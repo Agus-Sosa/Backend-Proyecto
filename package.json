@@ -1,0 +1,15 @@
+{
+  "name": "proyecto-backend_nuevo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/script.js",
+  "type": "module",
+
+  "scripts": {
+    "start": "node ."
+
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
