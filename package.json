@@ -2,14 +2,16 @@
   "name": "proyecto-backend_nuevo",
   "version": "1.0.0",
   "description": "",
-  "main": "src/script.js",
+  "main": "src/app.js",
   "type": "module",
-
   "scripts": {
-    "start": "node ."
-
+    "start": "node .",
+    "dev": "nodemon ."
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "nodemon": "^2.0.22"
+  }
 }
