@@ -28,8 +28,7 @@ class productManager {
 
     generatedId = () => {
         return this.indexId++
-        // if(this.products.length === 0) return + 1 
-        // return this.products[this.products.length-1].id + 1
+        
     }
 
 
@@ -62,9 +61,13 @@ class productManager {
 
 
     getProductoById = (idProduct) => {
-        const productExist = this.products.find(prod => prod.id === idProduct)
+        const data = fs.readFileSync(dataJson, 'utf-8')
+
+        const productJson = JSON.parse(data)
+        const productExist = productJson.find(prod => prod.id === idProduct)
+
         if(productExist) {
-            console.log(productExist)
+            console.log('Producto:', productExist)
 
         } else {
             console.error(`El producto ${idProduct} no fue encontrado`)
@@ -86,7 +89,11 @@ class productManager {
 
 
     deleteProduct = (idProduct) => {
-        const deleteProduct = this.products.findIndex(prod => prod.id === idProduct)
+
+        const data = fs.readFileSync(dataJson, 'utf-8')
+
+        const productJson = JSON.parse(data)
+        const deleteProduct = productJson.findIndex(prod => prod.id === idProduct)
 
         if(deleteProduct=== -1) {
             console.log(`Producto ${idProduct} no encontrado`)
@@ -139,3 +146,5 @@ manager.updateProduct(2, {price: 1000});
 
 
 manager.getProducts()
+
+manager.deleteProduct(2)
