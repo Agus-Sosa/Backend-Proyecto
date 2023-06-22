@@ -110,15 +110,19 @@ class productManager {
 
 
     updateProduct = (idProduct, update)=> {
-        const productId =this.products.findIndex(prod => prod.id === idProduct)
+        const data = fs.readFileSync(this.path, 'utf-8')
+
+        const productJson = JSON.parse(data)
+
+        const productId = productJson.findIndex(prod => prod.id === idProduct)
 
 
         if(productId === -1) return console.log(`Producto ${productId} no encontrado`)
 
-        const updateValues = {...this.products[productId], ...update}
-        this.products[productId] = updateValues;
+        const updateValues = {...productJson[productId], ...update}
+        productJson[productId] = updateValues;
 
-        this.saveProducts();
+        fs.writeFileSync(this.path, JSON.stringify(productJson, null, 3));
 
         console.log(`Producto ${idProduct} actualizado correctamente`)
 
@@ -142,11 +146,11 @@ manager.addProducts('Lenovo V15 G2 ITL F6AR', '15,6 pulgadas Full HD (1920x1080)
 manager.getProductoById(2);
 
 // Actualiza el producto
-manager.updateProduct(2, {price: 1200, stock: 30});
+manager.updateProduct(1, {price: 1200, stock: 30});
 
 // Trae todos los productos
 manager.getProducts()
 
 
 // Elimina todos los productos
-manager.deleteProduct(1)
+// manager.deleteProduct(1)
