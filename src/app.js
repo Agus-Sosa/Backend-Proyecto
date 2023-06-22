@@ -80,7 +80,7 @@ class productManager {
         try {
             const data = fs.readFileSync(dataJson, 'utf-8')
             const products = JSON.parse(data)
-            console.log({products})
+            console.log(products)
             
         } catch (error) {
             console.error(`Error al obtener los productos ${error}`)
@@ -138,13 +138,15 @@ manager.addProducts('Lenovo V15 G2 ITL F6AR', '15,6 pulgadas Full HD (1920x1080)
 
 
 
-
+// Trae el producto por id
 manager.getProductoById(2);
 
+// Actualiza el producto
+manager.updateProduct(2, {price: 1200, stock: 30});
 
-manager.updateProduct(2, {price: 1000});
-
-
+// Trae todos los productos
 manager.getProducts()
 
-manager.deleteProduct(2)
+
+// Elimina todos los productos
+manager.deleteProduct(1)
