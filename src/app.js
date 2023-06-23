@@ -152,5 +152,5 @@ manager.updateProduct(1, {price: 1200, stock: 30});
 manager.getProducts()
 
 
-// Elimina todos los productos
+// Elimina los productos
 // manager.deleteProduct(1)
