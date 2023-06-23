@@ -68,6 +68,8 @@ class productManager {
 
         if(productExist) {
             console.log('Producto:', productExist)
+            return productExist;
+
 
         } else {
             console.error(`El producto ${idProduct} no fue encontrado`)
@@ -80,6 +82,7 @@ class productManager {
         try {
             const data = fs.readFileSync(dataJson, 'utf-8')
             const products = JSON.parse(data)
+            return products
             console.log(products)
             
         } catch (error) {
@@ -90,7 +93,7 @@ class productManager {
 
     deleteProduct = (idProduct) => {
 
-        const data = fs.readFileSync(dataJson, 'utf-8')
+        const data = fs.readFileSync(this.path, 'utf-8')
 
         const productJson = JSON.parse(data)
         const deleteProduct = productJson.findIndex(prod => prod.id === idProduct)
@@ -101,10 +104,10 @@ class productManager {
         }
 
 
-        this.products.splice(deleteProduct, 1)
+        productJson.splice(deleteProduct, 1)
+        
+        this.products = productJson
         this.saveProducts()
-        console.log(`Producto ${idProduct} eliminado correctamente`)
-
 
     }
 
@@ -141,6 +144,8 @@ manager.addProducts('Lenovo V15 G2 ITL F6AR', '15,6 pulgadas Full HD (1920x1080)
 
 
 
+export default productManager;
+
 
 // Trae el producto por id
 manager.getProductoById(2);
@@ -148,9 +153,11 @@ manager.getProductoById(2);
 // Actualiza el producto
 manager.updateProduct(1, {price: 1200, stock: 30});
 
+
+// Elimina todos los productos
+manager.deleteProduct(2)
+
 // Trae todos los productos
 manager.getProducts()
 
 
-// Elimina todos los productos
-// manager.deleteProduct(1)
