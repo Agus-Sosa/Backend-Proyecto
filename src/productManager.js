@@ -161,3 +161,8 @@ manager.deleteProduct(2)
 manager.getProducts()
 
 
+<<<<<<< HEAD:src/productManager.js
+=======
+// Elimina los productos
+// manager.deleteProduct(1)
+>>>>>>> e7b9f14b03272b27d419394dd55b4350ea76d0a7:src/app.js
