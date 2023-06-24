@@ -5,7 +5,7 @@ import __dirname from './utils.js'
 
 const dataJson = path.join(__dirname, 'data', 'products.json')
 
-class productManager {
+class ProductManager {
     constructor () {
         this.products = []
         this.indexId = 1
@@ -135,16 +135,30 @@ class productManager {
 }
 
 
-const manager = new productManager();
+const manager = new ProductManager();
+
+// Productos 
+manager.addProducts(
+    'Msi Sword 15 A11UD-001', 
+    '15,6 pulgadas Full HD (1920x1080) IPS 144hz. Intel Core i7-11800H hasta 4.6GHz. 8GB DDR4. Nvidia GeForce RTX 3050 Ti 4Gb GDDR6. SSD 512GB', 
+    1542, 
+    'https://i.ibb.co/5jjVJdz/thumbnail3.jpg',
+    6405, 
+    10
+    );
+
+manager.addProducts(
+    'Lenovo V15 G2 ITL F6AR', 
+    '15,6 pulgadas Full HD (1920x1080) TN Anti-Glare. Intel Core i5-1135G7 hasta 4.2GHz. 8GB DDR4. Intel Iris Xe Graphics, SSD 256GB', 
+    925, 
+    'https://i.ibb.co/nDYB1FK/thumbnail4.jpg', 
+    3301, 
+    20);
 
 
-manager.addProducts('Msi Sword 15 A11UD-001', '15,6 pulgadas Full HD (1920x1080) IPS 144hz. Intel Core i7-11800H hasta 4.6GHz. 8GB DDR4. Nvidia GeForce RTX 3050 Ti 4Gb GDDR6. SSD 512GB', 1542, 'https://i.ibb.co/5jjVJdz/thumbnail3.jpg',6405, 10)
-manager.addProducts('Lenovo V15 G2 ITL F6AR', '15,6 pulgadas Full HD (1920x1080) TN Anti-Glare. Intel Core i5-1135G7 hasta 4.2GHz. 8GB DDR4. Intel Iris Xe Graphics, SSD 256GB', 925, 'https://i.ibb.co/nDYB1FK/thumbnail4.jpg', 3301, 20)
 
 
-
-
-export default productManager;
+export default ProductManager;
 
 
 // Trae el producto por id
@@ -155,7 +169,7 @@ manager.updateProduct(1, {price: 1200, stock: 30});
 
 
 // Elimina todos los productos
-manager.deleteProduct(2)
+// manager.deleteProduct(2)
 
 // Trae todos los productos
 // manager.getProducts()
