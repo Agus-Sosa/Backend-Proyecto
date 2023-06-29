@@ -16,5 +16,32 @@
       "thumbnail": "https://i.ibb.co/nDYB1FK/thumbnail4.jpg",
       "code": 3301,
       "stock": 20
+   },
+   {
+      "id": 3,
+      "title": "Acer Aspire 5 A514-54-501Z",
+      "description": "14 pulgadas Full HD (1920x1080) ComfyView IPS. Intel Core i5-1135G7 hasta 4.2GHz. 8GB DDR4. Intel Iris Xe Graphics. SSD 256GB",
+      "price": 727,
+      "thumbnail": "https://i.ibb.co/4m0R2g1/thumbnail8.jpg",
+      "code": 6679,
+      "stock": 30
+   },
+   {
+      "id": 4,
+      "title": "Lenovo Ideapad 3 15ALC6 Rkus",
+      "description": "15,6 pulgadas Full HD (1920x1080) TN Anti-Glare. AMD Ryzen 5 5500U hasta 4.0Hz. 8GB DDR4. AMD Radeon Graphics. 256GB NVMe",
+      "price": 676,
+      "thumbnail": "https://i.ibb.co/ZTvLcVz/thumbnail6.jpg",
+      "code": 7632,
+      "stock": 10
+   },
+   {
+      "id": 5,
+      "title": "Msi Bravo 15 B5DD-244",
+      "description": "15,6 pulgadas Full HD (1920x1080) IPS 144hz. AMD Ryzen 7 5800H hasta 4.4GH. 16GB DDR4. AMD Radeon RX 5500M 4GB GDDR6. 512gb NVMe",
+      "price": 1217,
+      "thumbnail": "https://ibb.co/MsQXw0x",
+      "code": 5543,
+      "stock": 15
    }
 ]

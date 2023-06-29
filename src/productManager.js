@@ -20,7 +20,7 @@ class ProductManager {
             fs.writeFileSync(this.path, jsonData, 'utf-8')
             console.log('Producto guardado correctamente')
         } catch (error) {
-            console.error(`Error al leer el archivo ${error}`)
+            console.error(`Error al guardar el archivo ${error}`)
         }
     }
 
@@ -155,6 +155,32 @@ manager.addProducts(
     3301, 
     20);
 
+
+manager.addProducts(
+    'Acer Aspire 5 A514-54-501Z',
+    '14 pulgadas Full HD (1920x1080) ComfyView IPS. Intel Core i5-1135G7 hasta 4.2GHz. 8GB DDR4. Intel Iris Xe Graphics. SSD 256GB',
+    727,
+    'https://i.ibb.co/4m0R2g1/thumbnail8.jpg',
+    6679,
+    30);
+
+manager.addProducts(
+    'Lenovo Ideapad 3 15ALC6 Rkus',
+    '15,6 pulgadas Full HD (1920x1080) TN Anti-Glare. AMD Ryzen 5 5500U hasta 4.0Hz. 8GB DDR4. AMD Radeon Graphics. 256GB NVMe',
+    676,
+    'https://i.ibb.co/ZTvLcVz/thumbnail6.jpg',
+    7632,
+    10
+);
+
+manager.addProducts(
+    'Msi Bravo 15 B5DD-244',
+    '15,6 pulgadas Full HD (1920x1080) IPS 144hz. AMD Ryzen 7 5800H hasta 4.4GH. 16GB DDR4. AMD Radeon RX 5500M 4GB GDDR6. 512gb NVMe',
+    1217,
+    'https://ibb.co/MsQXw0x',
+    5543,
+    15
+);
 
 
 
