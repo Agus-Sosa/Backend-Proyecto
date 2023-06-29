@@ -164,6 +164,8 @@ manager.addProducts(
     6679,
     30);
 
+
+    
 manager.addProducts(
     'Lenovo Ideapad 3 15ALC6 Rkus',
     '15,6 pulgadas Full HD (1920x1080) TN Anti-Glare. AMD Ryzen 5 5500U hasta 4.0Hz. 8GB DDR4. AMD Radeon Graphics. 256GB NVMe',
@@ -172,6 +174,8 @@ manager.addProducts(
     7632,
     10
 );
+
+
 
 manager.addProducts(
     'Msi Bravo 15 B5DD-244',
