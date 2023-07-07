@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "node .",
-    "dev": "nodemon src/app.js"
+    "dev": "nodemon ."
   },
   "keywords": [],
   "author": "",
