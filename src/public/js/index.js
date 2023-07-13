@@ -54,18 +54,41 @@ const productContainer = document.querySelector('.real-time_list');
 // })
 
 
+// socket.on('product-created', (productCreated)=> {
+//     if(productCreated && productCreated.thumbnails) {
+//         const productContainer = document.getElementById('container-realTime')
+//         const newProduct =document.createElement('ul');
+//         newProduct.setAttribute('data-id', productCreated.id)
+//         newProduct.innerHTML =`
+//             <li>
+//             <img src="${productCreated.thumbnails}" width="120px"/>
+//             </li>
+//             <li>${productCreated.title}</li>
+//             <li>${productCreated.price}</li>
+//             <button class="delete-product" id="delete-product" data-id="${productCreated.id}">Eliminar</button>`
+
+
+//             productContainer.appendChild(newProduct)
+            
+//     }
+// })
+
+
 socket.on('product-created', (productCreated)=> {
     if(productCreated && productCreated.thumbnails) {
         const productContainer = document.getElementById('container-realTime')
-        const newProduct =document.createElement('ul');
+        const newProduct =document.createElement('div');
         newProduct.setAttribute('data-id', productCreated.id)
+        newProduct.classList.add('card')
         newProduct.innerHTML =`
-            <li>
-            <img src="${productCreated.thumbnails}" width="120px"/>
-            </li>
-            <li>${productCreated.title}</li>
-            <li>${productCreated.price}</li>
-            <button class="delete-product" id="delete-product" data-id="${productCreated.id}">Eliminar</button>`
+           <article>
+                <img src="${productCreated.thumbnails}" alt="" width="200px">
+            </article>
+            <div class="card-body">
+                <h4>${productCreated.title}</h4>
+                <p>$${productCreated.price}</p>
+                <button class="delete-product" id="delete-product" data-id="${productCreated.id}">Eliminar</button>
+            </div>`
 
 
             productContainer.appendChild(newProduct)
@@ -84,7 +107,7 @@ productContainer.addEventListener('click', (event)=> {
 })
 
 socket.on('deleting-product', (deleteProduct)=> {
-    const productElement = document.querySelector(`ul[data-id="${deleteProduct}"]`)
+    const productElement = document.querySelector(`div[data-id="${deleteProduct}"]`)
     if(productElement) {
         productElement.remove();
         console.log(`producto ${deleteProduct} eliminado correctamente`)
