@@ -1,0 +1,14 @@
+<section class="container-home">
+    <h1>Home</h1>
+    <div class="container-list">
+        {{#each productList}}
+        <ul>
+            <li>
+                <img src="{{this.thumbnails}}" alt="{{this.title}}" width="100px">
+            </li>
+            <li>{{this.title}}</li>
+            <li>{{this.price}}</li>
+        </ul>
+        {{/each}}
+    </div>
+</section>

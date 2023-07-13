@@ -67,7 +67,7 @@ class ProductManager {
 
         this.products.push(product)
         this.saveProducts();
-
+        return product
 
         console.log(`Producto ${newProduct.title} agregado correctamente`)
     }
@@ -104,17 +104,16 @@ class ProductManager {
     deleteProduct = (idProduct) => {
         const data = fs.readFileSync(this.path, 'utf-8')
         const productJson = JSON.parse(data)
-
-        const deleteProduct = productJson.findIndex(prod => prod.id === idProduct)
+        const deleteProduct = productJson.findIndex(prod => prod.id == idProduct)
         if(deleteProduct=== -1) {
             throw new Error(`El producto ${idProduct} no existe para eliminarlo`)
         }
 
 
-        productJson.splice(deleteProduct, 1)
+        productJson.splice(deleteProduct, 1);
         this.products = productJson
         this.saveProducts();
-
+        return idProduct
     }
 
     // Actualizar un producto
