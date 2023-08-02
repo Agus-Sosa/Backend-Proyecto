@@ -1,8 +1,6 @@
 import fs from 'fs'
 import path from 'path'
-import __dirname from '../utils.js'
-
-
+import __dirname from '../../../../utils.js'
 const dataJson = path.join( __dirname, 'data', 'products.json')
 
 class ProductManager {

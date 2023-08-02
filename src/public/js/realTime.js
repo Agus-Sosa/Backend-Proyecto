@@ -1,7 +1,8 @@
 
+// se conecta el cliente con el servidor
 const socket = io()
 
-
+// Toma el valor de todos los inputs
 const productForm = document.getElementById('product-form')
 productForm.addEventListener('submit', (event)=> {
     event.preventDefault();
@@ -30,67 +31,25 @@ productForm.addEventListener('submit', (event)=> {
 
 
 
-
-
 const productContainer = document.querySelector('.real-time_list');
 
 
-
-
-// socket.on('product-created', (productCreated) => {
-//     console.log('Producto creado correctamente', productCreated)
-//     if(productCreated && productCreated.thumbnails){
-//     const newProduct = document.createElement('ul')
-//     newProduct.innerHTML = `
-//     <li>
-//     <img src="${productCreated.thumbnails}"/>
-//     </li>
-//     <li>${productCreated.title}</li>
-//     <li>${productCreated.price}</li>
-//     <buttton class="delete-product" data-id="${productCreated.id}">Eliminar</button>
-//     `
-//     productContainer.prepend(newProduct)
-//     }
-// })
-
-
-// socket.on('product-created', (productCreated)=> {
-//     if(productCreated && productCreated.thumbnails) {
-//         const productContainer = document.getElementById('container-realTime')
-//         const newProduct =document.createElement('ul');
-//         newProduct.setAttribute('data-id', productCreated.id)
-//         newProduct.innerHTML =`
-//             <li>
-//             <img src="${productCreated.thumbnails}" width="120px"/>
-//             </li>
-//             <li>${productCreated.title}</li>
-//             <li>${productCreated.price}</li>
-//             <button class="delete-product" id="delete-product" data-id="${productCreated.id}">Eliminar</button>`
-
-
-//             productContainer.appendChild(newProduct)
-            
-//     }
-// })
-
-
+// Recibe el producto nuevo creado por formulario y lo renderiza
 socket.on('product-created', (productCreated)=> {
     if(productCreated && productCreated.thumbnails) {
         const productContainer = document.getElementById('container-realTime')
         const newProduct =document.createElement('div');
-        newProduct.setAttribute('data-id', productCreated.id)
+        newProduct.setAttribute('data-id', productCreated._id)
         newProduct.classList.add('card')
         newProduct.innerHTML =`
-           <article>
+            <article>
                 <img src="${productCreated.thumbnails}" alt="" width="200px">
             </article>
             <div class="card-body">
                 <h4>${productCreated.title}</h4>
                 <p>$${productCreated.price}</p>
-                <button class="delete-product" id="delete-product" data-id="${productCreated.id}">Eliminar</button>
+                <button class="delete-product" id="delete-product" data-id="${productCreated._id}">Eliminar</button>
             </div>`
-
-
             productContainer.appendChild(newProduct)
             
     }
@@ -98,7 +57,7 @@ socket.on('product-created', (productCreated)=> {
 
 
 
-
+// Verifica el producto con el id que se selecciono y lo envia al servidor para que lo elimine
 productContainer.addEventListener('click', (event)=> {
     if(event.target.classList.contains('delete-product')){
         const productId =event.target.getAttribute('data-id');
@@ -106,6 +65,8 @@ productContainer.addEventListener('click', (event)=> {
     }
 })
 
+
+// recibe el id del producto eliminado en el json y lo elimina de la vista
 socket.on('deleting-product', (deleteProduct)=> {
     const productElement = document.querySelector(`div[data-id="${deleteProduct}"]`)
     if(productElement) {

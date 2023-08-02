@@ -1,17 +1,6 @@
 [
    {
       "id": 1,
-      "title": "Lenovo V15 G2 ITL F6AR",
-      "description": "15,6 pulgadas Full HD (1920x1080) TN Anti-Glare. Intel Core i5-1135G7 hasta 4.2GHz. 8GB DDR4. Intel Iris Xe Graphics, SSD 256GB",
-      "price": 1000,
-      "thumbnails": "https://i.ibb.co/nDYB1FK/thumbnail4.jpg",
-      "code": "3301",
-      "stock": 50,
-      "status": true,
-      "category": "oficina"
-   },
-   {
-      "id": 2,
       "title": "Msi Sword 15 A11UD-001",
       "description": "15,6 pulgadas Full HD (1920x1080) IPS 144hz. Intel Core i7-11800H hasta 4.6GHz. 8GB DDR4. Nvidia GeForce RTX 3050 Ti 4Gb GDDR6. SSD 512GB",
       "price": 1542,
@@ -20,6 +9,17 @@
       "stock": 30,
       "status": true,
       "category": "gamer"
+   },
+   {
+      "id": 2,
+      "title": "Lenovo V15 G2 ITL F6AR",
+      "description": "15,6 pulgadas Full HD (1920x1080) TN Anti-Glare. Intel Core i5-1135G7 hasta 4.2GHz. 8GB DDR4. Intel Iris Xe Graphics, SSD 256GB",
+      "price": 1000,
+      "thumbnails": "https://i.ibb.co/nDYB1FK/thumbnail4.jpg",
+      "code": "3301",
+      "stock": 50,
+      "status": true,
+      "category": "oficina"
    },
    {
       "id": 3,
