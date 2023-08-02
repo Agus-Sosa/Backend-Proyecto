@@ -9,7 +9,7 @@ Swal.fire({
     input: 'text',
     text: 'Introduce un nombre para poder acceder al chat',
     inputValidator: value => !value.trim() && 'Porfavor escribe un usuario para continuar',
-    // allowOutsideClick: false,
+    allowOutsideClick: false,
 }).then(result => {
     user = result.value
     socket = io()
