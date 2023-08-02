@@ -9,7 +9,7 @@ Swal.fire({
     input: 'text',
     text: 'Introduce un nombre para poder acceder al chat',
     inputValidator: value => !value.trim() && 'Porfavor escribe un usuario para continuar',
-    allowOutsideClick: false,
+    // allowOutsideClick: false,
 }).then(result => {
     user = result.value
     socket = io()
@@ -32,7 +32,8 @@ Swal.fire({
         const messagesLogs = document.getElementById('messagesLogs')
         let messages = ''
         data.forEach(msg => {            
-            messages +=`<p><strong>${msg.user}:</strong> ${msg.message}</p>`;
+            // messages +=`<p><strong>${msg.user}:</strong> ${msg.message}</p>`;
+            messages += `<div class="container-messages_user"><p>${msg.user}</p><span>${msg.message}</span></div>`
         });
         messagesLogs.innerHTML = messages;
     })

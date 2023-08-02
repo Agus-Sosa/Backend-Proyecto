@@ -1,112 +1,75 @@
-/* ... (código CSS existente) ... */
-
 
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@1,300&display=swap');
 
 
-
-
-* {
-    margin: 0px;
-    padding: 0px;
-    box-sizing: border-box;
+  .container {
     font-family: 'Lato', sans-serif;
-}
-
-
-.messages-container {
-    width: 400px;
-    height: 500px; /* Ajusta el alto según tus preferencias */
-    overflow-y: scroll;
-    border: 1px solid #ddd;
-    background-color: #f6f6f6;
-    border-radius: 8px;
-  }
-  
-  .messages-container p {
-    max-width: 80%; /* Limita el ancho de la burbuja */
-    margin: 10px 0;
-    padding: 10px;
-    border-radius: 15px;
-    position: relative;
-    word-wrap: break-word;
-  }
-  
-  .messages-container p.sent {
-    float: right;
-    background-color: #dcf8c6; /* Color de fondo para tus mensajes */
-    color: #000;
-  }
-  
-  .messages-container p.received {
-    float: left;
-    background-color: #fff; /* Color de fondo para mensajes recibidos */
-    color: #000;
-  }
-  
-  /* Nombre de usuario */
-  .messages-container p .username {
-    font-size: 12px;
-    color: #777;
-  }
-  
-  /* Triángulo de la burbuja para los mensajes enviados por el usuario */
-  .messages-container p.sent::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: -10px;
-    border-width: 10px 10px 0;
-    border-style: solid;
-    border-color: #dcf8c6 transparent transparent transparent;
-  }
-  
-  .messages-container p.received::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -10px;
-    border-width: 10px 10px 0;
-    border-style: solid;
-    border-color: #fff transparent transparent transparent;
-  }
-  
-  .container-chatbox {
+    margin: auto;
     display: flex;
+    
+    flex-direction: column;
     align-items: center;
-    width: 400px;
-    margin-top: 10px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 8px;
+
+    & .container-chat {
+      margin: 10px 0px;
+      box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+
+
+      & .header-chat {
+        padding: 10px;
+        display: flex;
+        background-color: #f0f0f0;
+        justify-content: center;
+      }
+
+      & .messages {
+        width: 300px;
+        height: 400px;
+        background-color: #d1d1d1;
+        display: flex;
+        flex-direction:  column;
+        align-items: flex-start;
+        & .container-messages_user {
+          padding: 5px 10px;
+          border-radius: 10px;
+          color: white;
+
+          margin: 10px 10px;
+          background-color: #2196F3;
+          & p {
+            margin: 3px 0px;
+            font-size: 15px;
+            font-weight: 700;
+          }
+        }
+      }
+
+      & .chatbox {
+        display: flex;
+        padding: 10px;
+
+          & #username {
+            flex: 1;
+            padding: 5px;
+            font-weight: bold;
+            white-space: nowrap; 
+            overflow: hidden; 
+            text-overflow: ellipsis; 
+            max-width: 150px;
+          } 
+          & #chatbox{
+            flex: 2;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            padding: 3px;
+            outline: none;
+            border-radius: 5px;
+            border: none;
+            background-color: #d1d0d0;
+            text-align: center;
+          }
+      }
+    }
   }
   
-  #chatbox {
-    flex: 1;
-    border: none;
-    outline: none;
-    padding: 10px;
-  }
-  
-  #chatbox::placeholder {
-    color: #ccc;
-  }
-  
-  #chatbox:focus {
-    border: 1px solid #007bff;
-  }
-  
-  #send-button {
-    padding: 10px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    border-radius: 8px;
-    transition: background-color 0.2s;
-  }
-  
-  #send-button:hover {
-    background-color: #0056b3;
-  }
-  
+
+
