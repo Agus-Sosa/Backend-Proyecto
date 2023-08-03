@@ -22,7 +22,6 @@ Swal.fire({
                 user: user,
                 message: chatBox.value
             })
-
             chatBox.value = ''
         }
     }
@@ -32,7 +31,6 @@ Swal.fire({
         const messagesLogs = document.getElementById('messagesLogs')
         let messages = ''
         data.forEach(msg => {            
-            // messages +=`<p><strong>${msg.user}:</strong> ${msg.message}</p>`;
             messages += `<div class="container-messages_user"><p>${msg.user}</p><span>${msg.message}</span></div>`
         });
         messagesLogs.innerHTML = messages;

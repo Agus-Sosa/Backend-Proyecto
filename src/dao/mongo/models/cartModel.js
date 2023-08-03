@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-
-const cartCollection = 'carts'
+import { cartCollection } from "../constants/constants.js";
+import { productCollection } from "../constants/constants.js";
 
 const cartSchema = new mongoose.Schema({
     
@@ -8,7 +8,8 @@ const cartSchema = new mongoose.Schema({
         {
             product: {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: 'products',
+                index: true,
+                ref: productCollection,
                 required: true
             },
             quantity: {
@@ -17,7 +18,11 @@ const cartSchema = new mongoose.Schema({
                 default: 1,
             },
         }
-    ]
+    ],
+})
+
+cartSchema.pre(['find','findOne'], function(){
+    this.populate(`${productCollection}.product`)
 })
 
 

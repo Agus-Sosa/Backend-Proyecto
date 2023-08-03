@@ -47,7 +47,7 @@ class CartMongoManager {
     async getCartById (idCart){
 
         try {
-            const cart = await Cart.findById(idCart).populate('products.product', 'title')
+            const cart = await Cart.findById(idCart)
 
             if(cart){
                 cart.products = cart.products.map(item=> {

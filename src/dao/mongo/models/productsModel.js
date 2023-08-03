@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
+import { productCollection } from "../constants/constants.js";
+// Nombre de la collection para almacenar productos
 
 
-const  productCollection = 'products'
-
+// Estructura que va a tener el documento de los productos
 const productSchema = new mongoose.Schema({
     title: {
         type: String,
