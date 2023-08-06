@@ -114,6 +114,8 @@ router.get('/:cid', async(req,res)=> {
             res.status(404).json({error: 'Carrito no encontrado'})
         }
 
+        console.log(getCartId)
+
         res.status(200).json({
             status: 'Success',
             getCartId

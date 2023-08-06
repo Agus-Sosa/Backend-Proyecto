@@ -1,9 +1,7 @@
 import mongoose from "mongoose";
 import { productCollection } from "../constants/constants.js";
-// Nombre de la collection para almacenar productos
+import mongoosePaginate from 'mongoose-paginate-v2'
 
-
-// Estructura que va a tener el documento de los productos
 const productSchema = new mongoose.Schema({
     title: {
         type: String,
@@ -42,6 +40,7 @@ const productSchema = new mongoose.Schema({
 
 })
 
+productSchema.plugin(mongoosePaginate);
 
 const Product = mongoose.model(productCollection, productSchema);
 

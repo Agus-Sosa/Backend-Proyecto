@@ -17,6 +17,10 @@ const router = Router()
 
 // Vista con fs
 
+
+
+
+
 // router.get('/home', (req,res)=> {
 //     res.render('home', { productList, style: "home.css" })
     
@@ -29,6 +33,10 @@ const router = Router()
 
 
 // Vistas con mongo
+
+
+/* Vista con MongoDb */
+
 router.get('/chat', (req, res)=> {
     res.render('chat',{style: 'chat.css'})
 })

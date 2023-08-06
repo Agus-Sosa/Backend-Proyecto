@@ -23,7 +23,7 @@ class ProductMongoManager {
         }
     }
 
-    async deleProduct(productId) {
+    async deleteProduct(productId) {
         try {   
             return await Product.findByIdAndDelete(productId)
         } catch (error) {

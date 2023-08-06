@@ -5,9 +5,7 @@ const products = new ProductManager()
 const router = Router()
 
 
-
-// Get: para todos los productos o con un limite
-
+// Metodos con Fs
 router.get('/', async(req, res)=> {
 
     try {
@@ -118,6 +116,9 @@ router.delete('/:pid', async(req, res)=> {
         }
     }
 })
+
+
+// Metodos con Mongo
 
 
 
