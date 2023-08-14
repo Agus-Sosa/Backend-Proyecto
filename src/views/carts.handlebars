@@ -1,0 +1,21 @@
+<section class="container-cart">
+    <div class="top-cart">
+        <a href="http://localhost:8080/home">Home</a>
+        <h5>Cart</h5>
+    </div>
+    {{#each productInCart}}
+    <div class="cart-product">
+        <article>
+            <img src="{{this.product.thumbnails}}" alt="{{this.producto.title}}">
+        </article>
+        <div class="product-data">
+            <h4>{{this.product.title}}</h4>
+            <p>{{this.product.category}}</p>
+        </div>
+        <div class="product-data_2">
+            {{this.product.price}}
+            {{this.quantity}}
+        </div>
+    </div>
+    {{/each}}
+</section>

@@ -14,6 +14,7 @@ class ProductMongoManager {
         }
     }
 
+
     async addNewProducts (newProduct) {
         try {
             const productAdd = new Product(newProduct)
@@ -30,6 +31,29 @@ class ProductMongoManager {
             throw new Error(`Error al eliminar el producto ${productId} ${error.message}`)
         }
     }
+
+
+    async getProductById (productId){
+        try {
+            const products = await Product.findById(productId)
+            return products;
+        } catch (error) {
+            throw new Error("Error al obtener los productos por ID", error.message)
+        }
+    }
+
+
+    async getProductPerPage (query, options) {
+        try {
+            const product = await Product.paginate(query, options);
+            return product;
+        } catch (error) {
+            throw error
+        }
+    }
+
+
+
 }
 
 export {ProductMongoManager as ProductMongoManager}

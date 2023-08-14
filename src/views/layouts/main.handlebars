@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/{{style}}">
+    <link rel="stylesheet" href="/css/{{style}}">
     <title>{{title}}</title>
 </head>
 
@@ -17,15 +17,21 @@
         border-radius: 5px;    
     }
 
+
+    header {
+        display: flex; margin: 20px;
+    }
 </style>
 
 
 <body>
-    <header style="display: flex; margin: 20px;">
+    <header>
         <nav>
             <a href="http://localhost:8080/chat">Chat</a>
             <a href="http://localhost:8080/home">Home</a>
             <a href="http://localhost:8080/realTimeProducts">Real time</a>
+            <a href="http://localhost:8080/carts">Carts</a>
+            <a href="http://localhost:8080/products">Products</a>
         </nav>
 </header>
 

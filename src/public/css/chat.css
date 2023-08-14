@@ -24,7 +24,8 @@
       & .messages {
         width: 300px;
         height: 400px;
-        background-color: #d1d1d1;
+        background: url('https://wallpaperaccess.com/full/1288076.jpg');
+        background-size: cover;
         display: flex;
         overflow-y: auto;
         flex-direction:  column;

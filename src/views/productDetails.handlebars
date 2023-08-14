@@ -1,0 +1,12 @@
+
+<div class="container-product_details">
+
+<img src="{{productDetails.thumbnails}}" width="200px" alt="">
+<h2>{{productDetails.title}}</h2>
+<p>Precio: ${{productDetails.price}}</p>
+<p>{{productDetails.description}}</p>
+
+<button id="addToCartBtn" onclick="addToCart('{{productDetails._id}}')">Agregar al carrito</button>
+</div>
+
+<script src="/js/products.js"></script>

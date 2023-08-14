@@ -104,7 +104,6 @@ const cartMongo = new CartMongoManager()
 // Metodos con Mongo
 
 
-
 router.get('/:cid', async(req,res)=> {
     try {
         const cid = req.params.cid
@@ -150,37 +149,33 @@ router.post('/', async(req, res)=> {
     }
 })
 
-// Eliminar el carrito
-router.delete('/:cid', async(req,res)=> {
-    try {
-        const cid = req.params.cid
-        await cartMongo.deleteCart(cid)
-        res.status(200).json({
-            status: 'Success',
-            message: 'Carrito eliminado correctamente'})
+// Eliminar el carrito (No usar por el momento)
+// router.delete('/:cid', async(req,res)=> {
+//     try {
+//         const cid = req.params.cid
+//         await cartMongo.deleteCart(cid)
+//         res.status(200).json({
+//             status: 'Success',
+//             message: 'Carrito eliminado correctamente'})
 
-    } catch (error) {
-        if(error instanceof Error){
-            res.status(404).json({error: error.message})
-        } else {
-            res.status(500).json({error: 'Error al eliminar el carrito'})
-        }
-    }
-})
+//     } catch (error) {
+//         if(error instanceof Error){
+//             res.status(404).json({error: error.message})
+//         } else {
+//             res.status(500).json({error: 'Error al eliminar el carrito'})
+//         }
+//     }
+// })
 
 
 // Agregar productos al carrito
-router.post('/:cid/product/:pid/:quantity', async(req, res)=> {
+
+
+router.post('/:cid/products/:pid/', async(req, res)=> {
     try {
         const cid = req.params.cid
         const pid = req.params.pid
-        const quantity = parseInt(req.params.quantity)
-
-        if(isNaN(quantity)){
-            return res.status(400).json({error: 'La cantidad debe ser un numero valido'})
-        }
-
-        const updateCart = await cartMongo.addProductToCart(cid, pid, quantity)
+        const updateCart = await cartMongo.addProductToCart(cid, pid)
 
         res.status(200).json({
             status: 'Success',
@@ -198,5 +193,79 @@ router.post('/:cid/product/:pid/:quantity', async(req, res)=> {
 })
 
 
+// Eliminar un producto del carrito
 
+router.delete('/:cid/products/:pid', async(req, res)=> {
+    try {
+        const cid = req.params.cid;
+        const pid = req.params.pid;
+
+        await cartMongo.deleteProductFromCart(cid, pid)
+        res.status(200).json({status: 'Succes', message: 'Producto eliminado correctamente'})
+
+    } catch (error) {
+        if(error instanceof Error){
+            res.status(404).json({error: error.message})
+        } else {
+            res.status(500).json({error: 'Error al eliminar el producto seleccionado'})
+        }
+    }
+})
+
+
+router.delete('/:cid', async(req, res)=> {
+    try {
+        const cid = req.params.cid;
+        await cartMongo.deleteAllProducts(cid)
+        res.status(200).json({status: 'Succes', message: 'Se eliminaron todos los productos con exito'})
+    } catch (error) {
+        if (error instanceof Error) {
+            res.status(404).json({error: error.message})
+        } else {
+            res.status(500).json({error: 'Error al eliminar los productos del carrito'})
+        }
+    }
+})
+
+
+
+router.put('/:cid/products/:pid', async(req, res)=> {
+    try {
+        const cid = req.params.cid
+        const pid = req.params.pid
+        const quantity = parseInt(req.body.quantity);  
+
+        const updateProductCart = await cartMongo.updateProductQuantityInCart(cid, pid, quantity)
+
+        res.status(200).json({message: `Producto ${pid} actualizado correctamente`, updateProductCart})
+    } catch (error) {
+        if(error instanceof Error) {
+            res.status(404).json({error: error.message})
+
+        } else {
+            res.status(500).json({error: 'Error al actualizar la cantidad del producto'})
+        }
+    }
+
+
+})
+
+
+
+router.put('/:cid', async(req,res)=> {
+    try {
+        const cid = req.params.cid;
+        const updateProducts = req.body;
+
+        const updateCart = await cartMongo.updateCart(cid, updateProducts);
+        res.status(200).json({message: `Carrito ${cid} se actualizo correctament`, updateCart});
+
+    } catch (error) {
+        if(error instanceof Error) {
+            res.status(404).json({error: error.message});
+        } else {
+            res.status(500).json({error: 'Error al actualizar el carrito'});
+        }
+    }
+})
 export {router as cartRouter};

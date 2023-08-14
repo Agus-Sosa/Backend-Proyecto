@@ -1,0 +1,27 @@
+
+<section class="container-products_views" style="display: flex;">
+    {{#if resultProductsViews.payload}}
+<div>
+<h1>Productos</h1>
+<div>
+{{#each resultProductsViews.payload}}
+<h2 style="margin: 10px 0px;">{{this.title}}</h2>
+<a href="/product/{{this._id}}" style="padding: 4px;">Ver Producto</a>
+<button onclick="addToCart('{{this._id}}')">Agregar al carrito</button>
+{{/each}}
+</div>
+
+{{#if resultProductsViews.hasPrevPage}}
+    <a href="{{resultProductsViews.prevLink}}">Antras</a>
+{{/if}}
+{{#if resultProductsViews.nextLink}}
+    <a href="{{resultProductsViews.nextLink}}">Siguiente</a>
+{{/if}}
+
+</>
+{{else}}
+<h2>No existen productos</h2>
+{{/if}}
+
+</section>
+<script src="/js/products.js"></script>

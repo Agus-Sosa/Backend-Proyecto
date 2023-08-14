@@ -71,7 +71,7 @@ io.on('connection', async(socket)=> {
 // Recibe el id del producto que quiere eliminar (mongo)
     socket.on('deleteProduct', async(productId)=> {
         try {
-        await productMongo.deleProduct(productId)
+        await productMongo.deleteProduct(productId)
         io.emit('deleting-product', productId)
         } catch (error) {
             console.error(`Error al eliminar el producto ${error}`)
