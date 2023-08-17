@@ -1,15 +1,18 @@
-import express from 'express'
-import __dirname from './utils.js'
-import handlebars from 'express-handlebars'
-import { Server } from 'socket.io'
-import {productRouter} from './routes/product.routes.js'
-import {cartRouter} from './routes/carts.routes.js'
-import { viewRouter } from './routes/view.routes.js'
-import ProductManager from './dao/fileSystem/controllers/controllers/ProductManager.js'
-import { MessageMongoManager } from './dao/mongo/MessageMongoManager.js'
-import { ProductMongoManager } from './dao/mongo/ProductMongoManager.js'
-import { config } from './config/config.js'
-import { connectDb } from './config/dbConnection.js'
+import express from 'express';
+import __dirname from './utils.js';
+import handlebars from 'express-handlebars';
+import { Server } from 'socket.io';
+import {productRouter} from './routes/product.routes.js';
+import {cartRouter} from './routes/carts.routes.js';
+import { viewRouter } from './routes/view.routes.js';
+import ProductManager from './dao/fileSystem/controllers/controllers/ProductManager.js';
+import { MessageMongoManager } from './dao/mongo/MessageMongoManager.js';
+import { ProductMongoManager } from './dao/mongo/ProductMongoManager.js';
+import { config } from './config/config.js';
+import { connectDb } from './config/dbConnection.js';
+import session from 'express-session';
+import MongoStore from 'connect-mongo';
+import { sessionsRouter } from './routes/sessions.routes.js';
 
 
 
@@ -37,6 +40,16 @@ app.use(express.urlencoded({extended: true}));
 // Configurar carpeta public
 app.use(express.static(__dirname + '/public'))
 
+// Configuracion de sessions
+app.use(session({
+    store:MongoStore.create({
+        mongoUrl: config.mongo.url
+    }),
+    secret: config.server.secretSession,
+    resave: true,
+    saveUninitialized: true
+}));
+
 
 // Configurar handlebars
 app.engine('handlebars', handlebars.engine());
@@ -48,6 +61,10 @@ app.set('view engine', 'handlebars')
 app.use('/api/products', productRouter);
 app.use('/api/carts', cartRouter);
 app.use(viewRouter)
+app.use('/api/sessions', sessionsRouter)
+
+
+
 
 
 // Configurar servidor
@@ -102,3 +119,5 @@ io.on('connection', async(socket)=> {
     
     io.emit('mensajeGeneral', 'Este es un mensaje para todos')
 })
+
+

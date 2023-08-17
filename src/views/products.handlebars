@@ -1,4 +1,9 @@
+<strong>{{error}}</strong>
+{{#if user}} 
 
+{{user.email}} | <button onclick="logoutSession()">Cerrar sesion</button>
+
+{{/if}}
 <section class="container-products_views" style="display: flex;">
     {{#if resultProductsViews.payload}}
 <div>
@@ -18,10 +23,10 @@
     <a href="{{resultProductsViews.nextLink}}">Siguiente</a>
 {{/if}}
 
-</>
 {{else}}
 <h2>No existen productos</h2>
 {{/if}}
 
 </section>
+<script src="/js/logoutSession.js"></script>
 <script src="/js/products.js"></script>

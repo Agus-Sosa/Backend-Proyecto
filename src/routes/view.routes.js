@@ -2,7 +2,7 @@ import { Router  } from "express";
 import ProductManager from "../dao/fileSystem/controllers/controllers/ProductManager.js";
 import { ProductMongoManager } from "../dao/mongo/ProductMongoManager.js";
 import { CartMongoManager } from "../dao/mongo/CartMongoManager.js";
-
+import { requireLogin, checkLogin } from "../authentication/auth.js";
 // Manager fs
 const product = new ProductManager()
 const productList = product.getProducts();
@@ -43,6 +43,25 @@ router.get('/chat', (req, res)=> {
 })
 
 
+// Vista para registrarse
+
+router.get('/register',checkLogin ,async (req, res)=> {
+    try {
+        res.render('register', {style: 'register.css'})
+    } catch (error) {
+        res.status(404).render('register', {error: error.menssage, style: 'register.css'})
+    }
+})
+
+
+router.get('/login', checkLogin,async(req,res)=> {
+    try {
+        res.render('login', {style: 'login.css'})
+    } catch (error) {
+        res.status(404).render('login', {error: error.message, style: 'login.css'})
+    }
+})
+
 // Pagina principal 
 router.get('/home', async(req, res)=> {
     try {
@@ -62,9 +81,13 @@ router.get('/home', async(req, res)=> {
         }
     })
 
-
-    router.get('/products', async(req,res)=> {
+    // Vista de los productos con paginacion
+    router.get('/products', requireLogin,async(req,res)=> {
         try {
+            const user = req.session.user;
+            if(!user) {
+                res.render('products', {error: 'Debes iniciar sesion', style: 'products.css'})
+            }
             const {limit=5, page=1, stock, sort="asc"} =req.query;
             // console.log(limit, sort, page, stock);
             const stockValue = stock === 0 ? undefined : parseInt(stock);
@@ -99,10 +122,8 @@ router.get('/home', async(req, res)=> {
                 nextLink: result.hasNextPage ? `${baseUrl.replace(`page=${result.page}`, `page=${result.nextPage}`)}` : null
             }
 
-            // console.log(result)
-            console.log(resultProductsViews)
 
-            res.render('products', {resultProductsViews, style: 'products.css', })
+            res.render('products', {resultProductsViews, user: user ,style: 'products.css', })
         } catch (error) {
             if(error instanceof Error) {
                 res.status(404).send(error.message)
@@ -112,7 +133,7 @@ router.get('/home', async(req, res)=> {
         }
     })
 
-    
+    // Vista del producto seleccionado detalladamente
     router.get('/product/:productId', async(req, res)=> {
         try {
             const productId = req.params.productId
@@ -156,6 +177,8 @@ router.get('/carts/:cid', async(req,res)=> {
         res.status(500).send('Error al obtener el carrito', error.message)
     }
 })
+
+
 
 
 export {router as viewRouter}
