@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@1,300&display=swap');
+
+
+
+form {
+        font-family: 'Lato', sans-serif;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin: 10vh auto;
+        border-radius: 10px;
+        padding: 20px 1px;
+        box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+        align-items: center;
+        width: 400px;
+        height: 500px;
+        & input {
+            border: none;
+            border-bottom: solid gray;
+            padding: 10px 10px;
+            outline: none;
+            margin: 20px;
+        }
+        & button {
+            border: none;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+            cursor: pointer;
+        }
+    }
