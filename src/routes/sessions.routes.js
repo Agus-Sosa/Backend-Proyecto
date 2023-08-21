@@ -2,6 +2,7 @@ import { Router } from "express";
 import { UsersMongoManager } from "../dao/mongo/UserMongoManager.js";
 import Users from "../dao/mongo/models/userModel.js";
 import session from "express-session";
+import { createHash } from "../utils.js";
 const UserMongo = new UsersMongoManager()
 
 const router = Router()
@@ -13,11 +14,17 @@ router.post('/register', async(req, res)=> {
         if(user){
             return res.render('register', {error: 'El usuario ya esta registrado',style: 'register.css'});
         }
-        const resultUser = await UserMongo.saveUsers(registerForm);
+        const newUser = {
+            first_name: registerForm.first_name,
+            email: registerForm.email,
+            password: createHash(registerForm.password)
+        }
+        await UserMongo.saveUsers(newUser);
         res.render('login', {message: 'usuario registrado'})
 
 
     } catch (error) {
+        console.log(error)
         res.render('register', {error: error.message})
     }
 })
