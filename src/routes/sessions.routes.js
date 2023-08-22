@@ -2,11 +2,13 @@ import { Router } from "express";
 import { UsersMongoManager } from "../dao/mongo/UserMongoManager.js";
 import Users from "../dao/mongo/models/userModel.js";
 import session from "express-session";
-import { createHash } from "../utils.js";
+import { createHash, isValidPassword } from "../utils.js";
+import passport from "passport";
 const UserMongo = new UsersMongoManager()
 
 const router = Router()
 
+// Metodo para registrarse sin passport 
 router.post('/register', async(req, res)=> {
     try {
         const registerForm = req.body;
@@ -20,7 +22,7 @@ router.post('/register', async(req, res)=> {
             password: createHash(registerForm.password)
         }
         await UserMongo.saveUsers(newUser);
-        res.render('login', {message: 'usuario registrado'})
+        res.render('login', {message: 'usuario registrado', style: 'login.css'})
 
 
     } catch (error) {
@@ -28,6 +30,23 @@ router.post('/register', async(req, res)=> {
         res.render('register', {error: error.message})
     }
 })
+
+// Metodo con passport (Solucionando errores)
+
+// router.post('/register', passport.authenticate("registerStrategy", {
+//     failureRedirect: "/api/sessions/fail-register"
+// }), (req, res)=>{
+//     res.render('register', {message: 'Usuario registrado' ,style: 'register.css'})
+
+// })
+
+// router.get('/fail-register', (req, res)=> {
+//     res.render('register', {error: 'No se pudo registrar el usuario', style: 'register.css'})
+// })
+
+
+
+// Metodo login sin passport
 router.post('/login', async(req, res) => {
     try {
     const user = req.body
@@ -35,7 +54,7 @@ router.post('/login', async(req, res) => {
         if(!user) {
             return res.render('login', {error: 'El usuario no esta registrado', style: 'login.css'})
         }
-        if(userLogin.password === userLogin.password) {
+        if(isValidPassword(userLogin, user.password)) {
             req.session.user = {
                 first_name: userLogin.first_name,
                 email: userLogin.email
@@ -52,7 +71,17 @@ router.post('/login', async(req, res) => {
 
 });
 
+// Metodo login con passport (Solucionando errores)
 
+// router.post('/login', passport.authenticate('loginStrategy', {
+//     failureRedirect: '/api/sessions/fail-login'
+// }), (req, res)=> {
+//     res.redirect('/products')
+// })
+
+// router.get('/fail-login', (req, res)=> {
+//     res.render('login', {error: 'Error al iniciar sesion', style: 'login.css'})
+// })
 
 
 router.post('/logout', async(req,res)=> {

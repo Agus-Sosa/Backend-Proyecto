@@ -29,7 +29,6 @@ class UsersMongoManager {
         try {
             const user = await Users.findOne({email:userEmail});
             if(user){
-                console.log(user)
                 return user;
             } else {
                 return null
