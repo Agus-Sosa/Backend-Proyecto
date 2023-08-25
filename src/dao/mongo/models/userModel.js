@@ -4,7 +4,6 @@ import { userCollection } from "../constants/constants.js";
 const userSchema = new mongoose.Schema({
     first_name: {
         type: String,
-        required: true
     },
 
 

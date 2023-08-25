@@ -2,6 +2,8 @@ import passport from "passport";
 import LocalStrategy from 'passport-local';
 import { createHash, isValidPassword } from "../utils.js";
 import { UsersMongoManager } from "../dao/mongo/UserMongoManager.js";
+import githubStrategy from 'passport-github2' 
+import { config } from "./config.js";
 const userMongo = new UsersMongoManager()
 
 export const initializePassport = () => {
@@ -52,6 +54,34 @@ export const initializePassport = () => {
         }
 
     ));
+
+    passport.use('githubLoginStrategy', new githubStrategy(
+        {
+            clientID: config.github.clientId,
+            clientSecret:config.github.clientSecret,
+            callBackURL:config.github.callBackUrl,
+        },
+        async(accesToken, refreshToken, profile, done)=>{
+            try {
+            console.log('profile', profile);
+            const user = await userMongo.getByEmail(profile.username);
+            if(!user){
+                const newUser = {
+                    first_name:'',
+                    email: profile.username,
+                    password: createHash(profile.id)
+                };
+                const userCreated = userMongo.saveUsers(newUser)
+                return done(null, userCreated)
+            } else { 
+                return done(null, user)
+            }
+
+            } catch (error) {
+                return done(error)
+            }
+        }
+    ))
 
     passport.serializeUser((user, done)=> {
         done(null, user._id);

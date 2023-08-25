@@ -9,40 +9,40 @@ const UserMongo = new UsersMongoManager()
 const router = Router()
 
 // Metodo para registrarse sin passport 
-router.post('/register', async(req, res)=> {
-    try {
-        const registerForm = req.body;
-        const user = await UserMongo.getByEmail(registerForm.email);
-        if(user){
-            return res.render('register', {error: 'El usuario ya esta registrado',style: 'register.css'});
-        }
-        const newUser = {
-            first_name: registerForm.first_name,
-            email: registerForm.email,
-            password: createHash(registerForm.password)
-        }
-        await UserMongo.saveUsers(newUser);
-        res.render('login', {message: 'usuario registrado', style: 'login.css'})
+// router.post('/register', async(req, res)=> {
+//     try {
+//         const registerForm = req.body;
+//         const user = await UserMongo.getByEmail(registerForm.email);
+//         if(user){
+//             return res.render('register', {error: 'El usuario ya esta registrado',style: 'register.css'});
+//         }
+//         const newUser = {
+//             first_name: registerForm.first_name,
+//             email: registerForm.email,
+//             password: createHash(registerForm.password)
+//         }
+//         await UserMongo.saveUsers(newUser);
+//         res.render('login', {message: 'usuario registrado', style: 'login.css'})
 
 
-    } catch (error) {
-        console.log(error)
-        res.render('register', {error: error.message})
-    }
-})
+//     } catch (error) {
+//         console.log(error)
+//         res.render('register', {error: error.message})
+//     }
+// })
 
 // Metodo con passport (Solucionando errores)
 
-// router.post('/register', passport.authenticate("registerStrategy", {
-//     failureRedirect: "/api/sessions/fail-register"
-// }), (req, res)=>{
-//     res.render('register', {message: 'Usuario registrado' ,style: 'register.css'})
+router.post('/register', passport.authenticate("registerStrategy", {
+    failureRedirect: "/api/sessions/fail-register"
+}), (req, res)=>{
+    res.render('register', {message: 'Usuario registrado' ,style: 'register.css'})
 
-// })
+})
 
-// router.get('/fail-register', (req, res)=> {
-//     res.render('register', {error: 'No se pudo registrar el usuario', style: 'register.css'})
-// })
+router.get('/fail-register', (req, res)=> {
+    res.render('register', {error: 'No se pudo registrar el usuario', style: 'register.css'})
+})
 
 
 
@@ -73,6 +73,8 @@ router.post('/register', async(req, res)=> {
 
 // Metodo login con passport (Solucionando errores)
 
+
+
 router.post('/login', passport.authenticate('loginStrategy', {
     failureRedirect: '/api/sessions/fail-login'
 }), (req, res)=> {
@@ -84,14 +86,16 @@ router.get('/fail-login', (req, res)=> {
 })
 
 
-// router.post('/logout', async(req,res)=> {
-//     try {
-//         req.session.destroy();
-//         res.redirect('/login')
-//     } catch (error) {
-//         res.status(404).send(error)
-//     }
-// })
+
+router.get('/loginGithub', passport.authenticate('githubLoginStrategy'));
+
+router.get('/github-callback', passport.authenticate('githubLoginStrategy',{
+    failureRedirect: '/api/sessions/fail-register'
+}), (req, res)=> {
+    res.redirect('/products')
+})
+
+
 
 router.post('/logout', (req, res)=> {
     req.logOut(error=> {
