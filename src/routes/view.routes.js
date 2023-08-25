@@ -84,10 +84,12 @@ router.get('/home', async(req, res)=> {
     // Vista de los productos con paginacion
     router.get('/products', requireLogin,async(req,res)=> {
         try {
-            const user = req.session.user;
+            const user = req.user;
+            
             if(!user) {
                 res.render('products', {error: 'Debes iniciar sesion', style: 'products.css'})
             }
+            const emailUser = user.email
             const {limit=5, page=1, stock, sort="asc"} =req.query;
             // console.log(limit, sort, page, stock);
             const stockValue = stock === 0 ? undefined : parseInt(stock);
@@ -122,10 +124,10 @@ router.get('/home', async(req, res)=> {
                 nextLink: result.hasNextPage ? `${baseUrl.replace(`page=${result.page}`, `page=${result.nextPage}`)}` : null
             }
 
-
-            res.render('products', {resultProductsViews, user: user ,style: 'products.css', })
+            res.render('products', {resultProductsViews, user: user.email ,style: 'products.css', })
         } catch (error) {
             if(error instanceof Error) {
+                console.log(error)
                 res.status(404).send(error.message)
             } else {
                 res.status(500).send('Error del servidor al mostrar los productos')

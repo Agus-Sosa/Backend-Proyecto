@@ -2,7 +2,7 @@
 
     // No permite acceder al apartado de products si no se inicio sesion
 export const requireLogin = (req, res, next) => {
-    if(req.session.user) {
+    if(req.user) {
         next();
     } else {
         res.redirect('/login')
@@ -12,7 +12,7 @@ export const requireLogin = (req, res, next) => {
 
 // No permite iniciar sesion ni tampoco registrarse si esta inciado sesion
 export const checkLogin = (req, res, next) =>  {
-    if(req.session.user) {
+    if(req.user) {
         res.redirect('/products');
     } else {
         next();

@@ -1,32 +1,49 @@
-<strong>{{error}}</strong>
-{{#if user}} 
 
-{{user.email}} | <button onclick="logoutSession()">Cerrar sesion</button>
+<p>{{error}}</p>
 
-{{/if}}
-<section class="container-products_views" style="display: flex;">
-    {{#if resultProductsViews.payload}}
-<div>
-<h1>Productos</h1>
-<div>
-{{#each resultProductsViews.payload}}
-<h2 style="margin: 10px 0px;">{{this.title}}</h2>
-<a href="/product/{{this._id}}" style="padding: 4px;">Ver Producto</a>
-<button onclick="addToCart('{{this._id}}')">Agregar al carrito</button>
-{{/each}}
+<p>{{message}}</p>
+
+
+<div class="user-info">
+    <p>{{user}}</p>
+    <button class="logout-button" onclick="logoutSession()">Cerrar sesión</button>
 </div>
 
-{{#if resultProductsViews.hasPrevPage}}
-    <a href="{{resultProductsViews.prevLink}}">Antras</a>
-{{/if}}
-{{#if resultProductsViews.nextLink}}
-    <a href="{{resultProductsViews.nextLink}}">Siguiente</a>
-{{/if}}
 
-{{else}}
-<h2>No existen productos</h2>
-{{/if}}
+<section class="container">
+    {{#if resultProductsViews.payload}}
+    <h1>Productos</h1>
+    {{#each resultProductsViews.payload}}
+    <section class="container-products">
+        <div class="container-image">
+            <article>
+                <img src="{{this.thumbnails}}" alt="{{this.title}}">
+            </article>
+        </div>
+        <div class="container-description">
+            <h5>{{this.title}}</h5>
+            <p>Categoria: {{this.category}}</p>
+            <p>${{this.price}}</p>
+            <button type="button" onclick="addToCart('{{this._id}}')">Agregar al carrito</button>
+            <a href="/product/{{this._id}}">Ver producto</a>
+
+        </div>
+    </section>
+    
+    {{/each}}
+
+    {{#if resultProductsViews.hasPrevPage}}
+    <a href="{{resultProductsViews.prevLink}}">Antras</a>
+    {{/if}}
+    {{#if resultProductsViews.nextLink}}
+        <a href="{{resultProductsViews.nextLink}}">Siguiente</a>
+    {{/if}}
+
+    {{else}}
+    <p>Sin productos</p>
+    {{/if}}
 
 </section>
+
 <script src="/js/logoutSession.js"></script>
 <script src="/js/products.js"></script>
