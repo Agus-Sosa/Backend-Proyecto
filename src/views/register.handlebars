@@ -1,17 +1,18 @@
 <p>{{error}}</p>
 <p>{{message}}</p>
-<div class="container-form">
 
 <form action="/api/sessions/register" method="post">
 <h1>Pagina de registro</h1>
     <input type="text" placeholder="Nombre" name="first_name">
+    <br>
+    <input type="text" placeholder="Apellido" name="last_name">
+    <br>
+    <input type="number" name="age" placeholder="Edad">
     <br>
     <input type="email" name="email" placeholder="correo electronico">
     <br>
     <input type="password" name="password" placeholder="Contraseña">
     <button>Registrarse</button>
 </form>
-<div class="container-social_networks">
-    <a href="/api/sessions/loginGithub"><i class="fa-brands fa-github"></i></a>
-</div>
-</div>
+
+

@@ -2,15 +2,19 @@ import { Router } from "express";
 import CartManager from "../dao/fileSystem/controllers/controllers/CartManager.js";
 import ProductManager from "../dao/fileSystem/controllers/controllers/ProductManager.js";
 import { CartMongoManager } from "../dao/mongo/CartMongoManager.js";
+import { cartService } from "../dao/mongo/Services/index.js";
+
 
 // File sistema
-const productMongo = new ProductManager()
-const cartManager = new CartManager()
+// const productMongo = new ProductManager()
+// const cartManager = new CartManager()
+
+
+
 const router = Router()
 
 // Mongo
-
-const cartMongo = new CartMongoManager()
+// const cartMongo = new CartMongoManager()
 
 
 
@@ -107,7 +111,7 @@ const cartMongo = new CartMongoManager()
 router.get('/:cid', async(req,res)=> {
     try {
         const cid = req.params.cid
-        const getCartId = await cartMongo.getCartById(cid)
+        const getCartId = await cartService.getCartById(cid)
 
         if(!getCartId){
             res.status(404).json({error: 'Carrito no encontrado'})
@@ -134,7 +138,7 @@ router.get('/:cid', async(req,res)=> {
 // Crear un carrito
 router.post('/', async(req, res)=> {
     try {
-        const newCart =  await cartMongo.createCart();
+        const newCart =  await cartService.createCart();
         res.status(201).json({
             status: 'Success',
             idCart: newCart._id})
@@ -175,7 +179,7 @@ router.post('/:cid/products/:pid/', async(req, res)=> {
     try {
         const cid = req.params.cid
         const pid = req.params.pid
-        const updateCart = await cartMongo.addProductToCart(cid, pid)
+        const updateCart = await cartService.addProductToCart(cid, pid)
 
         res.status(200).json({
             status: 'Success',
@@ -200,7 +204,7 @@ router.delete('/:cid/products/:pid', async(req, res)=> {
         const cid = req.params.cid;
         const pid = req.params.pid;
 
-        await cartMongo.deleteProductFromCart(cid, pid)
+        await cartService.deleteProductFromCart(cid, pid)
         res.status(200).json({status: 'Succes', message: 'Producto eliminado correctamente'})
 
     } catch (error) {
@@ -216,7 +220,7 @@ router.delete('/:cid/products/:pid', async(req, res)=> {
 router.delete('/:cid', async(req, res)=> {
     try {
         const cid = req.params.cid;
-        await cartMongo.deleteAllProducts(cid)
+        await cartService.deleteAllProducts(cid)
         res.status(200).json({status: 'Succes', message: 'Se eliminaron todos los productos con exito'})
     } catch (error) {
         if (error instanceof Error) {
@@ -235,7 +239,7 @@ router.put('/:cid/products/:pid', async(req, res)=> {
         const pid = req.params.pid
         const quantity = parseInt(req.body.quantity);  
 
-        const updateProductCart = await cartMongo.updateProductQuantityInCart(cid, pid, quantity)
+        const updateProductCart = await cartService.updateProductQuantityInCart(cid, pid, quantity)
 
         res.status(200).json({message: `Producto ${pid} actualizado correctamente`, updateProductCart})
     } catch (error) {
@@ -257,7 +261,7 @@ router.put('/:cid', async(req,res)=> {
         const cid = req.params.cid;
         const updateProducts = req.body;
 
-        const updateCart = await cartMongo.updateCart(cid, updateProducts);
+        const updateCart = await cartService.updateCart(cid, updateProducts);
         res.status(200).json({message: `Carrito ${cid} se actualizo correctament`, updateCart});
 
     } catch (error) {

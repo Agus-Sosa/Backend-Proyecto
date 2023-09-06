@@ -16,7 +16,7 @@ class UsersMongoManager {
     async getUserById (userId){
         try {
 
-            const user = await Users.findById(userId);
+            const user = await Users.findById(userId).lean();
             return user;
             
         } catch (error) {
@@ -27,7 +27,7 @@ class UsersMongoManager {
 
     async getByEmail (userEmail) {
         try {
-            const user = await Users.findOne({email:userEmail});
+            const user = await Users.findOne({email:userEmail}).lean();
             if(user){
                 return user;
             } else {

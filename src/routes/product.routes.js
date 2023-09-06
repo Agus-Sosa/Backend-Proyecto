@@ -1,6 +1,8 @@
 import { Router } from "express";
 import ProductManager from "../dao/fileSystem/controllers/controllers/ProductManager.js";
 import { ProductMongoManager } from "../dao/mongo/ProductMongoManager.js"; 
+import { productService } from "../dao/mongo/Services/index.js";
+
 
 // Clases con fs
 const products = new ProductManager()
@@ -8,7 +10,7 @@ const products = new ProductManager()
 const router = Router()
 
 // Clase con Mongo
-const productsMongo = new ProductMongoManager()
+// const productsMongo = new ProductMongoManager()
 
 
 // // Metodos con Fs
@@ -196,7 +198,7 @@ router.get('/', async(req,res)=> {
             query = {stock: {$gte: stockValue}}
         } 
 
-        const result = await productsMongo.getProductPerPage(query,{
+        const result = await productService.getProductPerPage(query,{
             page,
             limit,
             sort:{price: sortValue},
@@ -220,7 +222,7 @@ router.get('/', async(req,res)=> {
 
         // console.log(result)
         console.log(resultProductsViews)
-
+            
         res.status(200).json(resultProductsViews)
     } catch (error) {
         if(error instanceof Error) {

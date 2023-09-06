@@ -1,15 +1,14 @@
 import { Router  } from "express";
 import ProductManager from "../dao/fileSystem/controllers/controllers/ProductManager.js";
-import { ProductMongoManager } from "../dao/mongo/ProductMongoManager.js";
-import { CartMongoManager } from "../dao/mongo/CartMongoManager.js";
 import { requireLogin, checkLogin } from "../authentication/auth.js";
+import { productService, cartService } from "../dao/mongo/Services/index.js";
+
+
 // Manager fs
 const product = new ProductManager()
 const productList = product.getProducts();
 
-// Manager mongo
-const productMongo = new ProductMongoManager();
-const cartMongo = new CartMongoManager()
+
 const router = Router()
 
 
@@ -65,7 +64,7 @@ router.get('/login', checkLogin,async(req,res)=> {
 // Pagina principal 
 router.get('/home', async(req, res)=> {
     try {
-        const productsMongo = await productMongo.getAllProducts();
+        const productsMongo = await productService.getAllProducts();
         res.render('home', {productsMongo, style: 'home.css'})
     } catch (error) {
         res.status(500).send('Error al obtener todos los productos')
@@ -74,7 +73,7 @@ router.get('/home', async(req, res)=> {
 
     router.get('/realTimeProducts', async(req, res)=> {
         try {
-            const productsMongo = await productMongo.getAllProducts()
+            const productsMongo = await productService.getAllProducts()
             res.render('realTimeProducts', {productsMongo, style: 'realTime.css'})
         } catch (error) {
             res.status().send('Error al obtener los datos')
@@ -102,7 +101,7 @@ router.get('/home', async(req, res)=> {
                 query = {stock: {$gte: stockValue}}
             } 
 
-            const result = await productMongo.getProductPerPage(query,{
+            const result = await productService.getProductPerPage(query,{
                 page,
                 limit,
                 sort:{price: sortValue},
@@ -139,7 +138,7 @@ router.get('/home', async(req, res)=> {
     router.get('/product/:productId', async(req, res)=> {
         try {
             const productId = req.params.productId
-            const product = await productMongo.getProductById(productId)
+            const product = await productService.getProductById(productId)
 
             const productDetails = {
                 _id: product._id,
@@ -171,7 +170,7 @@ router.get('/carts', async(req, res)=> {
 router.get('/carts/:cid', async(req,res)=> {
     try {
         const cid = req.params.cid;
-        const cart = await cartMongo.getCartById(cid)
+        const cart = await cartService.getCartById(cid)
         const productInCart = cart.products
 
         res.render('carts', {productInCart, style: 'cartsProducts.css'})
@@ -180,7 +179,15 @@ router.get('/carts/:cid', async(req,res)=> {
     }
 })
 
+router.get('/current', (req,res)=> {
+    if(req.isAuthenticated()){
+        const user =req.user;
+        res.render('current', {user, style:'current.css'})
+    } else {
+        res.redirect('/login')
+    }
+})
 
-
+ 
 
 export {router as viewRouter}
