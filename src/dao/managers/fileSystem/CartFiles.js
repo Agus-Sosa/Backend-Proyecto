@@ -1,11 +1,10 @@
 import fs from 'fs'
 import path from 'path';
-import __dirname from '../../../../utils.js';
-
+import __dirname from '../../../utils.js';
 const dataJsonCart = path.join(__dirname, 'data', 'carts.json')
 
 
-class CartManager {
+class CartFiles{
 
     constructor () {
         this.path = dataJsonCart
@@ -123,4 +122,4 @@ class CartManager {
 }
 
 
-export default CartManager;
+export default CartFiles;

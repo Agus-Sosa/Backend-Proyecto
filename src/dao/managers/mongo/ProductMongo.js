@@ -1,6 +1,5 @@
-import Product from "./models/productsModel.js";
-
-class ProductMongoManager {
+import Product from "../../models/productsModel.js";
+class ProductMongo {
     constructor() {
     
     }
@@ -56,4 +55,4 @@ class ProductMongoManager {
 
 }
 
-export {ProductMongoManager as ProductMongoManager}
+export {ProductMongo as ProductMongo}

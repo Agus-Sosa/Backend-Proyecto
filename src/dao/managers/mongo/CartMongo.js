@@ -1,10 +1,8 @@
-import Cart from "./models/cartModel.js"
-import Product from "./models/productsModel.js";
+import Cart from "../../models/cartModel.js";
+import Product from "../../models/productsModel.js";
 
-class CartMongoManager {
-    constructor (){
 
-    }
+class CartMongo {
 
     async createCart () {
         try {
@@ -174,8 +172,4 @@ class CartMongoManager {
 
 }
 
-
-
-
-
-export {CartMongoManager as CartMongoManager}
+export {CartMongo as CartMongo }

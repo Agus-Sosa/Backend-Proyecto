@@ -1,15 +1,12 @@
-import Message from "./models/messagesModel.js"
+import Message from "../../models/messagesModel.js";
 
-
-class MessageMongoManager {
+class MessageMongo {
     constructor(io){
         this.io = io
     }
 
     async getAllMessagesChat () {
         try{
-
-        
         const messages = await Message.find();
         return messages
         } catch (error) {
@@ -34,4 +31,4 @@ class MessageMongoManager {
 }
 
 
-export {MessageMongoManager as MessageMongoManager};
+export {MessageMongo as MessageMongo};

@@ -1,7 +1,5 @@
 import mongoose from "mongoose";
-import { cartCollection } from "../constants/constants.js";
-import { productCollection } from "../constants/constants.js";
-
+import { cartCollection, productCollection } from "../managers/mongo/constants/constants.js";
 const cartSchema = new mongoose.Schema({
     
     products:[
@@ -18,7 +16,11 @@ const cartSchema = new mongoose.Schema({
             },
         }
     ],
-})
+},
+    {
+        versionKey: false
+    }
+    )
 
 cartSchema.pre(['find','findOne'], function(){
     this.populate(`${productCollection}.product`)

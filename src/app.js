@@ -5,9 +5,6 @@ import { Server } from 'socket.io';
 import {productRouter} from './routes/product.routes.js';
 import {cartRouter} from './routes/carts.routes.js';
 import { viewRouter } from './routes/view.routes.js';
-import ProductManager from './dao/fileSystem/controllers/controllers/ProductManager.js';
-import { MessageMongoManager } from './dao/mongo/MessageMongoManager.js';
-import { ProductMongoManager } from './dao/mongo/ProductMongoManager.js';
 import { config } from './config/config.js';
 import { connectDb } from './config/dbConnection.js';
 import session from 'express-session';
@@ -15,16 +12,8 @@ import MongoStore from 'connect-mongo';
 import { sessionsRouter } from './routes/sessions.routes.js';
 import { initializePassport } from './config/passportConfig.js';
 import passport from 'passport';
-
-
-
-// Manager de Mongo
-const messageManager = new MessageMongoManager()
-const productMongo = new ProductMongoManager();
-
-// Manager de fileSystem
-const product = new ProductManager()
-
+import { ProductService } from './Services/product.service.js';
+import { MessageService } from './Services/messages.service.js';
 
 // genera los datos para crear el servidor
 const app = express()
@@ -72,9 +61,6 @@ app.use(viewRouter)
 app.use('/api/sessions', sessionsRouter)
 
 
-
-
-
 // Configurar servidor
 const httpServer = app.listen(port, ()=> console.log(`Server Up ${port}`));
 const io = new Server(httpServer)
@@ -86,7 +72,7 @@ io.on('connection', async(socket)=> {
 // recibe el producto y lo guarda (mongo)
     socket.on('new-product', async(newProduct)=> {
         try {
-            const newProductCreated = await productMongo.addNewProducts(newProduct)
+            const newProductCreated = await ProductService.createProduct(newProduct)
             io.emit('product-created', newProductCreated)
         } catch (error) {
             console.error(`Error al crear el producto ${error}`)
@@ -96,7 +82,7 @@ io.on('connection', async(socket)=> {
 // Recibe el id del producto que quiere eliminar (mongo)
     socket.on('deleteProduct', async(productId)=> {
         try {
-        await productMongo.deleteProduct(productId)
+        await ProductService.deletingProduct(productId)
         io.emit('deleting-product', productId)
         } catch (error) {
             console.error(`Error al eliminar el producto ${error}`)
@@ -106,7 +92,7 @@ io.on('connection', async(socket)=> {
 
     // obtiene los mensjaes
     try {
-        const messageData2 =  await messageManager.getAllMessagesChat()
+        const messageData2 =  await MessageService.getAllMessagesChat()
         io.emit('messagesLogs', messageData2)
     } catch(error) {
         console.error('Error al obtener los mensajes')
@@ -116,8 +102,8 @@ io.on('connection', async(socket)=> {
     socket.on('message', async(data)=> {
         const {user, message} = data
         try {
-            await messageManager.addNewMessage(user, message)
-            const messageData = await messageManager.getAllMessagesChat()
+            await MessageService.addNewMessage(user, message)
+            const messageData = await MessageService.getAllMessagesChat()
             io.emit('messagesLogs', messageData)
         } catch (error) {
             console.error('Error al guardar el mensaje')

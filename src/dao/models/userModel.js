@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { userCollection, cartCollection } from "../constants/constants.js";
+import { userCollection, cartCollection } from "../managers/mongo/constants/constants.js";
 
 const userSchema = new mongoose.Schema({
     first_name: {
@@ -39,7 +39,10 @@ const userSchema = new mongoose.Schema({
 
 
     
-});
+},   
+    {
+    versionKey: false
+    });
 
 const Users = mongoose.model(userCollection, userSchema);
 

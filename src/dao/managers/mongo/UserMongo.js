@@ -1,6 +1,6 @@
-import Users from "./models/userModel.js";
+import Users from "../../models/userModel.js";
 
-class UsersMongoManager {
+class UsersMongo {
 
     async saveUsers (user) {
         try {
@@ -15,10 +15,8 @@ class UsersMongoManager {
 
     async getUserById (userId){
         try {
-
             const user = await Users.findById(userId).lean();
             return user;
-            
         } catch (error) {
             throw error
         }
@@ -40,4 +38,4 @@ class UsersMongoManager {
 }
 
 
-export {UsersMongoManager as UsersMongoManager}
+export {UsersMongo as UsersMongo};

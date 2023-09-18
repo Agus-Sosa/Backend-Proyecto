@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
-import { messageCollection } from "../constants/constants.js";
-
+import { messageCollection } from "../managers/mongo/constants/constants.js";
 
 
 const messageSchema = new mongoose.Schema({
@@ -16,7 +15,10 @@ const messageSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     }
-});
+},
+    {
+    versionKey: false
+    });
 
 const Message = mongoose.model(messageCollection, messageSchema);
 

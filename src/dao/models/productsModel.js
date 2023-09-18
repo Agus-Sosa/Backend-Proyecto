@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { productCollection } from "../constants/constants.js";
+import { productCollection } from "../managers/mongo/constants/constants.js";
 import mongoosePaginate from 'mongoose-paginate-v2'
 
 const productSchema = new mongoose.Schema({
@@ -38,7 +38,10 @@ const productSchema = new mongoose.Schema({
         required: true
     },
 
-})
+},
+    {
+        versionKey: false
+    })
 
 productSchema.plugin(mongoosePaginate);
 

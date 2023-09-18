@@ -3,9 +3,7 @@ import LocalStrategy from 'passport-local';
 import { createHash, isValidPassword } from "../utils.js";
 import githubStrategy from 'passport-github2' 
 import { config } from "./config.js";
-import { userService } from "../dao/mongo/Services/index.js";
-
-
+import { UserService } from "../Services/users.service.js";
 
 export const initializePassport = () => {
     passport.use('registerStrategy', new LocalStrategy(
@@ -16,7 +14,7 @@ export const initializePassport = () => {
         async (req,username, password, done)=>{
             try {
                 const {first_name, last_name, age} = req.body;
-                const user = await userService.getByEmail(username);
+                const user = await UserService.getByEmail(username);
                 if(user){
                     return done(null );
                 }
@@ -27,7 +25,7 @@ export const initializePassport = () => {
                     email: username,
                     password: createHash(password)
                 }
-                const userCreated = await userService.saveUsers(newUser);
+                const userCreated = await UserService.saveUser(newUser);
                 return done(null, userCreated)
 
             } catch (error) {
@@ -42,7 +40,7 @@ export const initializePassport = () => {
         },
         async(username, password, done)=> {
             try {
-                const user = await userService.getByEmail(username)
+                const user = await UserService.getByEmail(username)
                 if(!user) {
                     return done(null, false)
                 }
@@ -67,14 +65,14 @@ export const initializePassport = () => {
         async(accesToken, refreshToken, profile, done)=>{
             try {
             console.log('profile', profile);
-            const user = await userService.getByEmail(profile.username);
+            const user = await UserService.getByEmail(profile.username);
             if(!user){
                 const newUser = {
                     first_name:'',
                     email: profile.username,
                     password: createHash(profile.id)
                 };
-                const userCreated = userService.saveUsers(newUser)
+                const userCreated = UserService.saveUser(newUser)
                 return done(null, userCreated)
             } else { 
                 return done(null, user)
@@ -92,7 +90,7 @@ export const initializePassport = () => {
     })
 
     passport.deserializeUser(async(id, done)=> {
-        const user = await userService.getUserById(id)
+        const user = await UserService.getUserById(id)
         done(null, user); /* req.user */
     });
 
