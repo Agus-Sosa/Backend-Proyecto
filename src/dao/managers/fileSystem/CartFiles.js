@@ -4,7 +4,7 @@ import __dirname from '../../../utils.js';
 const dataJsonCart = path.join(__dirname, 'data', 'carts.json')
 
 
-class CartFiles{
+export class CartFiles{
 
     constructor () {
         this.path = dataJsonCart
@@ -119,7 +119,21 @@ class CartFiles{
             console.error('Error al guardar los datos del carrito:', error);
             }
         };
+
+
+        deleteProductFromCart =(cid, pid)=> {
+            const cart = this.getCartById(cid)
+            const productIndex = cart.products.findIndex(item => item.product === pid)
+            if(productIndex === -1){
+                throw new Error(`Producto ${pid} no encontrado en el carrito`)
+            }
+            
+            cart.producs.splice(productIndex, 1)
+            fs.writeFileSync(this.path, JSON.stringify(cart, null, 2), 'utf-8')
+
+            return cart
+        
+        }
 }
 
 
-export default CartFiles;

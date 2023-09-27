@@ -1,6 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@1,300&display=swap');
 
 
+.container-messages_alerts {
+    display: flex;
+    justify-content: center;
+    & h4 {
+        margin: 0px ;
+    }
+}
+
+
 .container-form {
     width: 400px;
     height: 500px;
@@ -50,3 +59,5 @@ form {
         }
 
     }
+
+

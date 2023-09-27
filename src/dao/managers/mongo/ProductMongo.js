@@ -1,12 +1,12 @@
 import Product from "../../models/productsModel.js";
 class ProductMongo {
     constructor() {
-    
+    this.model = Product;
     }
 
-    async getAllProducts () {
+    async getProducts () {
         try {
-            const product = await Product.find().lean();
+            const product = await this.model.find().lean();
             return product;
         } catch(error) {
             throw new Error(`Error al obtener todos los productos ${error}`)
@@ -16,7 +16,7 @@ class ProductMongo {
 
     async addNewProducts (newProduct) {
         try {
-            const productAdd = new Product(newProduct)
+            const productAdd = new this.model(newProduct)
             return await productAdd.save();
         } catch (error) {
             throw new Error(`Error al guardar el producto ${error.message}`)
@@ -25,7 +25,7 @@ class ProductMongo {
 
     async deleteProduct(productId) {
         try {   
-            return await Product.findByIdAndDelete(productId)
+            return await this.model.findByIdAndDelete(productId)
         } catch (error) {
             throw new Error(`Error al eliminar el producto ${productId} ${error.message}`)
         }
@@ -34,7 +34,7 @@ class ProductMongo {
 
     async getProductById (productId){
         try {
-            const products = await Product.findById(productId)
+            const products = await this.model.findById(productId)
             return products;
         } catch (error) {
             throw new Error("Error al obtener los productos por ID", error.message)
@@ -44,7 +44,7 @@ class ProductMongo {
 
     async getProductPerPage (query, options) {
         try {
-            const product = await Product.paginate(query, options);
+            const product = await this.model.paginate(query, options);
             return product;
         } catch (error) {
             throw error

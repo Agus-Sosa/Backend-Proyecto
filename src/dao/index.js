@@ -1,12 +1,65 @@
-import { UsersMongo } from "./managers/mongo/UserMongo.js";
-import { ProductMongo } from "./managers/mongo/ProductMongo.js";
-import { CartMongo } from "./managers/mongo/CartMongo.js";
-import { MessageMongo } from "./managers/mongo/MessageMongo.js";
+import { config } from "../config/config.js";
+import { connectDb } from "../config/dbConnection.js";
 
 
+// Guardamos en una variable el valor de la persistencia
+const PERSISTENCE = config.server.persistence;
 
-// Creamos la instancia y la pasamos a una variable
-export const userDao = new UsersMongo();
-export const productDao = new ProductMongo();
-export const cartDao = new CartMongo();
-export const messageDao = new MessageMongo()
+
+// Declaramos variables sin valor para que luego tomen el valor de alguna base de dato
+let productDao;
+let userDao;
+let cartDao;
+let messageDao;
+
+// Defino constantes para las persistencias para no tener ningun error
+const PERSISTENCE_TYPES = {
+    MONGO: 'MONGO',
+    FILESYSTEM: 'FILESYSTEM',
+    MEMORY: 'MEMORY'
+};
+
+
+// Switch para verificar y cambiar entre bases de datos de forma mas efectiva
+switch (PERSISTENCE) {
+
+    case PERSISTENCE_TYPES.MONGO:    
+
+        // Importamos la conexion a la base de datos para que se conecte cuando usamos mongo como persistencia
+        connectDb();
+
+        const {ProductMongo} = await import('./managers/mongo/ProductMongo.js');
+        productDao = new ProductMongo();
+
+        const {UsersMongo} = await import('./managers/mongo/UserMongo.js');
+        userDao = new UsersMongo();
+
+        const {CartMongo} = await import('./managers/mongo/CartMongo.js');
+        cartDao = new CartMongo();
+
+        const{MessageMongo} = await import('./managers/mongo/MessageMongo.js');
+        messageDao = new MessageMongo();
+
+        break;  
+
+    case PERSISTENCE_TYPES.FILESYSTEM:
+
+    console.log('*** BASE DE DATOS FILESYSTEM CONECTADO ***');
+    
+    const {CartFiles} = await import('./managers/fileSystem/CartFiles.js');
+    cartDao = new CartFiles();
+
+    
+    break;
+
+    case PERSISTENCE_TYPES.MEMORY:
+
+    console.log('***BASE DE DATOS MEMORY CONECTADO ***');
+
+    break;
+
+    default:
+        break;
+}
+
+export {userDao, productDao, messageDao, cartDao};

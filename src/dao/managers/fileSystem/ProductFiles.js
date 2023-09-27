@@ -3,7 +3,7 @@ import path from 'path'
 import __dirname from '../../../utils.js'
 const dataJson = path.join( __dirname, 'data', 'products.json')
 
-class ProductFiles {
+export class ProductFiles {
     constructor () {
         this.path = dataJson
         try{
@@ -36,7 +36,7 @@ class ProductFiles {
 
 
     // Agregar un nuevo producto
-    addProducts = (newProduct) => {
+    addNewProducts = (newProduct) => {
 
         if (!newProduct.title || !newProduct.description || !newProduct.price || !newProduct.code || !newProduct.stock || !newProduct.category) {
             throw new Error('Completar todos los campos')
@@ -135,7 +135,6 @@ class ProductFiles {
 }
 
 
-export default ProductFiles;
 
 
 

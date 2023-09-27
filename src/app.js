@@ -6,7 +6,6 @@ import {productRouter} from './routes/product.routes.js';
 import {cartRouter} from './routes/carts.routes.js';
 import { viewRouter } from './routes/view.routes.js';
 import { config } from './config/config.js';
-import { connectDb } from './config/dbConnection.js';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import { sessionsRouter } from './routes/sessions.routes.js';
@@ -17,12 +16,7 @@ import { MessageService } from './Services/messages.service.js';
 
 // genera los datos para crear el servidor
 const app = express()
-const port = config.server.port;
-
-
-// Conexion a la base de datos
-connectDb();
-
+const PORT = config.server.port;
 
 // Configurar express para que pueda entender los datos json y formulario
 app.use(express.json());
@@ -62,7 +56,7 @@ app.use('/api/sessions', sessionsRouter)
 
 
 // Configurar servidor
-const httpServer = app.listen(port, ()=> console.log(`Server Up ${port}`));
+const httpServer = app.listen(PORT, ()=> console.log(`Server Up ${PORT}`));
 const io = new Server(httpServer)
 
 // Configurar socket del lado del servidor

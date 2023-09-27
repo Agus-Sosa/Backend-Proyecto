@@ -4,9 +4,14 @@ import Product from "../../models/productsModel.js";
 
 class CartMongo {
 
+    constructor (){
+        this.modelCart = Cart;
+        this.modelProduct = Product
+    }
+
     async createCart () {
         try {
-            const newCart = new Cart({products: []})
+            const newCart = new this.modelCart({products: []})
             const savedCart = await newCart.save();
             return savedCart;
         } catch (error) {
@@ -17,10 +22,10 @@ class CartMongo {
     async addProductToCart (idCart, idProduct) {
         try {
 
-            const cart = await Cart.findById(idCart)
+            const cart = await this.modelCart.findById(idCart)
             if(!cart) throw new Error(`Carrito ${idCart} no encontrado`)
 
-            const product = await Product.findById(idProduct)
+            const product = await this.modelProduct.findById(idProduct)
             if(!product) throw new Error(`Producto ${idProduct} no encontrado `)
 
             const existignProductIndex = cart.products.findIndex(item=> item.product.equals(idProduct))
@@ -45,7 +50,7 @@ class CartMongo {
     async getCartById (idCart){
 
         try {
-            const cart = await Cart.findById(idCart)
+            const cart = await this.modelCart.findById(idCart)
 
             if(cart){
             const mongoProduct = cart.products = cart.products.map(item=> ({
@@ -82,7 +87,7 @@ class CartMongo {
     async deleteCart (idCart) {
 
         try {
-            const cartDelete = await Cart.findByIdAndDelete(idCart)
+            const cartDelete = await this.modelCart.findByIdAndDelete(idCart)
             return cartDelete;
         } catch (error) {
             throw new Error(`No se puede eliminar el carrito ${error.message}`)
@@ -95,7 +100,7 @@ class CartMongo {
 
         try {
 
-            const cart = await Cart.findById(cid)
+            const cart = await this.modelCart.findById(cid)
             if(!cart) {
                 throw new Error(`Carrito ${cart} no encontrado`)
             }
@@ -117,7 +122,7 @@ class CartMongo {
 
     async deleteAllProducts (cid) {
         try {
-            const cart = await Cart.findById(cid)
+            const cart = await this.modelCart.findById(cid)
             if(!cart) {
                 throw new Error(`El carrito ${cid} no existe`)
             }
@@ -134,7 +139,7 @@ class CartMongo {
 
     async updateProductQuantityInCart(cartId, productId, newQuantity) {
         try {
-            const cart = await Cart.findById(cartId);
+            const cart = await this.modelCart.findById(cartId);
             if (!cart) {
                 throw new Error(`El carrito ${cartId} no existe`);
             }
@@ -155,7 +160,7 @@ class CartMongo {
     async updateCart(cartid, updateProductsCart){
         try {
 
-            const cart = await Cart.findById(cartid);
+            const cart = await this.modelCart.findById(cartid);
             if(!cart) {
                 throw new Error(`El carrito ${cartid} no existe`);
             }

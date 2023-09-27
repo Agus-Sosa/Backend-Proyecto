@@ -1,4 +1,4 @@
-
+import { isAdmin, isUser } from "./authUtils.js";
 
     // No permite acceder al apartado de products si no se inicio sesion
 export const requireLogin = (req, res, next) => {
@@ -18,3 +18,24 @@ export const checkLogin = (req, res, next) =>  {
         next();
     }
 }
+
+
+export const authUser = (req, res, next) => {
+    if(isAdmin(req)){ 
+        next();
+    } else {
+        return res.status(401).send('Usuario no autorizado');
+
+    }
+
+    next();
+}
+
+
+export const isUserAuth = (req, res, next) => {
+    if(isUser(req)){
+        next();
+    }else {
+        res.status(403).send('Acceso denegado');
+    };
+};

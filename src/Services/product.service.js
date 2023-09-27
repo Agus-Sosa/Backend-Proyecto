@@ -6,7 +6,7 @@ export class ProductService {
 
     
     static async getProducts(){
-        return await productDao.getAllProducts();
+        return await productDao.getProducts();
     }
 
     

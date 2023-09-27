@@ -10,6 +10,12 @@ const userSchema = new mongoose.Schema({
         type: String
     },
 
+
+    fullName: {
+        type: String,
+        
+    },
+
     email: {
         type: String,
         required: true,
@@ -38,6 +44,7 @@ const userSchema = new mongoose.Schema({
     },
 
 
+    
     
 },   
     {

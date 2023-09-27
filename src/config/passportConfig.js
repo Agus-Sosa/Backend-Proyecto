@@ -4,6 +4,7 @@ import { createHash, isValidPassword } from "../utils.js";
 import githubStrategy from 'passport-github2' 
 import { config } from "./config.js";
 import { UserService } from "../Services/users.service.js";
+import { ContactDto } from "../dao/dto/contact.dto.js";
 
 export const initializePassport = () => {
     passport.use('registerStrategy', new LocalStrategy(
@@ -18,12 +19,20 @@ export const initializePassport = () => {
                 if(user){
                     return done(null );
                 }
+
+                const contactDto = new ContactDto({
+                    first_name: first_name,
+                    last_name:last_name,
+                    email: username,
+                })
+
                 const newUser = {
                     first_name: first_name,
                     last_name: last_name,
                     age: age,
                     email: username,
-                    password: createHash(password)
+                    password: createHash(password),
+                    fullName: contactDto.fullName,
                 }
                 const userCreated = await UserService.saveUser(newUser);
                 return done(null, userCreated)
@@ -64,15 +73,22 @@ export const initializePassport = () => {
         },
         async(accesToken, refreshToken, profile, done)=>{
             try {
-            console.log('profile', profile);
             const user = await UserService.getByEmail(profile.username);
             if(!user){
-                const newUser = {
-                    first_name:'',
+
+                const contactDto = new ContactDto({
+                    first_name: profile.displayName || '',
+                    last_name: '',
                     email: profile.username,
-                    password: createHash(profile.id)
+                })
+
+                const newUser = {
+                    first_name:contactDto.first_name,
+                    email: profile.username,
+                    password: createHash(profile.id),
+                    fullName: contactDto.fullName,
                 };
-                const userCreated = UserService.saveUser(newUser)
+                const userCreated = await UserService.saveUser(newUser)
                 return done(null, userCreated)
             } else { 
                 return done(null, user)

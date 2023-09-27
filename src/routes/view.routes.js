@@ -1,5 +1,5 @@
 import { Router  } from "express";
-import { requireLogin, checkLogin } from "../authentication/auth.js";
+import { requireLogin, checkLogin, isUserAuth } from "../authentication/auth.js";
 import { ViewController } from "../controllers/views.controller.js";
 
 
@@ -31,6 +31,6 @@ router.get('/product/:productId', ViewController.renderProductsDetails)
 router.get('/carts', ViewController.renderCart)
 router.get('/carts/:cid', ViewController.renderCartId)
 router.get('/current', ViewController.renderCurrent)
-router.get('/chat', ViewController.renderChat)
+router.get('/chat', isUserAuth,ViewController.renderChat)
 
 export {router as viewRouter}

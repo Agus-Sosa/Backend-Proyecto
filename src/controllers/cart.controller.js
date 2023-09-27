@@ -31,7 +31,8 @@ export class CartController {
             const newCart =  await CartService.createCart();
             res.status(201).json({
                 status: 'Success',
-                idCart: newCart._id})
+                message: 'Carrito creado correctamente'
+            })
     
         } catch (error) {
             if(error instanceof Error) {
