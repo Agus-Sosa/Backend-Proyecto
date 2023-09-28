@@ -1,5 +1,5 @@
 import { Router  } from "express";
-import { requireLogin, checkLogin, isUserAuth } from "../authentication/auth.js";
+import { requireLogin, checkLogin, isUserAuth,isAdminAuth } from "../authentication/auth.js";
 import { ViewController } from "../controllers/views.controller.js";
 
 
@@ -25,11 +25,10 @@ const router = Router()
 router.get('/register',checkLogin, ViewController.renderRegister)
 router.get('/login', checkLogin, ViewController.renderLogin)
 router.get('/home', ViewController.renderHome)
-router.get('/realTimeProducts', ViewController.renderRealTime)
-router.get('/products', requireLogin, ViewController.renderProducts)
-router.get('/product/:productId', ViewController.renderProductsDetails)
-router.get('/carts', ViewController.renderCart)
-router.get('/carts/:cid', ViewController.renderCartId)
+router.get('/realTimeProducts',isAdminAuth, ViewController.renderRealTime)
+router.get('/products', requireLogin, isUserAuth,ViewController.renderProducts)
+router.get('/product/:productId', isUserAuth,ViewController.renderProductsDetails)
+router.get('/carts', ViewController.renderCartId)
 router.get('/current', ViewController.renderCurrent)
 router.get('/chat', isUserAuth,ViewController.renderChat)
 

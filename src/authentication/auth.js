@@ -20,7 +20,7 @@ export const checkLogin = (req, res, next) =>  {
 }
 
 
-export const authUser = (req, res, next) => {
+export const isAdminAuth = (req, res, next) => {
     if(isAdmin(req)){ 
         next();
     } else {
@@ -28,7 +28,6 @@ export const authUser = (req, res, next) => {
 
     }
 
-    next();
 }
 
 

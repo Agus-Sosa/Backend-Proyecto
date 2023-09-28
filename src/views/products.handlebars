@@ -10,6 +10,7 @@
 </div>
 
 
+
 <section class="container">
     {{#if resultProductsViews.payload}}
     <h1>Productos</h1>
@@ -24,13 +25,14 @@
             <h5>{{this.title}}</h5>
             <p>Categoria: {{this.category}}</p>
             <p>${{this.price}}</p>
-            <button type="button" onclick="addToCart('{{this._id}}')">Agregar al carrito</button>
-            <a href="/product/{{this._id}}">Ver producto</a>
-
+            <button type="button" id="addToCartBtn" onclick="addToCart('{{this._id}}');">Agregar al carrito</button>
+                <a href="/product/{{this._id}}">Ver producto</a>
         </div>
     </section>
     
     {{/each}}
+
+
 
     {{#if resultProductsViews.hasPrevPage}}
     <a href="{{resultProductsViews.prevLink}}">Antras</a>
@@ -46,4 +48,18 @@
 </section>
 
 <script src="/js/logoutSession.js"></script>
-<script src="/js/products.js"></script>
+<script>
+    function addToCart(idProduct) {
+        const cartId = '{{userCartId}}';
+
+        fetch(`http://localhost:8080/api/carts/${cartId}/products/${idProduct}/`,  {
+            method: 'post'
+        }).then(response => response.json())
+        .then(data=> {
+            console.log('Producto agregado correctamente', data);
+        })
+        .catch(error => {
+            console.log(`Error al agregar el producto ${idProduct} al carrito ${cartId} ${error}`);
+        });
+    }
+</script>
