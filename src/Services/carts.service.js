@@ -34,4 +34,8 @@ export class CartService {
     static async updateCart(idCart, updateProductsCart){
         return await cartDao.updateCart(idCart, updateProductsCart)
     }
+
+    static async clearCart (idcart){
+        return await cartDao.clearCart(idcart);
+    }
 }

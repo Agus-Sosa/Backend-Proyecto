@@ -106,6 +106,12 @@ class CartMongo {
             }
 
             const productIndex =  cart.products.findIndex(item => item.product.equals(pid));
+
+            console.log('recibiendo id', pid)
+            console.log('recibiendo id de cart', cid)
+
+            // const productIndex = cart.products.findIndex(itsem => item.product === pid);
+
             if(productIndex === -1){
                 throw new Error(`Producto ${pid} no encontrado en el carrito`)
             }
@@ -174,6 +180,24 @@ class CartMongo {
         }
     }
 
+
+    async clearCart (cartId) {
+        try {
+            const cart = await this.modelCart.findById(cartId);
+            if(!cart){
+                throw new Error(`El carrito con id ${cartId} no existe`);
+            }
+
+            cart.products = [];
+
+
+            await cart.save();
+            
+            return true;
+        } catch (error) {
+            throw error;
+        }
+    }
 
 }
 

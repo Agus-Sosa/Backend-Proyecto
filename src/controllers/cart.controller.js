@@ -102,9 +102,7 @@ export class CartController {
             const cid = req.params.cid
             const pid = req.params.pid
             const quantity = parseInt(req.body.quantity);  
-    
             const updateProductCart = await CartService.updateProductQuantityInCart(cid, pid, quantity)
-    
             res.status(200).json({message: `Producto ${pid} actualizado correctamente`, updateProductCart})
         } catch (error) {
             if(error instanceof Error) {
@@ -133,5 +131,19 @@ export class CartController {
             }
         }
     }
+
+
+    static async purchaseCart (req, res){
+        try {
+            
+        } catch (error) {
+            if(error instanceof Error){
+                res.status(404).json({error: error.message})
+            } else {
+                res.status(500).json({error: 'Error al hacer la compra'})
+            }
+        }
+    }
+
 
 }

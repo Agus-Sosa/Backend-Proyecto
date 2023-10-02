@@ -11,6 +11,7 @@ let productDao;
 let userDao;
 let cartDao;
 let messageDao;
+let ticketDao
 
 // Defino constantes para las persistencias para no tener ningun error
 const PERSISTENCE_TYPES = {
@@ -40,6 +41,10 @@ switch (PERSISTENCE) {
         const{MessageMongo} = await import('./managers/mongo/MessageMongo.js');
         messageDao = new MessageMongo();
 
+
+        const {TicketsMongo} = await import('./managers/mongo/ticketsMongo.js');
+        ticketDao = new TicketsMongo();
+
         break;  
 
     case PERSISTENCE_TYPES.FILESYSTEM:
@@ -62,4 +67,4 @@ switch (PERSISTENCE) {
         break;
 }
 
-export {userDao, productDao, messageDao, cartDao};
+export {userDao, productDao, messageDao, cartDao, ticketDao};
