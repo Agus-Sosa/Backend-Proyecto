@@ -1,7 +1,7 @@
+import { v4 as uuidv4 } from 'uuid';
 import { TicketsService } from "../Services/tickets.service.js"; 
 import { CartService } from "../Services/carts.service.js";
 import { ProductService } from "../Services/product.service.js";
-import { UserService } from "../Services/users.service.js";
 
 
 export class ticketController {
@@ -15,35 +15,39 @@ export class ticketController {
             const productsOutOfStock = [];
 
 
+
             for(const productInCart of productsInCart) {
                 const productId = productInCart.product;
                 const quantity = productInCart.quantity;
-                console.log('prodID',productId)
-                console.log('quantity', quantity)
+                
                 const product = await ProductService.getProductId(productId);
-
                 if(!product){
                     return res.status(404).json({error: `El producto con ID ${productId} no existe`})
                 }
-                console.log('product',product)
                 if(product.stock > 0 && product.stock >= quantity){
                     productsProcessed.push(productId);
                     product.stock -= quantity;
                     await product.save();
+                
                 } else {
                     productsOutOfStock.push(productId);
                 }
             }
 
-            console.log('processed',productsProcessed)
-            console.log('outofstock', productsOutOfStock)
-
-            const amount = productsProcessed.reduce((total, products) => total + (productsProcessed.quantity * products.price), 0);
+            
 
 
-
-            for(const productId of productsProcessed){
-                console.log(productId)
+            const totalPrice =await productsProcessed.reduce(async (total, productId) => {
+                const productInCart = productsInCart.find(p => p.product === productId);
+                const product = await ProductService.getProductId(productId);
+                
+                if (productInCart && product) {
+                    return total + (productInCart.quantity * product.price);
+                } else {
+                    return total;
+                }
+            }, 0);
+                for(const productId of productsProcessed){
                 await CartService.deleteProductFromCart(cartId, productId._id || productId);
             }
 
@@ -51,22 +55,25 @@ export class ticketController {
                 await CartService.addProductToCart(cartId, productId._id);
             }
 
-            
-
-            const purchaser = req.user ? req.user.email : 'Usuario no autenticado';
-            console.log(amount)
+            const purchaserUser = req.user.email;
 
 
             const newTicket = {
-                amount:amount,
-                purchaser: 'agus',
+                amount: totalPrice,
+                purchaser: purchaserUser,
             };
 
-            const ticket =  await TicketsService.createTicket(newTicket);
+            const ticket = await TicketsService.createTicket(newTicket)
 
-            return res.status(200).json({message:'Compra finalizada correctamente.',ticket: ticket._id});
+            const  ticketProcessed = {
+                code: ticket.code,
+                purchase_datetime: ticket.purchase_datetime,
+                amount: totalPrice,
+                purchaser: purchaserUser
+            }
+
+            return res.status(200).json({message:'Compra finalizada correctamente.',ticket: ticketProcessed});
         } catch (error) {
-            console.log(error)
             res.status(404).json({error: `Error al finalizar la compra: ${error.message}`});
         }
 

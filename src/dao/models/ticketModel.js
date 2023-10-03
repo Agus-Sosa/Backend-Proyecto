@@ -2,23 +2,23 @@ import mongoose from "mongoose";
 import { tickeCollection } from "../managers/mongo/constants/constants.js";
 import { v4 as uuidv4 } from "uuid";
 
+
 const ticketSchema = new mongoose.Schema({
-    code: {
-        type: String,
-        default: uuidv4(),
-        required: true,
-        
+    code:{
+        type:String,
+        default: uuidv4,
+        required:true
     },
-    purchase_datetime: {
-        type:Date,
+    purchase_datetime:{
+        type: Date,
         default: Date.now
     },
-    amount: {
-        type: Number,
+    amount:{
+        type:Number,
+        default:10,
+        required:true
     },
-    purchaser: {
-        type:String,
-    },
+    purchaser:String,
 });
 
 const Ticket = mongoose.model(tickeCollection, ticketSchema);

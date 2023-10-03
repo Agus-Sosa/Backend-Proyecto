@@ -35,7 +35,7 @@ export class ViewController {
             const productsMongo = await ProductService.getProducts()
             res.render('realTimeProducts', {productsMongo, style: 'realTime.css'})
         } catch (error) {
-            res.status().send('Error al obtener los datos')
+            res.status(404).send('Error al obtener los datos')
         }
     }
 
@@ -123,7 +123,7 @@ export class ViewController {
     
             res.render('carts', {productInCart, style: 'cartsProducts.css'})
         } catch (error) {
-            res.status(500).send('Error al obtener el carrito', error.message)
+            res.status(500).send(error.message)
         }
     }
 
