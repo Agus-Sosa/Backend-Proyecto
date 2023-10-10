@@ -1,6 +1,9 @@
 import { CartService } from "../Services/carts.service.js";
+import { CustomError } from "../Services/error/CustomError.service.js";
+import { createProductErrorMsg } from "../Services/error/createProductError.service.js";
 import { ProductService } from "../Services/product.service.js";
 import { logger } from "../config/logger.js";
+import { EError } from "../enums/EError.js";
 
 export class ViewController {
 
@@ -45,7 +48,17 @@ export class ViewController {
             res.render('realTimeProducts', {productsMongo, style: 'realTime.css'})
         } catch (error) {
             logger.error(`Error al mostrar los productos o crear un producto ${error}`)
-            res.status(404).send('Error al obtener los datos')
+
+            const customError = CustomError.createError({
+                name: 'createNewProduct',
+                cause: createProductErrorMsg(),
+                message: 'Nos se pudo crear el producto',
+                errorCode: EError.INVALID_JSON,
+            })
+            res.status(404).json({
+                status:'error',
+                error: customError
+            })
         }
     }
 

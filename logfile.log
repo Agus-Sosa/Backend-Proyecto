@@ -6,3 +6,5 @@
 {"level":"info","message":"Acceso a la pagina actual por el user agus@gmail.com"}
 {"level":"info","message":"Obteniendo los productos y el email del usuario"}
 {"level":"info","message":"Renderizando la vista de perfil para el usuario [object Object]"}
+{"level":"info","message":"Obteniendo los productos para la pagina de inicio"}
+{"level":"info","message":"Obteniendo los productos en tiempo real"}

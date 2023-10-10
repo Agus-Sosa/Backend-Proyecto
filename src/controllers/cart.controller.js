@@ -1,5 +1,6 @@
 import { CartService } from "../Services/carts.service.js";
 import { CustomError } from "../Services/error/CustomError.service.js";
+import { addToCartErrorMsg } from "../Services/error/addToCartError.service.js";
 import { logger } from "../config/logger.js";
 import { EError } from "../enums/EError.js";
 
@@ -68,7 +69,7 @@ export class CartController {
         } catch (error) {
             const customError = CustomError.createError({
                 name: 'AddToCartError',
-                cause: 'Error al agregar el producto al carrito',
+                cause: addToCartErrorMsg(),
                 message: 'No se pudo agregar el producto al carrito',
                 errorCode: EError.CART_ERROR
             });
