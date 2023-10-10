@@ -1,4 +1,4 @@
-export class CustomError2 {
+export class CustomError {
     static createError({name, cause, message, errorCode=1}){
         const error = new Error(message,{cause});
         error.name=name;

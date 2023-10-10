@@ -3,7 +3,7 @@ import Product from "../../models/productsModel.js";
 import CustomError from "../../../Services/error/customError.js";
 import { EError } from "../../../enums/EError.js";
 import { addToCartErrorMsg } from "../../../Services/error/addToCartError.service.js";
-import { CustomError2 } from "../../../Services/error/CustomErrorProf.service.js";
+import { CustomError2 } from "../../../Services/error/CustomError.service.js";
 
 class CartMongo {
 
