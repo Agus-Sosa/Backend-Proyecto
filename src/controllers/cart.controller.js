@@ -74,7 +74,7 @@ export class CartController {
             });
             res.status(404).json({
                 status: 'error',
-                error: customError.cause
+                error: customError
             })
         }
     }

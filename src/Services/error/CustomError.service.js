@@ -1,9 +1,9 @@
 export class CustomError {
-    static createError({name, cause, message, errorCode=1}){
-        const error = new Error(message,{cause});
+    static createError({name, cause, message, errorCode}){
+        const error = new Error(message);
         error.name=name;
         error.code=errorCode;
-        console.log('error generado: ', error.cause);
-        throw error;
+        error.cause=cause
+        return error;
     }
 }
