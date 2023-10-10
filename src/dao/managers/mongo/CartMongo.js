@@ -1,6 +1,9 @@
 import Cart from "../../models/cartModel.js";
 import Product from "../../models/productsModel.js";
-
+import CustomError from "../../../Services/error/customError.js";
+import { EError } from "../../../enums/EError.js";
+import { addToCartErrorMsg } from "../../../Services/error/addToCartError.service.js";
+import { CustomError2 } from "../../../Services/error/CustomErrorProf.service.js";
 
 class CartMongo {
 
@@ -46,6 +49,36 @@ class CartMongo {
         }
     }
 
+    // async addProductToCart(idCart, idProduct) {
+    //     try {
+    //       const cart = await this.modelCart.findById(idCart);
+    //       if (!cart) {
+    //      CustomError2.createError({
+    //             name:"error cart",
+    //             cause: addToCartErrorMsg(),
+    //             message: 'Carrito no encontrado',
+    //             errorCode: EError.CART_ERROR
+    //         })
+    //       }
+    
+    //       const product = await this.modelProduct.findById(idProduct);
+    //       if (!product) {
+    //      const customError=  CustomError2.createError({
+    //             name:'error cart',
+    //             cause: addToCartErrorMsg(),
+    //             message:'producto no encontrado',
+    //             errorCode: EError.CART_ERROR
+    //         })
+    //         console.log(customError)
+    //       }
+    
+    //       // Resto de tu lógica para agregar el producto al carrito...
+    
+    //       return cart;
+    //     } catch (error) {
+    //         throw error
+    //     }
+    //   }
 
     async getCartById (idCart){
 

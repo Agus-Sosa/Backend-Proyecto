@@ -1,4 +1,8 @@
 import { CartService } from "../Services/carts.service.js";
+import { CustomError2 } from "../Services/error/CustomErrorProf.service.js";
+import { logger } from "../config/logger.js";
+
+
 export class CartController {
 
     // Metodo para obtener el carrito
@@ -51,6 +55,9 @@ export class CartController {
             const pid = req.params.pid
             const updateCart = await CartService.addProductToCart(cid, pid)
     
+            logger.info(`Producto agregado correctamented`, {cart:updateCart})
+
+
             res.status(200).json({
                 status: 'Success',
                 message: 'Producto agregado al carrito correctamente',
@@ -58,13 +65,14 @@ export class CartController {
             })
     
         } catch (error) {
-            if(error instanceof Error){
-                res.status(404).json({error: error.message})
-            } else {
-                res.status(500).json({error: 'Error al agregar el producto'})
-            }
+            // Aquí manejamos los errores generados por CustomError2
+            CustomError2.createError({
+                name: 'Error create'
+            })
         }
     }
+
+       
 
     static async removeProductFromCart(req, res){
         try {

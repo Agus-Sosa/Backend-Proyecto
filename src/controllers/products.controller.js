@@ -1,3 +1,4 @@
+import { faker } from "@faker-js/faker";
 import { ProductService } from "../Services/product.service.js";
 
 export class ProductsController {
@@ -51,6 +52,36 @@ export class ProductsController {
             }
         }
     }
+    
+
+    static async generateMockingProducts(req,res){
+        try {
+
+            const mockProducts = [];
+
+            for(let i = 0; i < 100; i++){
+                const product ={
+                        _id: faker.database.mongodbObjectId(),
+                        title: faker.commerce.productName(),
+                        description: faker.lorem.sentence(),
+                        price: parseFloat(faker.commerce.price()),
+                        thumbnails: faker.image.dataUri,
+                        code: faker.string.alphanumeric(4),
+                        stock:Math.floor(Math.random() *100) + 1,
+                        status: faker.datatype.boolean,
+                        category: faker.commerce.department,
+                }
+                
+                mockProducts.push(product);
+            }
+            res.status(200).json({status:'Succes', products: mockProducts})
+
+            
+            
+        } catch (error) {
+            res.status(501).send('Error al crear los productos')
+        }
+    } 
 
 
 

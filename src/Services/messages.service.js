@@ -1,4 +1,4 @@
-import { messageDao } from "../dao/index.js"
+import { messageDao } from "../dao/factory.js"
 export class MessageService {
 
     static getAllMessagesChat (){

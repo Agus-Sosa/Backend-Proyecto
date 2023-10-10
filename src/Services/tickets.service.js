@@ -1,4 +1,4 @@
-import { ticketDao } from "../dao/index.js"
+import { ticketDao } from "../dao/factory.js"
 
 export class TicketsService {
     static async createTicket (){

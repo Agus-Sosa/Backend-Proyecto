@@ -1,12 +1,13 @@
-import { v4 as uuidv4 } from 'uuid';
 import { TicketsService } from "../Services/tickets.service.js"; 
 import { CartService } from "../Services/carts.service.js";
 import { ProductService } from "../Services/product.service.js";
+import { logger } from "../config/logger.js";
 
 
 export class ticketController {
     static async createTicket(req, res){
         try {
+            logger.info('Creando ticket para la compra')
             const cartId = req.params.cid;
             const cart= await CartService.getCartById(cartId);
             const productsInCart = cart.products;
@@ -74,6 +75,7 @@ export class ticketController {
 
             return res.status(200).json({message:'Compra finalizada correctamente.',ticket: ticketProcessed});
         } catch (error) {
+            logger.error(`Error al crear el ticket ${error}`)
             res.status(404).json({error: `Error al finalizar la compra: ${error.message}`});
         }
 

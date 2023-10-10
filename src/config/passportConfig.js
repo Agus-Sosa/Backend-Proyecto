@@ -6,6 +6,7 @@ import { config } from "./config.js";
 import { UserService } from "../Services/users.service.js";
 import { ContactDto } from "../dao/dto/contact.dto.js";
 
+
 export const initializePassport = () => {
     passport.use('registerStrategy', new LocalStrategy(
         {
@@ -53,6 +54,7 @@ export const initializePassport = () => {
                 if(!user) {
                     return done(null, false)
                 }
+                
                 if(isValidPassword(user, password)){
                     return done(null, user);
                 } else {

@@ -1,30 +1,38 @@
 import { CartService } from "../Services/carts.service.js";
 import { ProductService } from "../Services/product.service.js";
+import { logger } from "../config/logger.js";
 
 export class ViewController {
 
 
     static  renderRegister (req,res) {
         try {
-            res.render('register', {style: 'register.css'})
+            logger.info('Pagina de registro renderizada');
+            res.render('register', {style: 'register.css'});
         } catch (error) {
-            res.status(404).render('register', {error: error.menssage, style: 'register.css'})
+            logger.error(`Error al renderizar la pagina de registro ${error}`);
+            res.status(404).render('register', {error: error.menssage, style: 'register.css'});
         }
     }
 
     static renderLogin (req, res) {
         try {
+
+            logger.info('Pagina de registro renderizado');
             res.render('login', {style: 'login.css'})
         } catch (error) {
+            logger.error(`Error al renderizar la pagina de logeo ${error}`)
             res.status(404).render('login', {error: error.message, style: 'login.css'})
         }
     }
 
     static async renderHome (req, res){
         try {
+            logger.info('Obteniendo los productos para la pagina de inicio')
             const productsMongo = await ProductService.getProducts();
             res.render('home', {productsMongo, style: 'home.css'})
         } catch (error) {
+            logger.error(`Error al renderizar la pagina de home ${error}`)
             res.status(500).send('Error al obtener todos los productos')
         }
     }
@@ -32,15 +40,20 @@ export class ViewController {
 
     static async renderRealTime (req, res){
         try {
+            logger.info('Obteniendo los productos en tiempo real')
             const productsMongo = await ProductService.getProducts()
             res.render('realTimeProducts', {productsMongo, style: 'realTime.css'})
         } catch (error) {
+            logger.error(`Error al mostrar los productos o crear un producto ${error}`)
             res.status(404).send('Error al obtener los datos')
         }
     }
 
     static async renderProducts (req, res){
         try {
+
+            logger.info('Obteniendo los productos y el email del usuario')
+
             const user = req.user;
             const userCartId = req.user.cart
 
@@ -84,7 +97,7 @@ export class ViewController {
 
         } catch (error) {
             if(error instanceof Error) {
-                console.log(error)
+                logger.info(`Error al mostrar los productos o el user ${error}`)
                 res.status(404).send(error.message)
             } else {
                 res.status(500).send('Error del servidor al mostrar los productos')
@@ -94,6 +107,7 @@ export class ViewController {
 
     static async renderProductsDetails (req, res){
         try {
+            logger.info('Obtienendo los detalles del producto')
             const productId = req.params.productId
             const userCartId = req.user.cart
             
@@ -110,6 +124,7 @@ export class ViewController {
             }
             res.render('productDetails', {productDetails,userCartId, style: 'productDetails.css'})
         } catch (error) {
+            logger.error(`Error al obtener los detalles del producto ${error}`)
             res.status(404).send(error.message)
         }
     }
@@ -117,12 +132,14 @@ export class ViewController {
 
     static async renderCartId(req, res){
         try {
+            logger.info('Obteniendo los productos en el carrito')
             const cartId = req.user.cart;
             const cart = await CartService.getCartById(cartId);
             const productInCart = cart.products;
     
             res.render('carts', {productInCart, style: 'cartsProducts.css'})
         } catch (error) {
+            logger.error(`Error al renderizar el carrito u obtener los productos del carrito ${error}`)
             res.status(500).send(error.message)
         }
     }
@@ -130,13 +147,17 @@ export class ViewController {
     static renderCurrent (req, res) {
         if(req.isAuthenticated()){
             const user =req.user;
+            logger.info(`Acceso a la pagina actual por el user ${user.email}`)
             res.render('current', {user, style:'current.css'})
         } else {
+
+            logger.info('Redireccion a la pagian de inicio de sesion')
             res.redirect('/login')
         }
     }
 
     static renderChat (req, res){
+        logger.info('Renderizando el chat')
         res.render('chat',{style: 'chat.css'})
     }
 }

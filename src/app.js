@@ -13,6 +13,7 @@ import { initializePassport } from './config/passportConfig.js';
 import passport from 'passport';
 import { ProductService } from './Services/product.service.js';
 import { MessageService } from './Services/messages.service.js';
+import { errorHandler } from './middlewares/errorHandler.js';
 
 // genera los datos para crear el servidor
 const app = express()
@@ -54,14 +55,21 @@ app.use('/api/carts', cartRouter);
 app.use(viewRouter)
 app.use('/api/sessions', sessionsRouter)
 
+app.use(errorHandler);  
+
+
 
 // Configurar servidor
 const httpServer = app.listen(PORT, ()=> console.log(`Server Up ${PORT}`));
 const io = new Server(httpServer)
 
+
+
 // Configurar socket del lado del servidor
 io.on('connection', async(socket)=> {
     console.log(`Cliente nuevo conectado ${socket.id}`)
+
+
 
 // recibe el producto y lo guarda (mongo)
     socket.on('new-product', async(newProduct)=> {
@@ -83,7 +91,7 @@ io.on('connection', async(socket)=> {
         }
     })
     
-
+    
     // obtiene los mensjaes
     try {
         const messageData2 =  await MessageService.getAllMessagesChat()
@@ -106,6 +114,6 @@ io.on('connection', async(socket)=> {
     
     
     io.emit('mensajeGeneral', 'Este es un mensaje para todos')
-})
+});
 
-
+// middleware para capturar el error y tenes mas control de ello
