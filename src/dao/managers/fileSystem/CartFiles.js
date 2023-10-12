@@ -27,7 +27,6 @@ export class CartFiles{
         try {
             const jsonData = JSON.stringify(this.carts, null, 3)
             fs.writeFileSync(this.path, jsonData, 'utf-8' )
-            console.log('Guardado correctamente en el archivo')
         } catch (error) {
             console.error(`Error al guardar en el archivo : ${error.message}`)
         }
@@ -53,7 +52,6 @@ export class CartFiles{
 
         this.carts.push(newCart)
         this.saveCarts();
-        console.log(`Carrito ${newId} creado correctamente`)
     }
 
 

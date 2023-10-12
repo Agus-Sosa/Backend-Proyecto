@@ -1,6 +1,5 @@
-import { logger } from "../config/logger.js"
-
-
+import { addLogger } from "../helpers/logger.js"
+const logger = addLogger()
 export class SessionsController {
     static redirectLogin=(req, res)=>{
         res.redirect('/login')

@@ -5,9 +5,9 @@
             method: 'post'
         }).then(response => response.json())
         .then(data=> {
-            console.log('Producto agregado correctamente', data)
+            logger.info(`Producto agregado correctamente: ${data}`);
         })
         .catch(error => {
-            console.log(`Error al agregar el producto ${idProduct} al carrito ${cartId} ${error}`)
+            logger.error(`Error al agregar el producto ${idProduct} al carrito ${cartId}: ${error}`);
         })
     };

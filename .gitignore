@@ -2,3 +2,5 @@ informacion.backend.md
 node_modules
 
 .env
+
+logs

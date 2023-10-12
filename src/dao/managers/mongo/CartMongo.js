@@ -46,37 +46,6 @@ class CartMongo {
         }
     }
 
-    // async addProductToCart(idCart, idProduct) {
-    //     try {
-    //       const cart = await this.modelCart.findById(idCart);
-    //       if (!cart) {
-    //      CustomError2.createError({
-    //             name:"error cart",
-    //             cause: addToCartErrorMsg(),
-    //             message: 'Carrito no encontrado',
-    //             errorCode: EError.CART_ERROR
-    //         })
-    //       }
-    
-    //       const product = await this.modelProduct.findById(idProduct);
-    //       if (!product) {
-    //      const customError=  CustomError2.createError({
-    //             name:'error cart',
-    //             cause: addToCartErrorMsg(),
-    //             message:'producto no encontrado',
-    //             errorCode: EError.CART_ERROR
-    //         })
-    //         console.log(customError)
-    //       }
-    
-    //       // Resto de tu lógica para agregar el producto al carrito...
-    
-    //       return cart;
-    //     } catch (error) {
-    //         throw error
-    //     }
-    //   }
-
     async getCartById (idCart){
 
         try {
@@ -137,10 +106,7 @@ class CartMongo {
 
             const productIndex =  cart.products.findIndex(item => item.product.equals(pid));
 
-            console.log('recibiendo id', pid)
-            console.log('recibiendo id de cart', cid)
 
-            // const productIndex = cart.products.findIndex(itsem => item.product === pid);
 
             if(productIndex === -1){
                 throw new Error(`Producto ${pid} no encontrado en el carrito`)

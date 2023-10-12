@@ -5,6 +5,7 @@ import { Server } from 'socket.io';
 import {productRouter} from './routes/product.routes.js';
 import {cartRouter} from './routes/carts.routes.js';
 import { viewRouter } from './routes/view.routes.js';
+import { loggerRouter } from './routes/logger.routes.js';
 import { config } from './config/config.js';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
@@ -14,10 +15,16 @@ import passport from 'passport';
 import { ProductService } from './Services/product.service.js';
 import { MessageService } from './Services/messages.service.js';
 import { errorHandler } from './middlewares/errorHandler.js';
+import { addLogger } from './helpers/logger.js';
+
+
+
 
 // genera los datos para crear el servidor
 const app = express()
 const PORT = config.server.port;
+const logger = addLogger()
+
 
 // Configurar express para que pueda entender los datos json y formulario
 app.use(express.json());
@@ -54,20 +61,21 @@ app.use('/api/products', productRouter);
 app.use('/api/carts', cartRouter);
 app.use(viewRouter)
 app.use('/api/sessions', sessionsRouter)
+app.use('/api/logger', loggerRouter)
 
 app.use(errorHandler);  
 
 
 
 // Configurar servidor
-const httpServer = app.listen(PORT, ()=> console.log(`Server Up ${PORT}`));
+const httpServer = app.listen(PORT, ()=>logger.info(`Server Up ${PORT}`));
 const io = new Server(httpServer)
 
 
 
 // Configurar socket del lado del servidor
 io.on('connection', async(socket)=> {
-    console.log(`Cliente nuevo conectado ${socket.id}`)
+    logger.info(`Cliente nuevo conectado ${socket.id}`)
 
 
 
@@ -77,7 +85,7 @@ io.on('connection', async(socket)=> {
             const newProductCreated = await ProductService.createProduct(newProduct)
             io.emit('product-created', newProductCreated)
         } catch (error) {
-            console.error(`Error al crear el producto ${error}`)
+            logger.error(`Error al crear el producto ${error}`)
         }
     })
 
@@ -87,7 +95,7 @@ io.on('connection', async(socket)=> {
         await ProductService.deletingProduct(productId)
         io.emit('deleting-product', productId)
         } catch (error) {
-            console.error(`Error al eliminar el producto ${error}`)
+            logger.error(`Error al eliminar el producto ${error}`)
         }
     })
     
@@ -97,7 +105,7 @@ io.on('connection', async(socket)=> {
         const messageData2 =  await MessageService.getAllMessagesChat()
         io.emit('messagesLogs', messageData2)
     } catch(error) {
-        console.error('Error al obtener los mensajes')
+        logger.error('Error al obtener los mensajes')
     }
 
     // obtiene los mensajes nuevos de los clientes
@@ -108,7 +116,7 @@ io.on('connection', async(socket)=> {
             const messageData = await MessageService.getAllMessagesChat()
             io.emit('messagesLogs', messageData)
         } catch (error) {
-            console.error('Error al guardar el mensaje')
+            logger.error('Error al guardar el mensaje')
         }
     })
     

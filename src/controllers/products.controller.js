@@ -1,6 +1,8 @@
 import { faker } from "@faker-js/faker";
 import { ProductService } from "../Services/product.service.js";
 
+
+
 export class ProductsController {
 
 
@@ -38,11 +40,7 @@ export class ProductsController {
                 prevLink: result.hasPrevPage ? `${baseUrl.replace(`page=${result.page}`, `page=${result.prevPage}`)}` : null,
                 nextLink: result.hasNextPage ? `${baseUrl.replace(`page=${result.page}`, `page=${result.nextPage}`)}` : null
             }
-    
-            console.log(resultProductsViews)
-                
 
-            
             res.status(200).json(resultProductsViews)
         } catch (error) {
             if(error instanceof Error) {

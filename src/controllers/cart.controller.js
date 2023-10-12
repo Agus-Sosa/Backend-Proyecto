@@ -1,10 +1,10 @@
 import { CartService } from "../Services/carts.service.js";
 import { CustomError } from "../Services/error/CustomError.service.js";
 import { addToCartErrorMsg } from "../Services/error/addToCartError.service.js";
-import { logger } from "../config/logger.js";
 import { EError } from "../enums/EError.js";
+import { addLogger } from "../helpers/logger.js";
 
-
+const logger = addLogger();
 export class CartController {
 
     // Metodo para obtener el carrito

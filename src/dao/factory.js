@@ -8,6 +8,10 @@ import { TicketsMongo } from "./managers/mongo/ticketsMongo.js";
 
 import { CartFiles } from "./managers/fileSystem/CartFiles.js";
 
+import { addLogger } from "../helpers/logger.js";
+
+const logger =addLogger();
+
 // Guardamos en una variable el valor de la persistencia
 const PERSISTENCE = config.server.persistence;
 
@@ -45,12 +49,12 @@ switch (PERSISTENCE) {
         break;  
 
     case PERSISTENCE_TYPES.FILESYSTEM:
-    console.log('*** BASE DE DATOS FILESYSTEM CONECTADO ***');
+    logger.info('*** BASE DE DATOS FILESYSTEM CONECTADO ***');
     cartDao = new CartFiles();
     break;
 
     case PERSISTENCE_TYPES.MEMORY:
-    console.log('***BASE DE DATOS MEMORY CONECTADO ***');
+    logger.info('***BASE DE DATOS MEMORY CONECTADO ***');
 
     break;
 

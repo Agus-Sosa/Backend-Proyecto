@@ -1,8 +1,9 @@
 import { TicketsService } from "../Services/tickets.service.js"; 
 import { CartService } from "../Services/carts.service.js";
 import { ProductService } from "../Services/product.service.js";
-import { logger } from "../config/logger.js";
+import { addLogger } from "../helpers/logger.js";
 
+const logger = addLogger();
 
 export class ticketController {
     static async createTicket(req, res){

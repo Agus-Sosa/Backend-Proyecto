@@ -1,3 +1,6 @@
+import { addLogger } from "../../helpers/logger.js";
+
+const logger = addLogger();
 
 // se conecta el cliente con el servidor
 const socket = io()
@@ -71,7 +74,7 @@ socket.on('deleting-product', (deleteProduct)=> {
     const productElement = document.querySelector(`div[data-id="${deleteProduct}"]`)
     if(productElement) {
         productElement.remove();
-        console.log(`producto ${deleteProduct} eliminado correctamente`)
+        logger.info(`producto ${deleteProduct} eliminado correctamente`)
     }
 })
 
@@ -79,5 +82,5 @@ socket.on('deleting-product', (deleteProduct)=> {
 
 // Se puede ver en la consola del navegador
 socket.on('mensajeGeneral', data => {
-    console.log(data)
+    logger.info(data)
 })
