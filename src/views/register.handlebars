@@ -1,4 +1,4 @@
-<p>{{error}}</p>
+{{!-- <p>{{error}}</p>
 <p>{{message}}</p>
 
 <form action="/api/sessions/register" method="post">
@@ -14,5 +14,33 @@
     <input type="password" name="password" placeholder="Contraseña">
     <button>Registrarse</button>
 </form>
+
+ --}}
+
+    <section class="container">
+        <h2>Registro</h2>
+        <div class="container-messages_alerts">
+        <h4 class="message">{{message}}{{#if error}}{{error}}{{/if}}</h4>
+        </div>
+        <form action="/api/sessions/register" method="post">
+        <label for="first_name">Nombre</label>
+        <input type="text" name="first_name" placeholder="Nombre">
+
+        <label for="last_name">Apellido</label>
+        <input type="text" name="last_name" placeholder="Apellido">
+
+        <label for="age">Edad</label>
+        <input type="text" name="age" placeholder="edad">
+
+        <label for="email">Correo Electronico</label>
+        <input type="text" name="email" placeholder="Correo Electronico">
+
+        <label for="password">Contraseña</label>
+        <input type="text" name="password" placeholder="Contraseña">
+
+        <button>Registrarse</button>
+        </form>
+    </section>
+
 
 

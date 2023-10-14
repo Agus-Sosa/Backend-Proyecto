@@ -2,9 +2,8 @@ import winston from "winston";
 import { config } from "../config/config.js";
 import { logLevels } from "./levels.js";
 const CURRENT_ENV = config.server.currentEnv;
-// const LOG_FILE_PATH = config.server.logFilePath;
 
-
+// Modo logger para desarrollo
 const devLogger =winston.createLogger({
     levels: logLevels,
     transports:[
@@ -12,6 +11,7 @@ const devLogger =winston.createLogger({
     ]
 })
 
+// Modo logger para produccion
 const prodLogger = winston.createLogger({
     levels: logLevels,
     transports:[
