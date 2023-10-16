@@ -74,8 +74,7 @@ export class ProductsController {
             }
             res.status(200).json({status:'Succes', products: mockProducts})
 
-            
-            
+
         } catch (error) {
             res.status(501).send('Error al crear los productos')
         }

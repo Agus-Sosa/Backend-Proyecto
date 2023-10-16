@@ -7,7 +7,7 @@ const CURRENT_ENV = config.server.currentEnv;
 const devLogger =winston.createLogger({
     levels: logLevels,
     transports:[
-        new winston.transports.Console({level:'debug'})
+        new winston.transports.Console({level:"debug"})
     ]
 })
 
@@ -15,8 +15,8 @@ const devLogger =winston.createLogger({
 const prodLogger = winston.createLogger({
     levels: logLevels,
     transports:[
-        new winston.transports.File({filename: './logs/logfile.log', level:'info'}),
-        new winston.transports.File({filename: './logs/errors.log', level:'error'})
+        new winston.transports.File({filename: './logs/logfile.log', level:"info"}),
+        new winston.transports.File({filename: './logs/errors.log', level:"error"})
     ]
 })
 

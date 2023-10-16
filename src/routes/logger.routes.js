@@ -6,15 +6,14 @@ const logger = addLogger();
 
 const router = Router();
 
-router.get('/loggerTest', (req, res)=> {
-    logger.debug('Mensaje debug');
-    logger.http('mensaje Http');
-    logger.info('Mensaje de info');
-    logger.warning('Mensaje de warning');
-    logger.error('Mensaje de error');
-    logger.fatal('Mensaje de fatal');
-    
-    res.json('Ruta de prueba del logger');
-});
+router.get("/loggerTest", (req, res) => {
+    logger.debug("Este es un mensaje de debug.");
+    logger.http("Este es un mensaje HTTP.");
+    logger.info("Este es un mensaje de info.");
+    logger.warning("Este es un mensaje de warning.");
+    logger.error("Este es un mensaje de error.");
+    logger.fatal("Este es un mensaje fatal.");
 
+    res.send("Test para logger");
+});
 export {router as loggerRouter}

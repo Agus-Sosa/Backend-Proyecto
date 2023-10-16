@@ -14,7 +14,7 @@ router.get('/home', ViewController.renderHome)
 router.get('/realTimeProducts', ViewController.renderRealTime)
 router.get('/products', requireLogin, isUserAuth,ViewController.renderProducts)
 router.get('/product/:productId', isUserAuth,ViewController.renderProductsDetails)
-router.get('/carts', ViewController.renderCartId)
+router.get('/carts',requireLogin,ViewController.renderCartId)
 router.get('/current', ViewController.renderCurrent)
 router.get('/chat', isUserAuth,ViewController.renderChat)
 
