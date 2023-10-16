@@ -12,7 +12,7 @@ router.delete('/:cid/products/:pid', CartController.removeProductFromCart)
 router.delete('/:cid', CartController.removeAllProductoCart)
 router.put('/:cid/products/:pid', CartController.updateProductQuantityInCart)
 router.put('/:cid', CartController.updateCart)
-router.post('/:cid/purchase',isUserAuth,ticketController.createTicket)
+router.post('/:cid/purchase',ticketController.createTicket)
 
 
 export {router as cartRouter};

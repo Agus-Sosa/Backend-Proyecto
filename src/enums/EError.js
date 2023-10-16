@@ -6,7 +6,8 @@ export const EError = {
     AUTH_ERROR:3, /* Error relacionados a la autenticacion, ejemplo: no se logueo, etc */
     INVALID_JSON: 4, /* Errores relacionados con Json */
     INVALID_PARAM: 5,
-    CART_ERROR: 6
+    CART_ERROR: 6,
+    OUT_OF_STOCK: 7,
 }
 
 

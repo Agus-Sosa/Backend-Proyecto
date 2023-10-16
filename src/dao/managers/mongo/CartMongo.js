@@ -28,6 +28,14 @@ class CartMongo {
             const product = await this.modelProduct.findById(idProduct)
             if(!product) throw new Error(`Producto ${idProduct} no encontrado `)
 
+
+            if(product.stock == 0) {
+                throw new Error(`Producto ${idProduct} esta fuera de stock`);
+            } /* else {
+                product.stock -= 1;
+                product.save();
+            } */
+
             const existignProductIndex = cart.products.findIndex(item=> item.product.equals(idProduct))
             if(existignProductIndex !== -1){
                 cart.products[existignProductIndex].quantity +=1;
@@ -35,7 +43,11 @@ class CartMongo {
                 cart.products.push({product: idProduct, quantity: 1})
             }
 
+
+
+
             await cart.save();
+            // await product.save();
 
             const cartId = cart.toObject()
             delete cartId._id;

@@ -7,10 +7,7 @@ import { UsersMongo } from "./managers/mongo/UserMongo.js";
 import { TicketsMongo } from "./managers/mongo/ticketsMongo.js";
 
 import { CartFiles } from "./managers/fileSystem/CartFiles.js";
-
-import { addLogger } from "../helpers/logger.js";
-
-const logger =addLogger();
+import { logger } from "../helpers/logger.js";
 
 // Guardamos en una variable el valor de la persistencia
 const PERSISTENCE = config.server.persistence;

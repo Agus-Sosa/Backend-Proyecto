@@ -15,15 +15,13 @@ import passport from 'passport';
 import { ProductService } from './Services/product.service.js';
 import { MessageService } from './Services/messages.service.js';
 import { errorHandler } from './middlewares/errorHandler.js';
-import { addLogger } from './helpers/logger.js';
-
+import { logger } from './helpers/logger.js';
 
 
 
 // genera los datos para crear el servidor
 const app = express()
 const PORT = config.server.port;
-const logger = addLogger()
 
 
 // Configurar express para que pueda entender los datos json y formulario

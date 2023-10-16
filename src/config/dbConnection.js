@@ -1,8 +1,7 @@
 import mongoose from "mongoose";
 import { config } from "./config.js";
-import { addLogger } from "../helpers/logger.js";
+import { logger } from "../helpers/logger.js";
 
-const logger = addLogger()
 
 export const connectDb = async() => {
     try {

@@ -5,9 +5,6 @@ import githubStrategy from 'passport-github2'
 import { config } from "./config.js";
 import { UserService } from "../Services/users.service.js";
 import { ContactDto } from "../dao/dto/contact.dto.js";
-import { CustomError } from "../Services/error/CustomError.service.js";
-import { createLoginErrorMsg } from "../Services/error/createLoginError.service.js";
-import { EError } from "../enums/EError.js";
 
 
 export const initializePassport = () => {
@@ -61,13 +58,7 @@ export const initializePassport = () => {
                 if(isValidPassword(user, password)){
                     return done(null, user);
                 } else {
-                    // const customError = CustomError.createError({
-                    //     name:'AuthenticaionError',
-                    //     cause: createLoginErrorMsg(username),
-                    //     message:'Error al inicar sesion',
-                    //     errorCode: EError.AUTH_ERROR
-                    // });
-                    // return done(customError, false);
+                    
                     return done(null, false);
                 }
             } catch (error) {

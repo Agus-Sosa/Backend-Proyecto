@@ -35,6 +35,6 @@ export const isUserAuth = (req, res, next) => {
     if(isUser(req)){
         next();
     }else {
-        res.status(403).send('Acceso denegado');
+        res.status(403).send('Acceso denegado1');
     };
 };

@@ -20,10 +20,8 @@ const prodLogger = winston.createLogger({
     ]
 })
 
-// creamos una funcion para manejar el logger dependiendo el ambiente
-export const addLogger =()=> {
-    return (CURRENT_ENV === 'development' ? devLogger : prodLogger)
-}
+
+export const logger = CURRENT_ENV === 'development' ? devLogger : prodLogger;
 
 
 

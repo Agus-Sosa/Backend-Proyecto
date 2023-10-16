@@ -2,9 +2,7 @@ import { CartService } from "../Services/carts.service.js";
 import { CustomError } from "../Services/error/CustomError.service.js";
 import { createProductErrorMsg } from "../Services/error/createProductError.service.js";
 import { ProductService } from "../Services/product.service.js";
-import { addLogger } from "../helpers/logger.js";
-
-const logger = addLogger()
+import { logger } from "../helpers/logger.js";
 export class ViewController {
 
 
