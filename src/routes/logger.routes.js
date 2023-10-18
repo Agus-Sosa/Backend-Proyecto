@@ -10,7 +10,6 @@ router.get("/loggerTest", (req, res) => {
     logger.warning("Este es un mensaje de warning.");
     logger.error("Este es un mensaje de error.");
     logger.fatal("Este es un mensaje fatal.");
-
     res.send("Test para logger");
 });
 export {router as loggerRouter}

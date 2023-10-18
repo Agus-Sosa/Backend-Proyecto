@@ -4,24 +4,24 @@ import { logLevels } from "./levels.js";
 const CURRENT_ENV = config.server.currentEnv;
 
 // Modo logger para desarrollo
-const devLogger =winston.createLogger({
-    levels: logLevels,
-    transports:[
-        new winston.transports.Console({level:"debug"})
-    ]
-})
+const devLogger = winston.createLogger({
+  levels: logLevels,
+  transports: [new winston.transports.Console({ level: "debug" })],
+});
 
 // Modo logger para produccion
 const prodLogger = winston.createLogger({
-    levels: logLevels,
-    transports:[
-        new winston.transports.File({filename: './logs/logfile.log', level:"info"}),
-        new winston.transports.File({filename: './logs/errors.log', level:"error"})
-    ]
-})
+  levels: logLevels,
+  transports: [
+    new winston.transports.File({
+      filename: "./logs/logfile.log",
+      level: "info",
+    }),
+    new winston.transports.File({
+      filename: "./logs/errors.log",
+      level: "error",
+    }),
+  ],
+});
 
-
-export const logger = CURRENT_ENV === 'development' ? devLogger : prodLogger;
-
-
-
+export const logger = CURRENT_ENV === "development" ? devLogger : prodLogger;
