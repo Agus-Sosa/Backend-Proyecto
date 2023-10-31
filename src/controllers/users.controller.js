@@ -1,5 +1,6 @@
 import { CustomError } from "../Services/error/CustomError.service.js";
 import { UserService } from "../Services/users.service.js"
+import { EError } from "../enums/EError.js";
 export class usersController {
     static modifyRole = async(req, res)=> {
         try {
@@ -12,7 +13,13 @@ export class usersController {
             } else if(userRole === "premium"){
                 user.role = "user"
             } else {
-                return  res.json({status:"error", message: "No se permite cambiar el role del admin"})
+                const customError = CustomError.createError({
+                    name: 'ChangeRoleError',
+                    cause: 'No se permite cambiar el rol del administrador',
+                    message: 'No se permite cambiar el rol del administrador',
+                    errorCode: EError.UNAUTHORIZED
+                })
+                throw customError
             }
             await UserService.updateUser(user._id, user)
             return res.json({status:"succes", message: `El nuevo rol del usuario es ${user.role}`})

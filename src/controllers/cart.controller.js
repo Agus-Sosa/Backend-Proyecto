@@ -58,9 +58,15 @@ export class CartController {
             console.log('prod', product)
             const user = req.user;
             if (user.role === 'premium' && product.owner.toString() === user._id.toString()) {
+                const customError = CustomError.createError({
+                    name: 'AddToCartError',
+                    cause: 'No se permite agregar el producto al carrito',
+                    message: "Los usuarios premium no pueden agregar sus propios productos",
+                    errorCode: EError.CART_ERROR
+                })
                 return res.status(403).json({
                     status: "Error",
-                    message: 'Los usuarios premium no pueden agregar sus propios productos al carrito'
+                    error: customError
                 });
             }
     

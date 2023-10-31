@@ -90,7 +90,6 @@ export class SessionsController {
         return res.send('El token ha caducado')
       }
     } catch (error) {
-      console.log(error)
       res.status(404).send("Error al restablecer la contraseña")
     }
   }

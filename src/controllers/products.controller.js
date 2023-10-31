@@ -1,5 +1,7 @@
 import { faker } from "@faker-js/faker";
 import { ProductService } from "../Services/product.service.js";
+import { CustomError } from "../Services/error/CustomError.service.js";
+import { EError } from "../enums/EError.js";
 
 
 
@@ -102,11 +104,16 @@ export class ProductsController {
                 await ProductService.deletingProduct(idProduct)
                 res.status(200).json({status:'Success', message:`Producto ${idProduct} eliminado correctamente` })
             } else {
-                res.status(401).json({status: 'error', message: "Usuario no autorizado"})
+                const customError = CustomError.createError({
+                    name: 'UnauthorizedError',
+                    cause: 'Usuario no autorizado',
+                    message: 'Usuario no autorizado para eliminar el producto',
+                    errorCode:EError.UNAUTHORIZED
+                })
+                throw customError
             }
         } catch (error) {
-            console.log(error)
-            res.status(501).json({status:'error', message: error.message})
+            res.json({status:'error', message: error.message})
         }
     }
 

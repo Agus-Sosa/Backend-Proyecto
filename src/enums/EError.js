@@ -8,6 +8,7 @@ export const EError = {
     INVALID_PARAM: 5,
     CART_ERROR: 6,
     OUT_OF_STOCK: 7,
+    UNAUTHORIZED: 8,
 }
 
 
