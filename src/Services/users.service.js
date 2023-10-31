@@ -12,4 +12,8 @@ export class UserService {
     static async getByEmail(userEmail){
         return await userDao.getByEmail(userEmail)
     }
+
+    static async updateUser(idUser, newData){
+        return await userDao.updateUser(idUser, newData)
+    }
 }

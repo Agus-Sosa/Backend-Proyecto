@@ -81,6 +81,34 @@ export class ProductsController {
     } 
 
 
+    static async createNewProduct (req, res){
+        try {
+            const data = req.body;
+            data.owner = req.user._id;
+            const product = await ProductService.createProduct(data);
+            res.status(200).json({status: 'Success', product: product})
+        } catch (error) {
+            res.status(501).json({status: 'error', message: "Error al crear el producto"})
+        }
+    }
+
+
+    static async deleteProduct (req, res) {
+        try {
+            const idProduct = req.params.pid;
+            const product = await ProductService.getProductId(idProduct)
+            const user = req.user;
+            if(user.role === "premium" && product.owner.toString()=== user._id.toString() || user.role === "admin"){
+                await ProductService.deletingProduct(idProduct)
+                res.status(200).json({status:'Success', message:`Producto ${idProduct} eliminado correctamente` })
+            } else {
+                res.status(401).json({status: 'error', message: "Usuario no autorizado"})
+            }
+        } catch (error) {
+            console.log(error)
+            res.status(501).json({status:'error', message: error.message})
+        }
+    }
 
     
 }

@@ -27,5 +27,6 @@ export class ProductService {
     static async getProductPage (query, options){
         return await productDao.getProductPerPage(query, options)
     }
+
     
 }

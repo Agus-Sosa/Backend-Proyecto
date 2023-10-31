@@ -1,6 +1,7 @@
 import { CartService } from "../Services/carts.service.js";
 import { CustomError } from "../Services/error/CustomError.service.js";
 import { addToCartErrorMsg } from "../Services/error/addToCartError.service.js";
+import { ProductService } from "../Services/product.service.js";
 import { EError } from "../enums/EError.js";
 import { logger } from "../helpers/logger.js";
 export class CartController {
@@ -51,8 +52,19 @@ export class CartController {
 
     static async addProductToCart(req, res){
         try {
-            const cid = req.params.cid
-            const pid = req.params.pid
+            const cid = req.params.cid;
+            const pid = req.params.pid;
+            const product = await ProductService.getProductId(pid);
+            console.log('prod', product)
+            const user = req.user;
+            if (user.role === 'premium' && product.owner.toString() === user._id.toString()) {
+                return res.status(403).json({
+                    status: "Error",
+                    message: 'Los usuarios premium no pueden agregar sus propios productos al carrito'
+                });
+            }
+    
+            
             const updateCart = await CartService.addProductToCart(cid, pid)
     
             logger.info(`Producto agregado correctamented`, {cart:updateCart})

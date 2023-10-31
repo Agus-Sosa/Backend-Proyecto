@@ -1,4 +1,3 @@
-import { isAdmin, isUser } from "./authUtils.js";
 
     // No permite acceder al apartado de products si no se inicio sesion
 export const requireLogin = (req, res, next) => {
@@ -19,22 +18,15 @@ export const checkLogin = (req, res, next) =>  {
     }
 }
 
-
-export const isAdminAuth = (req, res, next) => {
-    if(isAdmin(req)){ 
-        next();
-    } else {
-        return res.status(401).send('Usuario no autorizado');
-
-    }
-
-}
-
-
-export const isUserAuth = (req, res, next) => {
-    if(isUser(req)){
-        next();
-    }else {
-        res.status(403).send('Acceso denegado1');
+export const authorizeRoles = (allowedRoles) => {
+        return (req, res, next) => {
+        const { user } = req;
+        if (user && allowedRoles.includes(user.role)) {
+            next(); // El usuario tiene uno de los roles permitidos
+        } else {
+            res.status(403).send('Acceso denegado');
+        }
+        };
     };
-};
+    
+    

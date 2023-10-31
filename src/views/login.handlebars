@@ -1,27 +1,27 @@
-
-
-
 <section class="container">
-    <h2>Login</h2>
-    <div class="container-messages_alerts">
+  <h2>Login</h2>
+  <div class="container-messages_alerts">
     <h4 class="message">{{message}}{{#if error}}{{error}}{{/if}}</h4>
-    </div>
+  </div>
 
-    <form action="/api/sessions/login" method="post">
-        <label for="email">Correo Electronico</label>
-        <input type="text" name="email" placeholder="Correo Electronico">
-        
-        <label for="password">Contraseña</label>
-        <input type="password" name="password" placeholder="Contraseña">
+  <form action="/api/sessions/login" method="post">
+    <label for="email">Correo Electronico</label>
+    <input type="text" name="email" placeholder="Correo Electronico" />
 
-        <button>Iniciar Sesion</button>
-    </form>
-    <div class="separator">
-        <span></span>
-        <p>Or</p>
-        <span></span>
-    </div>
-    <div class="social-icons">
-        <a href="/api/sessions/loginGithub"><i class="fa-brands fa-github"></i></a>
-    </div>
+    <label for="password">Contraseña</label>
+    <input type="password" name="password" placeholder="Contraseña" />
+
+    <button>Iniciar Sesion</button>
+    <a href="/forgot-password">Olvidaste la Contraseña?</a>
+
+  </form>
+
+  <div class="separator">
+    <span></span>
+    <p>Or</p>
+    <span></span>
+  </div>
+  <div class="social-icons">
+    <a href="/api/sessions/loginGithub"><i class="fa-brands fa-github"></i></a>
+  </div>
 </section>
