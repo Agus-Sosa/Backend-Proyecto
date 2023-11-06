@@ -10,13 +10,13 @@ paths:
           content: 
             application/json:
               schema: 
-                $ref: "#components/schemas/ApiResponse"
+                $ref: "#components/schemas/GetProductPerPage"
         "500": 
           description: Error al obtener los productos
 
 components:
   schemas:
-    ApiResponse:
+    GetProductPerPage:
       type: object
       properties:
         status:
