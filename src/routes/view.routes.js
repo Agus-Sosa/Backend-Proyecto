@@ -16,11 +16,11 @@ router.get('/home', ViewController.renderHome)
 
 router.get('/realTimeProducts',authorizeRoles(['admin', 'premium']), ViewController.renderRealTime)
 
-router.get('/products', requireLogin, authorizeRoles(['user'])/* isUserAuth */,ViewController.renderProducts)
+router.get('/products', requireLogin, authorizeRoles(['user', "premium", "admin"])/* isUserAuth */,ViewController.renderProducts)
 
-router.get('/product/:productId', authorizeRoles(['user'])/* isUserAuth */,ViewController.renderProductsDetails)
+router.get('/product/:productId', requireLogin,authorizeRoles(['user',"premium", "admin"])/* isUserAuth */,ViewController.renderProductsDetails)
 
-router.get('/carts',requireLogin,ViewController.renderCartId)
+router.get('/carts',requireLogin,authorizeRoles(["user", "premium"]),ViewController.renderCartId)
 
 router.get('/current', ViewController.renderCurrent)
 

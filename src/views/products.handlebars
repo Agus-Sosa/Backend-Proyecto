@@ -1,7 +1,8 @@
+<div class="container_message">
+    <p id="errorMessage">{{error}}</p>
+    <p id="successMessage">{{message}}</p>
+</div>
 
-<p>{{error}}</p>
-
-<p>{{message}}</p>
 
 
 <div class="user-info">
@@ -48,18 +49,37 @@
 </section>
 
 <script src="/js/logoutSession.js"></script>
+
 <script>
     function addToCart(idProduct) {
         const cartId = '{{userCartId}}';
+        const successMessage = document.getElementById('successMessage')
+        const errorMessage = document.getElementById('errorMessage')
 
         fetch(`http://localhost:8080/api/carts/${cartId}/products/${idProduct}/`,  {
             method: 'post'
         }).then(response => response.json())
         .then(data=> {
+            Swal.fire({
+                position: "top-end",
+                icon: 'success',
+                title: 'Producto Agregado correctamente',
+                showConfirmButton: false,
+                timer:1500
+            })
             console.log('Producto agregado correctamente', data);
         })
         .catch(error => {
+            Swal.fire({
+                position: "top-end",
+                icon: 'error',
+                title: 'Error al agregar el producto al carrito',
+                showConfirmButton: false,
+                timer:1500
+            })
+
             console.log(`Error al agregar el producto ${idProduct} al carrito ${cartId} ${error}`);
         });
     }
 </script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
