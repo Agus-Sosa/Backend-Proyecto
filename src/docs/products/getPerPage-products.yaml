@@ -1,0 +1,83 @@
+paths: 
+  /api/products:
+    get:
+      summary: Endpoint para obtener los productos pero paginados
+      tags: 
+        - Productos
+      responses:
+        "200":
+          description: Se obtuvieron los productos
+          content: 
+            application/json:
+              schema: 
+                $ref: "#components/schemas/ApiResponse"
+        "500": 
+          description: Error al obtener los productos
+
+components:
+  schemas:
+    ApiResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          example: "Success"
+        payload:
+          type: array
+          items:
+            type: object
+            properties:
+              _id:
+                type: string
+                example: "64c030a91995a5f7bfa1442f"
+              title:
+                type: string
+                example: "Lenovo Ideapad 3 15ALC6 Rkus"
+              description:
+                type: string
+                example: "15,6 pulgadas Full HD (1920x1080) TN Anti-Glare. AMD Ryzen 5 5500U hasta 4.0Hz. 8GB DDR4. AMD Radeon Graphics. 256GB NVMe"
+              price:
+                type: number
+                example: 676
+              thumbnails:
+                type: string
+                example: "https://i.ibb.co/ZTvLcVz/thumbnail6.jpg"
+              code:
+                type: string
+                example: "7632"
+              stock:
+                type: number
+                example: 80
+              status:
+                type: boolean
+                example: true
+              category:
+                type: string
+                example: "diseño"
+              owner:
+                type: string
+                example: "6527006f26e2b973d59c60a1"
+        totalPages:
+          type: number
+          example: 5
+        prevPage:
+          type: number
+          example: null
+        nextPage:
+          type: number
+          example: 2
+        page:
+          type: number
+          example: 1
+        hasPrevPage:
+          type: boolean
+          example: false
+        hasNextPage:
+          type: boolean
+          example: true
+        prevLink:
+          type: string
+          example: null
+        nextLink:
+          type: string
+          example: "http://localhost:8080/api/products?page=2"

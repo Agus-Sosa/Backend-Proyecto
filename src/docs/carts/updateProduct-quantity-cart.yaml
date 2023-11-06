@@ -1,0 +1,21 @@
+paths:
+  /api/carts/{cid}/products/{pid}:
+    put:
+      summary: Endpoint para actualizar la cantidad de los productos en el carrito
+      tags:
+        - Carritos
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          description: Indetificador del carrito creado por mongo
+          schema: 
+            type: string
+          example: 653eb853467ae68f4e0a55eb
+        - in: path
+          name: pid
+          required: true
+          description: Indetificador del carrito
+          schema:  
+            type: string
+          example: 65406333fb164a28d2a6b361

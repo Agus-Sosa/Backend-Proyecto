@@ -6,7 +6,7 @@ const router = Router()
 
 
 router.get('/', ProductsController.getProductsPage)
-router.get('/mockingproducts',ProductsController.generateMockingProducts)
+router.get('/mockingproducts',authorizeRoles(["admin"]),ProductsController.generateMockingProducts)
 router.post('/createProduct',authorizeRoles(["admin", "premium"]) ,ProductsController.createNewProduct)
 router.delete('/:pid', authorizeRoles(["admin", "premium"]), ProductsController.deleteProduct);
 

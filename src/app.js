@@ -17,6 +17,8 @@ import { MessageService } from "./Services/messages.service.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
 import { logger } from "./helpers/logger.js";
 import { usersRouter } from "./routes/users.routes.js";
+import swaggerUI from "swagger-ui-express";
+import { swaggerSpecs } from "./config/swagger.config.js";
 
 // genera los datos para crear el servidor
 const app = express();
@@ -63,6 +65,9 @@ app.use(errorHandler);
 
 // Configurar servidor
 const httpServer = app.listen(PORT, () => logger.info(`Server Up ${PORT}`));
+
+// Endpoint para acceder a la documentacion
+app.use("/api/docs", swaggerUI.serve, swaggerUI.setup(swaggerSpecs))
 const io = new Server(httpServer);
 
 // Configurar socket del lado del servidor

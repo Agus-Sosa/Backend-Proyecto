@@ -1,0 +1,28 @@
+paths:
+  /api/carts/{cid}/products/{pid}:
+    delete:
+      summary: Endpoint para eliminar producto del carrito
+      tags:
+        - Carritos
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          description: Indetificador del carrito creado por mongo
+          schema: 
+            type: string
+          example: 653eb853467ae68f4e0a55eb
+        - in: path
+          name: pid
+          required: true
+          description: Indetificador del carrito
+          schema:  
+            type: string
+          example: 65406333fb164a28d2a6b361
+      responses:
+        "200":
+          description: Producto eliminado correctamente del carrito
+        "404":
+          description: Carrito o producto no encontrado
+        "500":
+          description: Error al agregar el producto al carrito

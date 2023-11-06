@@ -1,0 +1,72 @@
+paths:
+  /api/carts/{cid}:
+    get:
+      summary: Endpoint para buscar un carrito a través de su ID
+      tags:
+        - Carritos
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          description: Identificador del carrito
+          schema:
+            type: string
+          example: "64d54a1e5a65287df8b36261"  # Ejemplo de ID de carrito
+      responses:
+        "200":
+          description: Carrito obtenido correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'  # Referencia al esquema del carrito
+            
+components:
+  schemas:
+    Cart:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: "64d54a1e5a65287df8b36261"  # Ejemplo de ID de carrito
+        products:
+          type: array
+          items:
+            type: object
+            properties:
+              product:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                    example: "64c030a91995a5f7bfa1442c"  # Ejemplo de ID de producto
+                  title:
+                    type: string
+                    example: "Msi Sword 15 A11UD-001"
+                  description:
+                    type: string
+                    example: "15,6 pulgadas Full HD (1920x1080) IPS 144hz. Intel Core i7-11800H hasta 4.6GHz. 8GB DDR4. Nvidia GeForce RTX 3050 Ti 4Gb GDDR6. SSD 512GB"
+                  price:
+                    type: number
+                    example: 1542
+                  thumbnails:
+                    type: string
+                    format: uri
+                    example: "https://i.ibb.co/5jjVJdz/thumbnail3.jpg"
+                  code:
+                    type: string
+                    example: "2203"
+                  stock:
+                    type: integer
+                    example: 15
+                  status:
+                    type: boolean
+                    example: true
+                  category:
+                    type: string
+                    example: "gamer"
+              quantity:
+                type: integer
+                example: 5
+      required:
+        - _id
+        - products

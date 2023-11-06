@@ -1,0 +1,26 @@
+paths:
+  /api/products/{pid}:
+    delete: 
+      summary: Endpoint para eliminar un producto a traves de su ID
+      tags: 
+        - Productos
+      parameters:
+        - name: pid
+          in: path
+          description: ID del producto a eliminar
+          required: true
+          schema: 
+            type: string
+      responses: 
+        "200":
+          description: Se elimino correctamente el producto
+          content:
+            application/json:
+              example:
+                status: "Success"
+                message: "Producto eliminado con exito"
+        "404":
+          description: No tienes acceso a esta ruta
+        "500":
+          description: Error del servidor al eliminar el producto
+

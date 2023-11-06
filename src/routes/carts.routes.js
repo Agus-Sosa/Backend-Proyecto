@@ -5,14 +5,14 @@ import { authorizeRoles } from "../authentication/auth.js";
 
 const router = Router()
 
-router.get('/:cid', CartController.getCartId)
-router.post('/', CartController.createCart)
+router.get('/:cid', authorizeRoles(["admin"]),CartController.getCartId)
+// router.post('/', CartController.createCart)
 router.post('/:cid/products/:pid/', authorizeRoles(["user", "premium"]),CartController.addProductToCart)
-router.delete('/:cid/products/:pid', CartController.removeProductFromCart)
-router.delete('/:cid', CartController.removeAllProductoCart)
-router.put('/:cid/products/:pid', CartController.updateProductQuantityInCart)
-router.put('/:cid', CartController.updateCart)
-router.post('/:cid/purchase',ticketController.createTicket)
+router.delete('/:cid/products/:pid', authorizeRoles(["user", "premium"]),CartController.removeProductFromCart)
+router.delete('/:cid', authorizeRoles(["premium", "user"]),CartController.removeAllProductoCart)
+router.put('/:cid/products/:pid', authorizeRoles(["premium", "user"]),CartController.updateProductQuantityInCart)
+router.put('/:cid', authorizeRoles(["premium", "user"]),CartController.updateCart)
+router.post('/:cid/purchase',authorizeRoles(["premium", "user"]),ticketController.createTicket)
 
 
 export {router as cartRouter};

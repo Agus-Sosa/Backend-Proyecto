@@ -25,7 +25,15 @@ export class usersController {
             return res.json({status:"succes", message: `El nuevo rol del usuario es ${user.role}`})
         } catch (error) {
             console.log(error)
-            res.json({status: 'error', message: error.message})
+            res.status(500).json({status: 'error', message: error.message})
+        }
+    }
+    static getUsers = async (req, res)=> {
+        try {
+            const users = await UserService.getUsers();
+            res.status(200).json({status: 'success', users})
+        } catch (error) {
+            res.status(500).json({error: error.message})
         }
     }
 }

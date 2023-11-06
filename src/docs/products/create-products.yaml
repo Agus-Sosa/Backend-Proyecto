@@ -1,0 +1,68 @@
+paths:
+  /api/products/createProduct:
+    post:
+      summary: Endpoint para crear un producto
+      tags:
+        - Productos
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+                $ref: "#components/requestBodies/Products"
+      responses:
+        "200":
+          description: Producto creado correctamente
+        "404":
+          description: No tienes acceso a esta ruta
+        "500":
+          description: Error al crear el producto
+
+
+
+
+components: 
+  requestBodies:
+    Products: 
+      type: object
+      properties: 
+        _id: 
+          type: ObjectId
+          description: Id del producto creado por mongodb
+        title: 
+          type: string
+          description: Nombre del producto
+        description: 
+          type: string
+          description: Descripcion del producto
+        price: 
+          type: number
+          description: Precio del producto
+        thumbnails: 
+          type: string
+          description: Imagen del producto
+        code: 
+          type: string
+          description: codigo unico del producto
+        stock: 
+          type: number
+          description: Cantidad disponible del producto
+        status: 
+          type: boolean
+          description: Estado del producto
+        category: 
+          type: string
+          description: Categoria del producto
+        owner: 
+          type: ObjectId
+          description: id del creador del producto
+      example: 
+        title: "producto de prueba"
+        description: "15,6 pulgadas Full HD (1920x1080) IPS 144hz. AMD Ryzen 7 5800H hasta 4.4GHz. 16GB DDR4. AMD Radeon RX 5500M 4GB GDDR6. 512GB NVMe"
+        price: 1300
+        thumbnails: "https://i.ibb.co/px5mVFB/thumbnail2.jpg"
+        code: "5543"
+        stock: 20
+        status: true
+        category: "gamer"
+

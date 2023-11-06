@@ -50,6 +50,15 @@ class UsersMongo {
       throw error;
     }
   }
+
+  async getUsers(){
+    try {
+      const resultUser = await this.modelUser.find({})
+      return resultUser;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 export { UsersMongo as UsersMongo };

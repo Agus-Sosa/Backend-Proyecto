@@ -1,0 +1,69 @@
+paths:
+  /api/products/mockingproducts:
+    get:
+      summary: Endpoint para generar 100 productos con mock
+      tags: 
+        - Productos
+      responses: 
+        "200":
+          description: Se generaron los 100 productos correctamente
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                $ref: "#components/schemas/Products"
+          examples:
+            example:
+              summary: Ejemplo 1 - mock de 100 productos
+              value: 
+                status: "Success"
+                products:
+                  - _id: "cece78e375cb1ec978ae3aba"
+                    title: "Modern Rubber Salad"
+                    description: "Virgo maiores deorsum curtus cenaculum claro et."
+                    price: 469
+                    code: "Wez5"
+                    stock: 74
+
+        "404": 
+          description: Acceso denegado
+        "500":
+          description: Error al generar los productos
+
+
+components: 
+  schemas: 
+    Products: 
+      type: object
+      properties: 
+        _id: 
+          type: ObjectId
+          description: Id del producto creado por mongodb
+        title: 
+          type: string
+          description: Nombre del producto
+        description: 
+          type: string
+          description: Descripcion del producto
+        price: 
+          type: number
+          description: Precio del producto
+        thumbnails: 
+          type: string
+          description: Imagen del producto
+        code: 
+          type: string
+          description: codigo unico del producto
+        stock: 
+          type: number
+          description: Cantidad disponible del producto
+        status: 
+          type: boolean
+          description: Estado del producto
+        category: 
+          type: string
+          description: Categoria del producto
+        owner: 
+          type: ObjectId
+          description: id del creador del producto

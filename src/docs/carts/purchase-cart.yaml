@@ -1,0 +1,17 @@
+paths:
+  /api/carts/{cid}/purchase:
+    post:
+      summary: Endpint para comprar los productos del carrito
+      tags:
+        - Carritos
+      parameters: 
+        - in: path
+          name: cid
+          required: true
+          description: Identificador del carrito creado por mongo
+          schema: 
+            type: string
+          example: 653eb853467ae68f4e0a55eb
+      responses: 
+        "200":
+          description: Compra realizada con exito
