@@ -99,7 +99,6 @@ describe("Pruebas app proyecto backend", async function(){
             .set("Cookie", [`${this.cookie.name}=${this.cookie.value}`])
             .send(mockProduct);  
             
-            console.log(productCreated)
             const deleteResponse =await requester
             .delete(`/api/products/${productCreated._id}`)
             expect(deleteResponse.status).to.equal(200)

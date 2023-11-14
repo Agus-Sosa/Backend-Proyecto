@@ -6,3 +6,4 @@ node_modules
 logs
 
 users.yaml
+carts-integration.test.js
