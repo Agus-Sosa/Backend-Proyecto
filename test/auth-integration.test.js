@@ -1,13 +1,8 @@
 import {app} from '../src/app.js'
 import supertest from 'supertest'
 import chai from 'chai'
-import mongoose from 'mongoose';
-import { configTest } from './config.test.js';
 import Users from '../src/dao/models/userModel.js';
 
-const URL_DB_TEST = configTest.mongo.url
-const ObjectId = mongoose.Types.ObjectId;
-const newIdMongo = new ObjectId();
 const expect = chai.expect;
 const requester = supertest(app); /* Elemento para hacer peticiones al servidor */
 
@@ -27,7 +22,8 @@ describe("Prueba app backend", function(){
         last_name: "Alvarez",
         email: "julian@gmail.com",
         age: "21",
-        password: "333"
+        password: "333",
+        role: 'admin'
     }
     describe("test modulo sessions", function(){
 
@@ -55,7 +51,6 @@ describe("Prueba app backend", function(){
             this.cookie = cookieData;
             expect(this.cookie.name).to.be.equal("connect.sid")
             expect(response.status).to.equal(200);
-
         })
 
         
