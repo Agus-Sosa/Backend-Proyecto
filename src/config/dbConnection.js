@@ -10,7 +10,7 @@ const DB_URL = config.mongo.url
 
 export const connectDb = async() => {
     try {
-        await mongoose.connect(DB_URL)
+        await mongoose.connect(URL_DB_TEST)
         logger.info('*** MONGO DB CONECTADO ***')
     } catch (error) {
         logger.error(`Error al conectar con la base de datos: ${error.message}`)

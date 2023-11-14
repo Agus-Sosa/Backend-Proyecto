@@ -32,10 +32,11 @@ describe("Prueba app backend", function(){
     describe("test modulo sessions", function(){
 
         it("Se debe resgistrar el ususario correctamente", async function(){
-            const response = await requester.post('/api/sessions/register').send(mockUser);
-            console.log(response.body)
+            const response = await requester.post('/api/sessions/register').send(mockUser).redirects(1);
 
-            
+            expect(response.status).to.equal(200);
+            expect(response.redirects.length).to.equal(1);
+
         })
 
         it("Se debe loguear el usuario correctamente", async function(){
@@ -45,16 +46,16 @@ describe("Prueba app backend", function(){
                 password: mockUser.password,
             };
             
-            const response =await requester.post('/api/sessions/login').send(mockUserLoged)
+            const response =await requester.post('/api/sessions/login').send(mockUserLoged).redirects(1)
             const cookieResponse = response.headers['set-cookie'][0];
-            console.log(cookieResponse)
             const cookieData = {
                 name: cookieResponse.split("=")[0],
                 value: cookieResponse.split("=")[1],
             }
             this.cookie = cookieData;
             expect(this.cookie.name).to.be.equal("connect.sid")
-            console.log(cookieData)
+            expect(response.status).to.equal(200);
+
         })
 
         
