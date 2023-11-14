@@ -74,7 +74,7 @@ export class ProductsController {
                 
                 mockProducts.push(product);
             }
-            res.status(200).json({status:'Succes', products: mockProducts})
+            res.status(200).json({status:'Success', products: mockProducts})
 
 
         } catch (error) {

@@ -113,6 +113,11 @@ export class ViewController {
             )}`
           : null,
       };
+      console.log('baseUrl:', baseUrl);
+console.log('result.page:', result.page);
+console.log('result.prevPage:', result.prevPage);
+console.log('result.nextPage:', result.nextPage);
+
 
       res.render("products", {
         resultProductsViews,

@@ -118,3 +118,6 @@ io.on("connection", async (socket) => {
 });
 
 // middleware para capturar el error y tenes mas control de ello
+
+
+export {app}

@@ -37,6 +37,7 @@ export const initializePassport = () => {
                 }
                 const userCreated = await UserService.saveUser(newUser);
                 return done(null, userCreated)
+                
 
             } catch (error) {
                 done(error)

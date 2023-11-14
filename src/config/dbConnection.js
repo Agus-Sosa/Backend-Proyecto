@@ -1,11 +1,15 @@
 import mongoose from "mongoose";
 import { config } from "./config.js";
 import { logger } from "../helpers/logger.js";
+import {configTest} from "../../test/config.test.js";
+
+
+const URL_DB_TEST = configTest.mongo.url
+const DB_URL = config.mongo.url
 
 
 export const connectDb = async() => {
     try {
-        const DB_URL = config.mongo.url
         await mongoose.connect(DB_URL)
         logger.info('*** MONGO DB CONECTADO ***')
     } catch (error) {

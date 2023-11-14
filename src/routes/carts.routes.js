@@ -6,7 +6,6 @@ import { authorizeRoles } from "../authentication/auth.js";
 const router = Router()
 
 router.get('/:cid', authorizeRoles(["admin"]),CartController.getCartId)
-// router.post('/', CartController.createCart)
 router.post('/:cid/products/:pid/', authorizeRoles(["user", "premium"]),CartController.addProductToCart)
 router.delete('/:cid/products/:pid', authorizeRoles(["user", "premium"]),CartController.removeProductFromCart)
 router.delete('/:cid', authorizeRoles(["premium", "user"]),CartController.removeAllProductoCart)
