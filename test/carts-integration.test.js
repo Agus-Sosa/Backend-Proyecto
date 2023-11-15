@@ -93,13 +93,12 @@ describe("Pruebas app backend",async function(){
             const userData =await this.userManager.getByEmail(mockUser.email);
             const userCart = userData.cart;
 
-
-
-
             const response = await requester.delete(`/api/carts/${userCart}`);
             expect(response.status).to.equal(200);
 
         })
+
+        
     })
 })
     
