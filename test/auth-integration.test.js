@@ -13,7 +13,7 @@ describe("Prueba app backend", function(){
     this.timeout(100000);                    
 
     before(async function(){        
-        await Users.deleteMany({})
+        // await Users.deleteMany({})
         this.cookie;
     })
 
