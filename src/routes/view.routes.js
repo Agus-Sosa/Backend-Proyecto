@@ -1,7 +1,7 @@
 import { Router  } from "express";
 import { requireLogin, checkLogin,  authorizeRoles } from "../authentication/auth.js";
 import { ViewController } from "../controllers/views.controller.js";
-
+import { updloaderProfile } from "../utils.js";
 
 const router = Router()
 
@@ -14,7 +14,7 @@ router.get('/login', checkLogin, ViewController.renderLogin)
 
 router.get('/home', ViewController.renderHome)
 
-router.get('/realTimeProducts',authorizeRoles(['admin', 'premium']), ViewController.renderRealTime)
+router.get('/realTimeProducts',authorizeRoles(['admin', 'premium']), updloaderProfile.single("thumbnails"),ViewController.renderRealTime)
 
 router.get('/products', requireLogin, authorizeRoles(['user', "premium", "admin"])/* isUserAuth */,ViewController.renderProducts)
 

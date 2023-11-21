@@ -87,6 +87,7 @@ export class ProductsController {
         try {
             const data = req.body;
             data.owner = req.user._id;
+            data.thumbnails = req.file.filename;
             const product = await ProductService.createProduct(data);
             res.status(200).json({status: 'Success', product: product})
         } catch (error) {

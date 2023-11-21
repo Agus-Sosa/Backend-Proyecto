@@ -1,12 +1,13 @@
 import { Router } from "express";
 import passport from "passport";
 import { SessionsController } from "../controllers/sessions.controller.js";
-
+import { updloaderProfile } from "../utils.js";
 const router = Router();
 
 // Nuevas rutas con la arquitectura de capas
 
-router.post("/register",passport.authenticate("registerStrategy", {
+                            /* req.file */  /* nombre para guardar una foto del usuario */
+router.post("/register",updloaderProfile.single("avatar"),passport.authenticate("registerStrategy", {
     failureRedirect: "/api/sessions/fail-register",
   }),
   SessionsController.redirectLogin

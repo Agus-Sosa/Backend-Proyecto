@@ -1,11 +1,16 @@
 import { Router } from "express";
 import { authorizeRoles, requireLogin } from "../authentication/auth.js";
 import { usersController } from "../controllers/users.controller.js";
+import { updloaderDocuments } from "../utils.js";
 
 const router = Router();
 
 
 router.get('/',usersController.getUsers)
 router.post("/premium/:uid", requireLogin,authorizeRoles(['admin']),usersController.modifyRole);
-
+router.put('/:uid/documents', updloaderDocuments.fields([
+    {name: "identificacion", maxCount:1},
+    {name: "domicilio", maxCount: 1},
+    {name: "estadoDeCuenta", maxCount:1},
+]), usersController.uploadDocuments)
 export {router as usersRouter}

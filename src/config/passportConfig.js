@@ -16,6 +16,7 @@ export const initializePassport = () => {
         async (req,username, password, done)=>{
             try {
                 const {first_name, last_name, age} = req.body;
+                console.log(req.file)
                 const user = await UserService.getByEmail(username);
                 if(user){
                     return done(null );
@@ -34,6 +35,7 @@ export const initializePassport = () => {
                     email: username,
                     password: createHash(password),
                     fullName: contactDto.fullName,
+                    avatar: req.file.filename
                 }
                 const userCreated = await UserService.saveUser(newUser);
                 return done(null, userCreated)
@@ -57,6 +59,8 @@ export const initializePassport = () => {
                 }
                 
                 if(isValidPassword(user, password)){
+                    user.last_connection=new Date(); /* Guardar fecha de la ultima conexion  */
+                    await UserService.updateUser(user._id, user);
                     return done(null, user);
                 } else {
                     

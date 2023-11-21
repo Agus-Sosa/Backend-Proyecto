@@ -33,6 +33,7 @@ export class SessionsController {
   };
 
   static logOut = (req, res) => {
+    const user = req.user;
     req.logOut((error) => {
       if (error) {
         logger.error(`Error al cerrar la sesion ${error}`);
@@ -40,6 +41,8 @@ export class SessionsController {
           error: "No fue posible cerrar sesion",
         });
       } else {
+        user.last_connection = new Date();
+        UserService.updateUser(user._id, user)
         req.session.destroy((error) => {
           logger.info("Se cerro la sesion");
           if (error)

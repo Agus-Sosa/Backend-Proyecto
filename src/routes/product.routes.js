@@ -1,13 +1,13 @@
 import { Router } from "express";
 import { ProductsController } from "../controllers/products.controller.js";
 import { authorizeRoles, checkLogin } from "../authentication/auth.js";
-
+import { updloaderProducts } from "../utils.js";
 const router = Router()
 
 
 router.get('/', ProductsController.getProductsPage)
 router.get('/mockingproducts',authorizeRoles(["admin"]) , ProductsController.generateMockingProducts)
-router.post('/createProduct', authorizeRoles(["admin", "premium"]) ,ProductsController.createNewProduct)
+router.post('/createProduct', authorizeRoles(["admin", "premium"]), updloaderProducts.single("thumbnails"),ProductsController.createNewProduct)
 router.delete('/:pid', authorizeRoles(["admin", "premium"]), ProductsController.deleteProduct);
 
 
