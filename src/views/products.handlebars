@@ -5,9 +5,14 @@
 
 
 
-<div class="user-info">
-    <p>{{user}}</p>
+<div class="user_info">
+    <article>
+        <img src="/multer/users/imgs/{{user.avatar}}" alt="">
+    </article>    
+    <div class="profile_details">
+    <p>{{user.email}}</p>
     <button class="logout-button" onclick="logoutSession()">Cerrar sesión</button>
+    </div>
 </div>
 
 

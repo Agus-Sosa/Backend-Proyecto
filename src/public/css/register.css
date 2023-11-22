@@ -1,54 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@1,300&display=swap');
-
-
-/* 
-form {
-    width: 400px;
-    height: 500px;
-    padding: 37px;
-    margin: 10vh auto;
-    border-radius: 10px;
-    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;;
-        
-        & input {
-            border: none;
-            border-bottom: solid gray;
-            padding: 10px 10px;
-            outline: none;
-            margin: 20px;
-        }
-        & button {
-            border: none;
-            border-radius: 10px;
-            padding: 15px;
-            box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-            cursor: pointer;
-            transition: .5s all;
-        }
-        & button:hover {
-            background-color: rgb(105, 105, 105);
-            color: white;
-        }
-    }
-
-
-    .container-social_networks {
-        & a {color: white;
-        background-color: black;
-        }
-
-    } */
-
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap');
 
 body {
     background-color: #E6E6FA;
 }
 .container {
-    font-family: 'Lato', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     width: 400px;
     background: white;
     padding: 41px;
@@ -97,6 +53,8 @@ body {
             border: 0px;
             box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
         }
+
+    
     }
     & .separator {
         margin: 11px;

@@ -55,7 +55,6 @@ export class CartController {
             const cid = req.params.cid;
             const pid = req.params.pid;
             const product = await ProductService.getProductId(pid);
-            console.log('prod', product)
             const user = req.user;
             if (user.role === 'premium' && product.owner.toString() === user._id.toString()) {
                 const customError = CustomError.createError({

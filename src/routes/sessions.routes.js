@@ -16,6 +16,7 @@ router.post("/register",updloaderProfile.single("avatar"),passport.authenticate(
 router.get("/fail-register", SessionsController.fallRegister);
 
 router.post("/login",passport.authenticate("loginStrategy", {
+    successRedirect: '/current',
     failureRedirect: "/api/sessions/fail-login",
   }),
   SessionsController.renderCurrent

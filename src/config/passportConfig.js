@@ -16,7 +16,6 @@ export const initializePassport = () => {
         async (req,username, password, done)=>{
             try {
                 const {first_name, last_name, age} = req.body;
-                console.log(req.file)
                 const user = await UserService.getByEmail(username);
                 if(user){
                     return done(null );

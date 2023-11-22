@@ -6,9 +6,9 @@ import { updloaderDocuments } from "../utils.js";
 const router = Router();
 
 
-router.get('/',usersController.getUsers)
+router.get('/',requireLogin, authorizeRoles(['admin']),usersController.getUsers)
 router.post("/premium/:uid", requireLogin,authorizeRoles(['admin']),usersController.modifyRole);
-router.put('/:uid/documents', updloaderDocuments.fields([
+router.put('/:uid/documents', requireLogin,updloaderDocuments.fields([
     {name: "identificacion", maxCount:1},
     {name: "domicilio", maxCount: 1},
     {name: "estadoDeCuenta", maxCount:1},

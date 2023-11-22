@@ -1,9 +1,17 @@
-  <div class="profile-card">
-        <h1>Perfil de Usuario</h1>
-        <p>Nombre completo: {{user.fullName}}</p>
-        <p>Email: {{user.email}}</p>
-        <button onclick="logoutSession()">Cerrar Sesion</button>
-    </div>
 
+
+
+<section class="profile_cart_container">
+    <article>
+        <img src="/multer/users/imgs/{{user.avatar}}" alt="Imagen de perfil">
+    </article>
+    <div class="profile_details">
+      <h2>{{user.fullName}}</h2>
+      <p>{{user.email}}</p>
+    </div>
+    <div class="profile_button">
+      <button onclick="logoutSession()">Cerrar Sesion</button>
+    </div>
+</section>
 
 <script src="/js/logoutSession.js"></script>

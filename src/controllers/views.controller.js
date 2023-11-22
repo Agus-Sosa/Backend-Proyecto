@@ -113,16 +113,12 @@ export class ViewController {
             )}`
           : null,
       };
-      console.log('baseUrl:', baseUrl);
-console.log('result.page:', result.page);
-console.log('result.prevPage:', result.prevPage);
-console.log('result.nextPage:', result.nextPage);
-
+      
 
       res.render("products", {
         resultProductsViews,
         userCartId,
-        user: user.email,
+        user,
         style: "products.css",
       });
     } catch (error) {
@@ -182,6 +178,7 @@ console.log('result.nextPage:', result.nextPage);
   static renderCurrent(req, res) {
     if (req.isAuthenticated()) {
       const user = req.user;
+  
       logger.info(`Acceso a la pagina actual por el user ${user.email}`);
       res.render("current", { user, style: "current.css" });
     } else {

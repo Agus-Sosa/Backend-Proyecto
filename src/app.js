@@ -70,6 +70,11 @@ const httpServer = app.listen(PORT, () => logger.info(`Server Up ${PORT}`));
 app.use("/api/docs", swaggerUI.serve, swaggerUI.setup(swaggerSpecs))
 const io = new Server(httpServer);
 
+
+// endpoint para mostrar imagenes de avatar en la vista
+app.use('/multer/users/imgs', express.static(__dirname + '/multer/users/imgs'));
+
+
 // Configurar socket del lado del servidor
 io.on("connection", async (socket) => {
   logger.info(`Cliente nuevo conectado ${socket.id}`);
