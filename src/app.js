@@ -19,6 +19,7 @@ import { logger } from "./helpers/logger.js";
 import { usersRouter } from "./routes/users.routes.js";
 import swaggerUI from "swagger-ui-express";
 import { swaggerSpecs } from "./config/swagger.config.js";
+import { handlebarsHelpers } from "./config/handlebars-helpers.js";
 
 // genera los datos para crear el servidor
 const app = express();
@@ -49,7 +50,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Configurar handlebars
-app.engine("handlebars", handlebars.engine());
+app.engine("handlebars", handlebars.engine({helpers: handlebarsHelpers}));
 app.set("views", __dirname + "/views");
 app.set("view engine", "handlebars");
 
@@ -69,6 +70,10 @@ const httpServer = app.listen(PORT, () => logger.info(`Server Up ${PORT}`));
 // Endpoint para acceder a la documentacion
 app.use("/api/docs", swaggerUI.serve, swaggerUI.setup(swaggerSpecs))
 const io = new Server(httpServer);
+
+
+// Endpoint para mostrar imagenes de producto en la vista de manera local
+app.use('/multer/products/imgs', express.static(__dirname + '/multer/products/imgs'));
 
 
 // endpoint para mostrar imagenes de avatar en la vista

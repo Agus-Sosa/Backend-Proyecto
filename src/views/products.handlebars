@@ -23,9 +23,16 @@
     {{#each resultProductsViews.payload}}
     <section class="container-products">
         <div class="container-image">
-            <article>
-                <img src="{{this.thumbnails}}" alt="{{this.title}}">
-            </article>
+            {{#contains this.thumbnails 'https'}}
+                <article>
+                    <img src="{{this.thumbnails}}" alt="{{this.title}}">
+                </article>
+            {{else}}
+                <article>
+                    <img src="/multer/products/imgs/{{this.thumbnails}}" alt="">
+                </article>
+            {{/contains}}
+
         </div>
         <div class="container-description">
             <h5>{{this.title}}</h5>

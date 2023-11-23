@@ -4,9 +4,15 @@
     <div class="real-time_list" id="container-realTime">
         {{#each productsMongo}}
         <div class="card" data-id="{{_id}}">
+            {{#contains thumbnails 'https'}}
             <article>
                 <img src="{{thumbnails}}" alt="{{title}}" width="200px">
             </article>
+            {{else}}
+            <article>
+                <img src="/multer/products/imgs/{{thumbnails}}" alt="">
+            </article>
+            {{/contains}}
             <div class="card-body">
                 <h4>{{title}}</h4>
                 <p>${{price}}</p>

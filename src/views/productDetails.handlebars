@@ -2,9 +2,15 @@
 
 <section class="container-product_details">
     <div class="container-image">
+        {{#contains productDetails.thumbnails 'https'}}
         <article>
             <img src="{{productDetails.thumbnails}}" alt="">
         </article>
+        {{else}}
+        <article>
+            <img src="/multer/products/imgs/{{productDetails.thumbnails}}" alt="">
+        </article>
+        {{/contains}}
     </div>
     <div class="container-description">
         <h2>{{productDetails.title}}</h2>
