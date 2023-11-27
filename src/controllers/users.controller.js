@@ -38,7 +38,15 @@ export class usersController {
     static getUsers = async (req, res)=> {
         try {
             const users = await UserService.getUsers();
-            res.status(200).json({status: 'success', users})
+
+            const responseUsers = users.map(user => ({
+                name: user.first_name,
+                email: user.email,
+                role: user.role
+            }));
+
+            
+            res.status(200).json({status: 'success', users: responseUsers})
         } catch (error) {
             res.status(500).json({error: error.message})
         }
@@ -80,5 +88,19 @@ export class usersController {
         } catch (error) {   
             res.status({status: "error", message: "No se pudo guardar los documentos"})
         }
+    }
+
+    static updateUser = async(req, res)=> {
+        try {
+        const userId = req.params.id; 
+        const newData = req.body;
+        console.log(newData)
+        console.log(userId)
+        const UpdatedUser = await UserService.updateUser(userId, newData);
+        res.status(200).json({status:"success", message:"Usuario actualizado correctamente", data: UpdatedUser})
+        } catch (error) {
+            res.json({status:"error", message: "error al actualizar el usuario"})
+        }
+        
     }
 }
