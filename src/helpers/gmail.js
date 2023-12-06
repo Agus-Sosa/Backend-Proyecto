@@ -34,3 +34,25 @@ export const recoveryEmail = async (req, userEmail, emailToken) => {
     console.log(`Hubo un error ${error.message}`);
   }
 };
+
+
+export const accountDeleteEmail = async(userEmail)=> {
+  try {
+    
+    await gmailTransporter.sendMail({
+      from: "Ecommerce Backend",
+      to: userEmail,
+      subject: "Eliminacion de cuenta por inactividad",
+      html: `
+      <p>Hola,</p>
+      <p>Tu cuenta en nuestra plataforma ha sido eliminada debido a la inactividad. Si necesitas informacion, no dudes en contactarnos</p>
+      <p>Gracias,</p>
+      <p>Equipo de soporte</p>
+      `,
+    });
+
+
+  } catch (error) {
+    console.log(`Hubo un error ${error.message}`)
+  }
+}

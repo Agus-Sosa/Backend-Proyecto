@@ -26,6 +26,14 @@ export const errorHandler =(error, req, res, next)=> {
         case EError.UNAUTHORIZED: 
             res.status(404).json({status:'Error', error: error.message})
             break;
+        
+        case EError.INVALID_PARAM: 
+            res.status(400).json({status: 'Error', error:error.message})
+            break;
+
+
+        case EError.USERS_ERROR:
+            res.status(400).json({status:'error', error: error.message})
         default:
             res.status(500).status({status: 'error', error:'error desconocido'})
             break;

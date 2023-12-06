@@ -9,6 +9,8 @@ export const EError = {
     CART_ERROR: 6,
     OUT_OF_STOCK: 7,
     UNAUTHORIZED: 8,
+    USERS_ERROR: 9
+    
 }
 
 

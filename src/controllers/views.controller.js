@@ -2,6 +2,7 @@ import { CartService } from "../Services/carts.service.js";
 import { CustomError } from "../Services/error/CustomError.service.js";
 import { createProductErrorMsg } from "../Services/error/createProductError.service.js";
 import { ProductService } from "../Services/product.service.js";
+import { UserService } from "../Services/users.service.js";
 import { EError } from "../enums/EError.js";
 import { logger } from "../helpers/logger.js";
 export class ViewController {
@@ -203,4 +204,12 @@ export class ViewController {
     logger.info('Renderizando la vista para cambiar la contraseña')
     res.render("resetPassword", {style: "resetPassword.css", token})
   }
+
+  static async renderManageUsers(req, res) {
+    logger.info('Renderizando vista para manejar los usuarios')
+    const usersData = await UserService.getUsers()
+    const filteredUsers = usersData.filter(user => user.role !== 'admin');
+    res.render("manageUsers", {style: "manageUsers.css", users: filteredUsers})
+  }
+
 }

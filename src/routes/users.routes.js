@@ -13,4 +13,8 @@ router.put('/:uid/documents', requireLogin,updloaderDocuments.fields([
     {name: "domicilio", maxCount: 1},
     {name: "estadoDeCuenta", maxCount:1},
 ]), usersController.uploadDocuments)
+router.delete('/deleteInactiveUsers', requireLogin, authorizeRoles(['admin']), usersController.deleteUsersIncative )
+router.delete('/deletUser/:uid', requireLogin, authorizeRoles(["admin"]), usersController.deleteUser)
+
+
 export {router as usersRouter}

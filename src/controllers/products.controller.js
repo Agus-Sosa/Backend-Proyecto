@@ -87,6 +87,17 @@ export class ProductsController {
         try {
             const data = req.body;
             data.owner = req.user._id;
+
+            if (!data.title || !data.price || !data.description || !data.category || !data.stock || !data.code || !data.thumbnails) {
+                const customError = CustomError.createError({
+                    name: 'MissingFieldsError',
+                    cause: 'Faltan agregar campos',
+                    message: "Es obligatorio agregar todos los campos para crear producto",
+                    errorCode: EError.INVALID_PARAM
+                })
+                throw customError
+            }
+            
             if(req.file){
                 data.thumbnails = req.file.filename;
             }
@@ -94,7 +105,7 @@ export class ProductsController {
             const product = await ProductService.createProduct(data);
             res.status(200).json({status: 'Success', product: product})
         } catch (error) {
-            res.status(501).json({status: 'error', message: "Error al crear el producto"})
+            res.status(501).json({status: 'error', message: error.message})
         }
     }
 

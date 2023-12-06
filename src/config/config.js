@@ -7,6 +7,7 @@ export const config = {
     secretSession: process.env.SECRET_SESSION,
     persistence: process.env.PERSISTENCE,
     currentEnv: process.env.NODE_ENV,
+
   },
   mongo: {
     url: process.env.MONGO_URL,
@@ -21,4 +22,7 @@ export const config = {
     password: process.env.GMAIL_SALES_PASSWORD,
     secretToken: process.env.SECRET_TOKEN_EMAIL,
   },
+  api: {
+    baseUrl: process.env.API_BASE_URL,
+  }
 };
