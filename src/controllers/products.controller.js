@@ -2,6 +2,8 @@ import { faker } from "@faker-js/faker";
 import { ProductService } from "../Services/product.service.js";
 import { CustomError } from "../Services/error/CustomError.service.js";
 import { EError } from "../enums/EError.js";
+import { UserService } from "../Services/users.service.js";
+import { deleteProductPremium } from "../helpers/gmail.js";
 
 
 
@@ -74,7 +76,7 @@ export class ProductsController {
                 
                 mockProducts.push(product);
             }
-            res.status(200).json({status:'Success', products: mockProducts})
+            res.status(200).json({status:'success', products: mockProducts})
 
 
         } catch (error) {
@@ -95,7 +97,6 @@ export class ProductsController {
                     message: "Es obligatorio agregar todos los campos para crear producto",
                     errorCode: EError.INVALID_PARAM
                 })
-                throw customError
             }
             
             if(req.file){
@@ -105,7 +106,7 @@ export class ProductsController {
             const product = await ProductService.createProduct(data);
             res.status(200).json({status: 'Success', product: product})
         } catch (error) {
-            res.status(501).json({status: 'error', message: error.message})
+            res.status(501).json({status: 'error', message: console.log(error.message)})
         }
     }
 
@@ -115,20 +116,39 @@ export class ProductsController {
             const idProduct = req.params.pid;
             const product = await ProductService.getProductId(idProduct)
             const user = req.user;
+
+            if(!product) {
+                CustomError.createError({
+                    name: 'NonExistentProduct',
+                    cause: 'Produco inexistente',
+                    message: `El producto con el id ${idProduct} no existe`,
+                    errorCode: EError.PRODUCT_ERROR
+                })
+            }
+
             if(user.role === "premium" && product.owner.toString()=== user._id.toString() || user.role === "admin"){
+                const userOwner = await UserService.getUserById(product.owner);
+
+                if(userOwner.role === "premium"){
+                    const userEmail = userOwner.email;
+                    deleteProductPremium(userEmail)
+                } 
+
                 await ProductService.deletingProduct(idProduct)
+
+
                 res.status(200).json({status:'Success', message:`Producto ${idProduct} eliminado correctamente` })
             } else {
-                const customError = CustomError.createError({
+                CustomError.createError({
                     name: 'UnauthorizedError',
                     cause: 'Usuario no autorizado',
                     message: 'Usuario no autorizado para eliminar el producto',
                     errorCode:EError.UNAUTHORIZED
                 })
-                throw customError
+
             }
         } catch (error) {
-            res.json({status:'error', message: error.message})
+            res.json({status:'error', message: console.log(error)})
         }
     }
 

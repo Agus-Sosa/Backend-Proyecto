@@ -34,6 +34,10 @@ export const errorHandler =(error, req, res, next)=> {
 
         case EError.USERS_ERROR:
             res.status(400).json({status:'error', error: error.message})
+
+
+        case EError.PRODUCT_ERROR:
+            res.status(401).json({status:"error", error: error.message})
         default:
             res.status(500).status({status: 'error', error:'error desconocido'})
             break;

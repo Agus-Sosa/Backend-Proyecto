@@ -12,6 +12,13 @@
     <div class="profile_button">
       <button onclick="logoutSession()">Cerrar Sesion</button>
     </div>
+    {{#eq user.role 'admin'}}
+    <div class="manage_users">
+      <a href="/manageUsers">Administrar usuarios</a>
+    </div>
+    {{/eq}}
+
 </section>
 
+    
 <script src="/js/logoutSession.js"></script>

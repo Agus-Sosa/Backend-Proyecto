@@ -41,7 +41,22 @@ describe("Pruebas app proyecto backend", async function(){
         });
 
         it("/GET /mockingproducts", async function(){
-            const response = await requester.get('/api/products/mockingproducts')
+
+            const loginResponse = await requester.post('/api/sessions/login').send({
+                email: mockUser.email,
+                password: mockUser.password,
+            }).redirects(1);
+            const cookieResponse = loginResponse.headers['set-cookie'][0];
+            const cookieData = {
+                name: cookieResponse.split("=")[0],
+                value: cookieResponse.split("=")[1],
+            }
+            this.cookie = cookieData;
+            expect(loginResponse.status).to.equal(200);
+
+            const response = await requester
+            .get('/api/products/mockingproducts')
+            .set("Cookie", [`${this.cookie.name}=${this.cookie.value}`]);
             expect(response.body.status.toLowerCase()).to.equal('success');
             expect(response.status).to.equal(200);
         })
@@ -138,8 +153,13 @@ describe("Pruebas app proyecto backend", async function(){
             .set("Cookie", [`${this.cookie.name}=${this.cookie.value}`])
             .send(mockProduct);  
             
+
+            const productId = productCreated && productCreated.data && productCreated.data._id;
+            console.log(productId)
             const deleteResponse =await requester
             .delete(`/api/products/${productCreated._id}`)
+            .set("Cookie", [`${this.cookie.name}=${this.cookie.value}`]);
+
             expect(deleteResponse.status).to.equal(200)
 
         

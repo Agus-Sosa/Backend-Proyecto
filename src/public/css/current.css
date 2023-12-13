@@ -52,4 +52,18 @@
 
     }
 
+    & .manage_users {
+        margin: 20px 0px;
+
+        & button {
+            background-color: #4c6ef5;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+        }
+    }
+
 }

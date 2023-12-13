@@ -23,8 +23,26 @@ body {
   }
 
   & h2 {
-    margin: 0px 0px 20px 0px;
+    margin: 0px 0px 5px 0px;
   }
+
+  & .message_register {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    & a {
+      background: none;
+      color: #4c6ef5;
+      transition: .5s all;
+    
+    &:hover {
+      text-decoration: underline;
+    }
+    }
+  }
+
+ 
+  
 
   & form {
     display: flex;
