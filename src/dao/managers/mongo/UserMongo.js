@@ -53,12 +53,33 @@ class UsersMongo {
 
   async getUsers(){
     try {
-      const resultUser = await this.modelUser.find({})
+      const resultUser = await this.modelUser.find({}).lean()
       return resultUser;
     } catch (error) {
       throw error;
     }
   }
+
+  async getUsersInactiveSince (date){
+    try {
+      const users = await this.modelUser.find({last_connection: {$lt: date}}).lean()
+      return users;
+
+    } catch (error) {
+      throw error
+    }
+  }
+
+
+  async deleteUser (userId){
+      try {
+        return await this.modelUser.findByIdAndDelete(userId)
+      } catch (error) {
+        throw error
+      }
+  }
+
+
 }
 
 export { UsersMongo as UsersMongo };

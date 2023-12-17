@@ -8,7 +8,7 @@
     "start": "node .",
     "dev": "nodemon .",
     "update-products": "node src/scripts/mongo.script.js",
-    "test": "mocha test/carts-integration.test.js"
+    "test": "mocha test/auth-integration.test.js"
   },
   "keywords": [],
   "author": "",

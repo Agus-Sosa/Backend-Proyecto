@@ -17,9 +17,15 @@
         <p class="description">{{productDetails.description}}</p>
         <p class="category">Categoria: {{productDetails.category}}</p>
         <p class="price">${{productDetails.price}}</p>
-        <button type="button" id="addToCartBtn" onclick="addToCart('{{productDetails._id}}', '{{userCartId}}')">Agregar al carrito</button>
+        <div class="container_button">
+        <button type="button" class="addToCart_button" id="addToCartBtn" onclick="addToCart('{{productDetails._id}}', '{{userCartId}}')">Agregar al carrito</button>
+        {{#eq userRole 'admin'}}
+        <button type="button" onclick="deleteProduct('{{productDetails._id}}')" class="delete_product">Eliminar producto</button>
+        {{/eq}}
+        </div>
     </div>
 </section>
 <script src="/js/products.js"></script>
+<script src="/js/deleteProduct.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
