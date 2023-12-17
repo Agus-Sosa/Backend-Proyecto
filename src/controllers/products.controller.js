@@ -97,6 +97,7 @@ export class ProductsController {
                     message: "Es obligatorio agregar todos los campos para crear producto",
                     errorCode: EError.INVALID_PARAM
                 })
+                throw customError
             }
             
             if(req.file){
@@ -106,7 +107,7 @@ export class ProductsController {
             const product = await ProductService.createProduct(data);
             res.status(200).json({status: 'Success', product: product})
         } catch (error) {
-            res.status(501).json({status: 'error', message: console.log(error.message)})
+            res.status(501).json({status: 'error', message: error.message})
         }
     }
 
@@ -118,12 +119,13 @@ export class ProductsController {
             const user = req.user;
 
             if(!product) {
-                CustomError.createError({
+                const error =  CustomError.createError({
                     name: 'NonExistentProduct',
                     cause: 'Produco inexistente',
                     message: `El producto con el id ${idProduct} no existe`,
                     errorCode: EError.PRODUCT_ERROR
                 })
+                throw error
             }
 
             if(user.role === "premium" && product.owner.toString()=== user._id.toString() || user.role === "admin"){
@@ -139,16 +141,16 @@ export class ProductsController {
 
                 res.status(200).json({status:'Success', message:`Producto ${idProduct} eliminado correctamente` })
             } else {
-                CustomError.createError({
+             const error =  CustomError.createError({
                     name: 'UnauthorizedError',
                     cause: 'Usuario no autorizado',
                     message: 'Usuario no autorizado para eliminar el producto',
                     errorCode:EError.UNAUTHORIZED
                 })
-
+            throw error
             }
         } catch (error) {
-            res.json({status:'error', message: console.log(error)})
+            res.status(404).json({status:'error', message:error.message})
         }
     }
 
