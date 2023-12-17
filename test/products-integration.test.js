@@ -12,15 +12,27 @@ describe("Pruebas app proyecto backend", async function(){
 
     this.timeout(10000)
 
-    const mockUser = {
-        email: "julian@gmail.com",
-        password: "333"
-    }
-
     before(async function(){
         Product.deleteMany({})
         this.cookie;
     })
+    
+    const mockUser = {
+        email: "julian@gmail.com",
+        password: "333"
+    }
+    // const loginAndGetCookie = async () => {
+    //     const loginResponse = await requester
+    //       .post('/api/sessions/login')
+    //       .send({
+    //         email: 'julian@gmail.com',
+    //         password: '333',
+    //       })
+    //       .redirects(1);
+    //     const cookieResponse = loginResponse.headers['set-cookie'][0];
+    //     return cookieResponse.split("=")[1];
+    //   };
+
 
     describe("test de rutas de productos", async function(){
         it("/GET /", async function () {
@@ -29,7 +41,22 @@ describe("Pruebas app proyecto backend", async function(){
         });
 
         it("/GET /mockingproducts", async function(){
-            const response = await requester.get('/api/products/mockingproducts')
+
+            const loginResponse = await requester.post('/api/sessions/login').send({
+                email: mockUser.email,
+                password: mockUser.password,
+            }).redirects(1);
+            const cookieResponse = loginResponse.headers['set-cookie'][0];
+            const cookieData = {
+                name: cookieResponse.split("=")[0],
+                value: cookieResponse.split("=")[1],
+            }
+            this.cookie = cookieData;
+            expect(loginResponse.status).to.equal(200);
+
+            const response = await requester
+            .get('/api/products/mockingproducts')
+            .set("Cookie", [`${this.cookie.name}=${this.cookie.value}`]);
             expect(response.body.status.toLowerCase()).to.equal('success');
             expect(response.status).to.equal(200);
         })
@@ -69,6 +96,33 @@ describe("Pruebas app proyecto backend", async function(){
 
         })
 
+        it('/POST /createProduct prueba de validaciones', async function(){
+
+            const loginResponse = await requester.post('/api/sessions/login').send({
+                email: mockUser.email,
+                password: mockUser.password,
+            }).redirects(1);
+            const cookieResponse = loginResponse.headers['set-cookie'][0];
+            const cookieData = {
+                name: cookieResponse.split("=")[0],
+                value: cookieResponse.split("=")[1],
+            }
+            this.cookie = cookieData;
+            expect(loginResponse.status).to.equal(200);
+
+            const mockProductIncomplete ={
+                title: "producto",
+            }
+
+        
+            const response = await requester
+            .post('/api/products/createProduct')
+            .send(mockProductIncomplete)
+            .set("Cookie", [`${this.cookie.name}=${this.cookie.value}`])
+            expect(response.status).to.equal(400);
+            expect(response.body.status).to.equal('error');
+        })
+
         it("/DELETE /:pid", async function(){
             // Inicio de sesión
             const loginResponse = await requester.post('/api/sessions/login').send({
@@ -99,8 +153,13 @@ describe("Pruebas app proyecto backend", async function(){
             .set("Cookie", [`${this.cookie.name}=${this.cookie.value}`])
             .send(mockProduct);  
             
+
+            const productId = productCreated && productCreated.data && productCreated.data._id;
+            console.log(productId)
             const deleteResponse =await requester
             .delete(`/api/products/${productCreated._id}`)
+            .set("Cookie", [`${this.cookie.name}=${this.cookie.value}`]);
+
             expect(deleteResponse.status).to.equal(200)
 
         

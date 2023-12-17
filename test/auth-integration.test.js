@@ -23,7 +23,8 @@ describe("Prueba app backend", function(){
         email: "julian@gmail.com",
         age: "21",
         password: "333",
-        role: 'admin'
+        role: 'admin',
+        avatar: "avatar.jpg"
     }
     describe("test modulo sessions", function(){
 

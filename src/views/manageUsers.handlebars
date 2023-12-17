@@ -1,0 +1,54 @@
+
+
+{{#if users}}
+<section class="container">
+    <div class="header_container">
+        <h1>Administrador de usuarios</h1>
+
+        <p>Usuarios:  {{totalUsers}}</p>
+    </div>
+
+
+  <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Correo</th>
+                <th>Role</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each users}}
+        <tr data-user-id="{{_id}}">
+                <td>{{first_name}}</td>
+                <td>{{email}}</td>
+                <td>{{role}}</td>
+                {{#eq status 'completo'}}
+                <td>
+                    <button class="button_change_role" onclick="changeRoleUser('{{_id}}')">Cambiar el role</button>
+                </td>
+                {{else}}
+                <td>
+                    <button class="button_change_role_disabled" onclick="NotChangeRoleUser()">Cambiar el role</button>
+                </td>
+                {{/eq}}
+                <td>
+                <button class="button_delete_user" onclick="deleteUser('{{_id}}', event)">Eliminar</button>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</section>
+
+
+
+{{else}}
+    <div class="not_users">
+        <h2>No existen usuarios</h2>
+    </div>
+{{/if}}
+
+<script src="/js/deleteUser.js"></script>
+<script src="/js/changeRoleUser.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

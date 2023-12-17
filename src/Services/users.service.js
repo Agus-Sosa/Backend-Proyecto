@@ -20,4 +20,12 @@ export class UserService {
     static async getUsers(){
         return await userDao.getUsers()
     }
+
+    static async getUsersInactiveSince(date){
+        return await userDao.getUsersInactiveSince(date);
+    }
+
+    static async deleteUser (userId){
+        return await userDao.deleteUser(userId)
+    }
 }

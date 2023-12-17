@@ -26,9 +26,12 @@ router.get('/current', ViewController.renderCurrent)
 
 router.get('/chat',authorizeRoles(['user', "premium"]) /* isUserAuth */,ViewController.renderChat)
 
-
 router.get('/forgot-password', ViewController.renderForgotPassword)
+
 router.get('/reset-password', ViewController.renderResetPassword)
+
+router.get("/manageUsers", authorizeRoles(["admin"]), ViewController.renderManageUsers)
+
 
 
 export {router as viewRouter}

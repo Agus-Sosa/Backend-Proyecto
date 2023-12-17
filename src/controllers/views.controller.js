@@ -2,6 +2,7 @@ import { CartService } from "../Services/carts.service.js";
 import { CustomError } from "../Services/error/CustomError.service.js";
 import { createProductErrorMsg } from "../Services/error/createProductError.service.js";
 import { ProductService } from "../Services/product.service.js";
+import { UserService } from "../Services/users.service.js";
 import { EError } from "../enums/EError.js";
 import { logger } from "../helpers/logger.js";
 export class ViewController {
@@ -136,6 +137,8 @@ export class ViewController {
       logger.info("Obtienendo los detalles del producto");
       const productId = req.params.productId;
       const userCartId = req.user.cart;
+      const userRole = req.user.role;
+
 
       const product = await ProductService.getProductId(productId);
 
@@ -151,6 +154,7 @@ export class ViewController {
       res.render("productDetails", {
         productDetails,
         userCartId,
+        userRole: userRole,
         style: "productDetails.css",
       });
     } catch (error) {
@@ -166,7 +170,20 @@ export class ViewController {
       const cart = await CartService.getCartById(cartId);
       const productInCart = cart.products;
 
-      res.render("carts", { productInCart, style: "cartsProducts.css" });
+      let subtotal = 0;
+      let totalPrice = 0;
+      for(const item of productInCart){
+        const productPrice = item.product.price;
+        const productQuantity = item.quantity;
+        subtotal += productPrice * productQuantity;
+        
+      }
+      
+      const shippingCost = 10;
+      totalPrice = subtotal + shippingCost
+
+
+      res.render("carts", { productInCart, cart: cart,subtotal:subtotal,totalPrice:totalPrice,shippingCost:shippingCost,style: "cartsProducts.css" });
     } catch (error) {
       logger.error(
         `Error al renderizar el carrito u obtener los productos del carrito ${error}`
@@ -203,4 +220,13 @@ export class ViewController {
     logger.info('Renderizando la vista para cambiar la contraseña')
     res.render("resetPassword", {style: "resetPassword.css", token})
   }
+
+  static async renderManageUsers(req, res) {
+    logger.info('Renderizando vista para manejar los usuarios')
+    const usersData = await UserService.getUsers()
+    const filteredUsers = usersData.filter(user => user.role !== 'admin');
+    const totalUsers = filteredUsers.length;
+    res.render("manageUsers", {style: "manageUsers.css", users: filteredUsers, totalUsers: totalUsers})
+  }
+
 }
