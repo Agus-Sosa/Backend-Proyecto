@@ -68,7 +68,7 @@
         const successMessage = document.getElementById('successMessage')
         const errorMessage = document.getElementById('errorMessage')
 
-        fetch(`http://localhost:8080/api/carts/${cartId}/products/${idProduct}/`,  {
+        fetch(`/api/carts/${cartId}/products/${idProduct}/`,  {
             method: 'post'
         }).then(response => response.json())
         .then(data=> {

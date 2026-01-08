@@ -48,13 +48,20 @@ export class ticketController {
 
       const totalPriceArray = await Promise.all(totalPricePromises);
 
-      const totalPrice = totalPriceArray.reduce(
+      const subtotalPrice = totalPriceArray.reduce(
         (total, price) => total + price,
         0
       );
       for (const productId of productsOutOfStock) {
         await CartService.addProductToCart(cartId, productId._id);
       }
+
+      const totalPrice = subtotalPrice + 10
+
+      for (const productInCart of productsProcessed) {
+        await CartService.deleteAllProducts(cartId, productInCart.product);
+      }
+
 
       const purchaserUser = req.user.email;
 

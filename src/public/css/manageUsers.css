@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap');
+
+
+* {
+    font-family: 'Montserrat', sans-serif;
+}
+
+
+.not_users {
+    margin: auto;
+    display: flex;
+    height: 80vh;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 50px;
+
+    & .header_container {
+        display: flex;
+        align-items: center;
+        margin: 30px 0px 10px;
+        & h1 {
+            margin: 0px 15px 0px 0px;
+        }
+
+        & p {
+            margin: 0px ;
+            font-weight: 700;
+        }
+    }
+
+
+    & table {
+        border-spacing: 0px 15px;
+
+        
+        & thead {
+            width: 100%;
+        
+        }
+
+
+        & tbody {
+            margin-top: 10px;
+            & tr {
+                padding: 20px;
+                box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;                
+                margin: 10px 0px;
+
+                & td {
+                    padding: 12px;
+
+                    & .button_change_role {
+                        background-color: #4c6ef5;
+                        color: white;
+                        padding: 5px;
+                        border-radius: 5px;
+                        border: none;
+                        cursor: pointer;
+                        transition: .5s all;
+                    &:hover {
+                        background-color: #374da7;
+                    }
+                    }
+                
+                & .button_delete_user{
+                    background-color: rgb(245, 32, 32);
+                    color: white;
+                    border: none;
+                    padding: 5px;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    transition: .5s all;
+                
+                 &:hover {
+                    background-color: rgb(168, 30, 30);
+                 }
+                }
+
+
+
+                & .button_change_role_disabled {
+                    background-color: rgb(71, 71, 71);
+                    color: white;
+                    border: none;
+                    padding: 5px;
+                    border-radius: 5px;
+                    cursor: pointer;
+                }
+
+                }
+            }
+        }
+    }
+
+}

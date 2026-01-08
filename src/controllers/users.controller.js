@@ -1,6 +1,7 @@
 import { CustomError } from "../Services/error/CustomError.service.js";
 import { UserService } from "../Services/users.service.js"
 import { EError } from "../enums/EError.js";
+import { accountDeleteEmail } from "../helpers/gmail.js";
 export class usersController {
     static modifyRole = async(req, res)=> {
         try {
@@ -102,5 +103,55 @@ export class usersController {
             res.json({status:"error", message: "error al actualizar el usuario"})
         }
         
+    }
+
+
+
+    
+
+    static deleteUsersIncative = async(req, res)=> {
+        try {
+            const currentData = new Date();
+            const inactiveTime = 1000 * 60 * 30;
+            const userInactive = await UserService.getUsersInactiveSince(new Date(currentData - inactiveTime))
+
+            const deleteUsersIncatives = userInactive.map(async (user)=> {
+                await UserService.deleteUser(user._id);
+                await accountDeleteEmail(user.email);
+
+            })
+
+            await Promise.all(deleteUsersIncatives)
+
+            res.status(200).json({status: 'success', message: 'Usuarios inactivos eliminados correctamente y correos enviados'})
+
+        } catch (error) {
+            res.status(404).json({error: error.message})
+        }
+    }
+
+
+
+    static deleteUser = async(req,res)=> {
+        try {
+            const userId = req.params.uid;
+            const user = await UserService.getUserById(userId);
+            if(!user){
+                CustomError.createError({
+                    name:'DeleteUser',
+                    cause: 'Error al eliminar el usuario',
+                    message: 'El usuario que quieres eliminar no existe',
+                    errorCode: EError.USERS_ERROR
+                })
+            }
+
+            await UserService.deleteUser(userId);
+            res.status(202).json({status: 'success', message: `Se elimino el usuario con el id ${userId}`})
+            
+        } catch (error) {
+            res.status(404).json({status: 'error', message: 'Error al eliminar el usuario'})
+        }
+
+
     }
 }
