@@ -8,8 +8,11 @@ class UsersMongo {
   }
 
   async saveUsers(user) {
+    console.log("Saving user:", user);
+    
     try {
       const usersCreated = await this.modelUser.create(user);
+      console.log("User created:", usersCreated);
       const newCart = await this.modelCart.create({ products: [] });
 
       usersCreated.cart = newCart._id;

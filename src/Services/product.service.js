@@ -11,6 +11,7 @@ export class ProductService {
 
     
     static async createProduct(productInfo) {
+        console.log("service:", productInfo);
         return await productDao.addNewProducts(productInfo);
     }
 

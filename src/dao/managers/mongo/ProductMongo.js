@@ -16,6 +16,7 @@ class ProductMongo {
 
     async addNewProducts (newProduct) {
         try {
+            console.log("Adding new product:", newProduct);
             const productAdd = new this.model(newProduct)
             return await productAdd.save();
         } catch (error) {

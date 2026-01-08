@@ -34,7 +34,7 @@ export const initializePassport = () => {
                     email: username,
                     password: createHash(password),
                     fullName: contactDto.fullName,
-                    avatar: req.file.filename
+                    avatar: req.file ? req.file.filename : null,
                 }
                 const userCreated = await UserService.saveUser(newUser);
                 return done(null, userCreated)
@@ -52,6 +52,7 @@ export const initializePassport = () => {
         },
         async(username, password, done)=> {
             try {
+                console.log(username, password);
                 const user = await UserService.getByEmail(username)
                 if(!user) {
                     return done(null, false)
