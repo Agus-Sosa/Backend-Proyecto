@@ -1,29 +1,30 @@
-# E-commerce 
-## Desarrollador Backend - Coderhouse
+# E-commerce
+## "Desarrollador Backend" — Coderhouse
 
-Proyecto realizado durante la formacion Desarrollo Backend
+Proyecto realizado durante la formación "Desarrollador Backend".
 
-## Objetivos 
-Aprender y aplicar los conceptos fundamentales del desarrollo con NodeJs
+## 🎯 Objetivo
+Aprender y aplicar los conceptos fundamentales del desarrollo backend con Node.js.
 
-## Teconologias utilizadas 
-- NodeJs
+## 🛠️ Tecnologías utilizadas
+- Node.js
 - Express
 - MongoDB
 - Mongoose
 - Handlebars
-- Bcrypt
-- Socket
+- bcrypt
+- Socket.io
 
-## Contenidos trabajados 
+## 📚 Contenidos trabajados
 - Servidor HTTP con Express
 - Rutas y controladores
 - Manejo de peticiones y respuestas
 - Persistencia de datos con MongoDB
 - Modelado de datos con Mongoose
-- CRUD
+- Operaciones CRUD
+- Renderizado de vistas con Handlebars
+- Comunicación en tiempo real con Socket.io
 
-
-## Estado de proyecto 
-Proyecto de aprendizaje
-No representa mi nivel actual
+## 📌 Estado del proyecto
+Proyecto de aprendizaje.  
+No representa mi nivel actual.
